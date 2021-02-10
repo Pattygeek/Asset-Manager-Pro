@@ -1,6 +1,9 @@
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
+import { ThemeProvider } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import theme from "./helpers/theme";
 
 const Home = lazy(() => import("./pages/home"));
 const Login = lazy(() => import("./pages/login"));
