@@ -45,6 +45,12 @@ const useStyles = makeStyles((theme) => ({
 	toggle: {
 		margin: "auto 0px",
 	},
+	formula: {
+		width: "20px",
+		height: "20px",
+		fill: "#fff",
+		margin: "auto 12px auto 0px",
+	},
 }));
 
 const Sidebar = () => {
@@ -89,7 +95,7 @@ const Sidebar = () => {
 						Manage Users
 					</Box>
 					<Box fontWeight={500} className={classes.main}>
-						<FormulaIcon className={classes.icon} />
+						<FormulaIcon className={classes.formula} />
 						Formulas
 					</Box>
 				</Box>

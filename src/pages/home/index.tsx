@@ -6,12 +6,15 @@ import { Sidebar, Navbar } from "../../components";
 
 const useStyles = makeStyles((theme) => ({
 	container: {
-		border: "1px solid black",
 		height: "100vh",
 		display: "flex",
 	},
 	box: {
 		width: "100%",
+	},
+	main: {
+		width: "100%",
+		height: "calc(100% - 50px)",
 	},
 }));
 
@@ -24,7 +27,7 @@ const Home = () => {
 				<Sidebar />
 				<Box className={classes.box}>
 					<Navbar />
-					<p>Home</p>
+					<Box bgcolor="secondary.main" className={classes.main}></Box>
 				</Box>
 			</Box>
 		</>
