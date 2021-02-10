@@ -18,21 +18,25 @@ const Formulas = lazy(() => import("./pages/formulas"));
 function App() {
 	return (
 		<div className="App">
-			<Suspense fallback={<p>Loading...</p>}>
-				<Router>
-					<Switch>
-						<Route path="/" exact component={Home} />
-						<Route path="/login" exact component={Login} />
-						<Route path="/signup" exact component={Signup} />
-						<Route path="/contact-rolodex" exact component={Contact} />
-						<Route path="/manage-users" exact component={ManageUsers} />
-						<Route path="/search" exact component={Search} />
-						<Route path="/upload-data" exact component={UploadData} />
-						<Route path="/reporting" exact component={Reporting} />
-						<Route path="/formulas" exact component={Formulas} />
-					</Switch>
-				</Router>
-			</Suspense>
+			<ThemeProvider theme={theme}>
+				{/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+				<CssBaseline />
+				<Suspense fallback={<p>Loading...</p>}>
+					<Router>
+						<Switch>
+							<Route path="/" exact component={Home} />
+							<Route path="/login" exact component={Login} />
+							<Route path="/signup" exact component={Signup} />
+							<Route path="/contact-rolodex" exact component={Contact} />
+							<Route path="/manage-users" exact component={ManageUsers} />
+							<Route path="/search" exact component={Search} />
+							<Route path="/upload-data" exact component={UploadData} />
+							<Route path="/reporting" exact component={Reporting} />
+							<Route path="/formulas" exact component={Formulas} />
+						</Switch>
+					</Router>
+				</Suspense>
+			</ThemeProvider>
 		</div>
 	);
 }
