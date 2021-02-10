@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="toggle"  role="img" viewBox="0 0 39 32">
+	<path
+				fill="#fff"
+				style="fill: var(--color1, #fff); stroke: var(--color1, #fff)"
+				stroke="#fff"
+				stroke-linejoin="miter"
+				stroke-linecap="butt"
+				stroke-miterlimit="4"
+				stroke-width="2.4615"
+				d="M20.321 26.923h22.154v3.538h-22.154v-3.538z"
+			></path>
+			<path
+				fill="#fff"
+				style="fill: var(--color1, #fff); stroke: var(--color1, #fff)"
+				stroke="#fff"
+				stroke-linejoin="miter"
+				stroke-linecap="butt"
+				stroke-miterlimit="4"
+				stroke-width="2.4615"
+				d="M20.321 2.923h22.154v3.538h-22.154v-3.538z"
+			></path>
+			<path
+				fill="#fff"
+				style="fill: var(--color1, #fff); stroke: var(--color1, #fff)"
+				stroke="#fff"
+				stroke-linejoin="miter"
+				stroke-linecap="butt"
+				stroke-miterlimit="4"
+				stroke-width="2.4615"
+				d="M11.706 13.692v1.231h30.769v3.538h-30.769v7.242l-9.516-9.117 9.516-9.117v6.222z"
+			></path>
+</svg>

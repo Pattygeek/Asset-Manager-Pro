@@ -17,7 +17,7 @@ const Formulas = lazy(() => import("./pages/formulas"));
 
 function App() {
 	return (
-		<div className="App">
+		<div>
 			<ThemeProvider theme={theme}>
 				{/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
 				<CssBaseline />
