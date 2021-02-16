@@ -10,7 +10,6 @@ export const TabPanel = (props: TabPanelProps) => {
 	const { children, value, index, ...other } = props;
 	return (
 		<>
-			{" "}
 			<div
 				role="tabpanel"
 				hidden={value !== index}
@@ -18,7 +17,7 @@ export const TabPanel = (props: TabPanelProps) => {
 				aria-labelledby={`scrollable-prevent-tab-${index}`}
 				{...other}
 			>
-				{value === index && <Box p={3}>{children}</Box>}
+				{value === index && <Box p={2}>{children}</Box>}
 			</div>
 		</>
 	);

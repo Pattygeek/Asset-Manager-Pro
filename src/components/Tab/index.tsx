@@ -4,7 +4,9 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
 import { TabPanel } from "./TabPanel";
+import Buy from './Buy';
 import React from "react";
+
 
 interface toggleProps {
 	toggle: boolean;
@@ -16,7 +18,7 @@ const StatusTab = ({ toggle }: toggleProps) => {
 				"0px 0px 4px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.24)",
 		},
 		overlay: {
-			width: "98%",
+			width: "100%",
 			margin: "0px auto",
 			overflowX: "hidden",
 			backgroundColor: "white",
@@ -31,6 +33,7 @@ const StatusTab = ({ toggle }: toggleProps) => {
 		text: {
 			textTransform: "capitalize",
 		},
+	
 	}));
 
 	const classes = useStyles();
@@ -58,7 +61,7 @@ const StatusTab = ({ toggle }: toggleProps) => {
 				</Paper>
 				<Paper className={classes.tab}>
 					<TabPanel value={value} index={0}>
-						Item One
+						<Buy />
 					</TabPanel>
 					<TabPanel value={value} index={1}>
 						Item Two
