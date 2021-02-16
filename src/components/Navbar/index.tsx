@@ -20,6 +20,10 @@ const useStyles = makeStyles((theme) => ({
 		display: "flex",
 		width: "100%",
 		padding: "0px 24px",
+		position: "sticky",
+		backgroundColor: "white",
+		top: 0,
+		zIndex: +10,
 	},
 	iconBox: {
 		display: "flex",
