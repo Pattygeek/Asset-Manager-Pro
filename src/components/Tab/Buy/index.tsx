@@ -15,6 +15,9 @@ import PhotoBox from "./PhotoBox";
 import pix1 from "../../../assets/images/pix1.png";
 import History from "./History";
 import Document from "./Document";
+import PriceHistory from "./PriceHistory";
+import BidHistory from "./BidHistory";
+import { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
 	label: {
@@ -37,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	section: {
 		display: "flex",
-		justifyContent:"space-between"
+		justifyContent: "space-between",
 	},
 	buttonStack: {
 		display: "flex",
@@ -64,6 +67,30 @@ const useStyles = makeStyles((theme) => ({
 
 const Buy = () => {
 	const classes = useStyles();
+
+	//================pricehistory modal handler==============
+	const [open, setOpen] = useState(false);
+
+	const handleOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
+	};
+	//=========================================================
+
+	//================bidhistory modal handler==============
+	const [show, setShow] = useState(false);
+
+	const handleShow = () => {
+		setShow(true);
+	};
+
+	const handleCloseShow = () => {
+		setShow(false);
+	};
+	//=======================================================
 
 	return (
 		<>
@@ -480,7 +507,10 @@ const Buy = () => {
 							helper text
 						</FormHelperText>
 					</FormControl>
-					<p className={classes.price}>View Price History</p>
+					<p className={classes.price} onClick={handleOpen}>
+						View Price History
+					</p>
+					<PriceHistory open={open} handleClose={handleClose} />
 				</Box>
 			</div>
 			<div className={classes.div}>
@@ -592,7 +622,8 @@ const Buy = () => {
 							helper text
 						</FormHelperText>
 					</FormControl>
-					<p className={classes.price}>View Bid History</p>
+					<p className={classes.price} onClick={handleShow}>View Bid History</p>
+					<BidHistory open={show} handleClose={handleCloseShow}/>
 				</Box>
 			</div>
 			<div className={classes.section}>
@@ -745,7 +776,12 @@ const Buy = () => {
 					<PhotoBox image={pix1} />
 				</Box>
 			</div>
-			<Box width="100%" display="flex" justifyContent="space-between" marginTop={4}>
+			<Box
+				width="100%"
+				display="flex"
+				justifyContent="space-between"
+				marginTop={4}
+			>
 				<History />
 				<Document />
 			</Box>
