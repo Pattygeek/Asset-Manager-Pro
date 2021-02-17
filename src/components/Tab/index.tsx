@@ -11,6 +11,7 @@ import React from "react";
 interface toggleProps {
 	toggle: boolean;
 }
+
 const StatusTab = ({ toggle }: toggleProps) => {
 	const useStyles = makeStyles((theme) => ({
 		root: {

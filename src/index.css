@@ -19,3 +19,7 @@ code {
 .MuiFormControl-root {
 	width: 100%;
 }
+.wtHolder {
+	height: fit-content !important;
+	width: 100% !important;
+}

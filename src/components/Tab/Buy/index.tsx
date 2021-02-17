@@ -10,8 +10,11 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 
 //assets & components
-import { ReactComponent as FileIcon } from "../../assets/icons/file.svg";
+import { ReactComponent as FileIcon } from "../../../assets/icons/file.svg";
 import PhotoBox from "./PhotoBox";
+import pix1 from "../../../assets/images/pix1.png";
+import History from "./History";
+import Document from "./Document";
 
 const useStyles = makeStyles((theme) => ({
 	label: {
@@ -34,10 +37,12 @@ const useStyles = makeStyles((theme) => ({
 	},
 	section: {
 		display: "flex",
+		justifyContent:"space-between"
 	},
 	buttonStack: {
 		display: "flex",
-		marginTop: "28px",
+		marginTop: "32px",
+		marginBottom: "32px",
 	},
 	buttonBox: {
 		border: "1px solid #109CF1",
@@ -591,7 +596,7 @@ const Buy = () => {
 				</Box>
 			</div>
 			<div className={classes.section}>
-				<div>
+				<div style={{ width: "67%" }}>
 					<div className={classes.sectionDiv}>
 						<Box>
 							<p className={classes.label}>Auction Agent</p>
@@ -736,8 +741,14 @@ const Buy = () => {
 						</Button>
 					</div>
 				</div>
-				<PhotoBox />
+				<Box width="33%">
+					<PhotoBox image={pix1} />
+				</Box>
 			</div>
+			<Box width="100%" display="flex" justifyContent="space-between" marginTop={4}>
+				<History />
+				<Document />
+			</Box>
 		</>
 	);
 };
