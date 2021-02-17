@@ -89,7 +89,7 @@ const History = () => {
 					<HotColumn width={150}></HotColumn>
 					<HotColumn width={150}></HotColumn>
 					<HotColumn width={150}></HotColumn>
-					<HotColumn width={150}></HotColumn>
+					<HotColumn width={115}></HotColumn>
 				</HotTable>
 			</Box>
 		</>
