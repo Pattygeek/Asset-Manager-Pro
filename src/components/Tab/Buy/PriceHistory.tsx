@@ -38,7 +38,7 @@ const PriceHistory = ({ open, handleClose }: ModalProps) => {
 	const [state, setState] = useState<any>({
 		colHeaders: ["Date", "Status", "Sale Type", "Amount", "Source"],
 		licenseKey: "non-commercial-and-evaluation",
-		rowHeights: 30,
+		rowHeights: 39,
 		columnHeaderHeight: 35,
 		width: 760,
 		data: [
@@ -70,13 +70,42 @@ const PriceHistory = ({ open, handleClose }: ModalProps) => {
 				address_state: "IL",
 				address_zip: 749,
 			},
+			{
+				address_street: "860 Ashland Place",
+				address_city: "Alamo, Maryland, 2062",
+				address_county: "SAINT CHARLES",
+				address_state: "IL",
+				address_zip: 749,
+			},
+			{
+				address_street: "860 Ashland Place",
+				address_city: "Alamo, Maryland, 2062",
+				address_county: "SAINT CHARLES",
+				address_state: "IL",
+				address_zip: 749,
+			},
+			{
+				address_street: "860 Ashland Place",
+				address_city: "Alamo, Maryland, 2062",
+				address_county: "SAINT CHARLES",
+				address_state: "IL",
+				address_zip: 749,
+			},
+			{
+				address_street: "860 Ashland Place",
+				address_city: "Alamo, Maryland, 2062",
+				address_county: "SAINT CHARLES",
+				address_state: "IL",
+				address_zip: 749,
+			},
 		],
+		className: "htCenter htMiddle",
 		columns: [
-			{ data: "address_zip" },
-			{ data: "address_state" },
-			{ data: "address_county" },
-			{ data: "address_city" },
-			{ data: "address_street" },
+			{ data: "address_zip", readOnly: true, width: 100 },
+			{ data: "address_state", readOnly: true, width: 150 },
+			{ data: "address_county", readOnly: true, width: 150 },
+			{ data: "address_city", readOnly: true, width: 200 },
+			{ data: "address_street", readOnly: true, width: 160 },
 		],
 	});
 	return (

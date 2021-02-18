@@ -35,6 +35,27 @@ const useStyles = makeStyles(() => ({
 const BidHistory = ({ open, handleClose }: ModalProps) => {
 	const classes = useStyles();
 
+	const [header] = useState<any>({
+		colHeaders: ["Total Live Bids", "Live Bidders", "Highest Bid"],
+		data: [
+			{
+				total_live_bids: 5,
+				live_bidders: 2,
+				highest_bid: "$167,000",
+			},
+		],
+		className: "htLeft htMiddle",
+		width: 760,
+		rowHeights: 35,
+		columnHeaderHeight: 35,
+		columns: [
+			{ data: "total_live_bids", readOnly: true, width: 200 },
+			{ data: "live_bidders", readOnly: true, width: 200 },
+			{ data: "highest_bid", readOnly: true, width: 360 },
+		],
+		licenseKey: "non-commercial-and-evaluation",
+	});
+
 	const [state, setState] = useState<any>({
 		colHeaders: [
 			"Date/Time",
@@ -87,13 +108,15 @@ const BidHistory = ({ open, handleClose }: ModalProps) => {
 				date: 749,
 			},
 		],
-		// columns: [
-		// 	{ data: "address_zip" },
-		// 	{ data: "address_state" },
-		// 	{ data: "address_county" },
-		// 	{ data: "address_city" },
-		// 	{ data: "address_street" },
-		// ],
+		columns: [
+			{ data: "address_zip", readOnly: true, width: 100 },
+			{ data: "address_state", readOnly: true, width: 100 },
+			{ data: "address_county", readOnly: true, width: 100 },
+			{ data: "address_city", readOnly: true, width: 130 },
+			{ data: "address_street", readOnly: true, width: 130 },
+			{ data: "status", readOnly: true, width: 100 },
+			{ data: "date", readOnly: true, width: 100 },
+		],
 	});
 	return (
 		<>
@@ -107,6 +130,7 @@ const BidHistory = ({ open, handleClose }: ModalProps) => {
 					<Box className={classes.heading}>Bid History</Box>
 					<CloseIcon onClick={handleClose} className={classes.icon} />
 				</Box>
+				<HotTable settings={header}></HotTable>
 				<HotTable settings={state}>
 					{/* <HotColumn width={160} />
 					<HotColumn width={150} />

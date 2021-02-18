@@ -100,6 +100,7 @@ const PhotoBox = ({ images }: PhotoProps) => {
 						variant="contained"
 						color="primary"
 						className={classes.button}
+						onClick={handleReveal}
 					>
 						photo gallery
 					</Button>

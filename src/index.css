@@ -22,3 +22,7 @@ code {
 .wtHolder {
 	height: fit-content !important;
 }
+
+.handsontable th {
+	vertical-align: middle !important;
+}
