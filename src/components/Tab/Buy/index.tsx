@@ -62,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: "#EDF7FF",
 		fontWeight: 500,
 		marginRight: "12px",
+		cursor: "pointer",
 	},
 	icon: {
 		height: "18px",

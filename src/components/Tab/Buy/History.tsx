@@ -76,7 +76,7 @@ const History = () => {
 			{ data: "address_city", readOnly: true, width: 150 },
 			{ data: "address_street", readOnly: true, width: 115 },
 		],
-		minRows: 10,
+		minRows: 3,
 	});
 	return (
 		<>
