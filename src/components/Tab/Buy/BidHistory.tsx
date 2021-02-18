@@ -1,6 +1,7 @@
 import Dialog from "@material-ui/core/Dialog";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Box from "@material-ui/core/Box";
+import CloseIcon from "@material-ui/icons/Close";
 import { HotTable, HotColumn } from "@handsontable/react";
 import { useState } from "react";
 
@@ -16,6 +17,18 @@ const useStyles = makeStyles(() => ({
 		width: "100%",
 		borderRadius: "4px 4px 0px 0px",
 		padding: "8px 18px",
+		display: "flex",
+		justifyContent: "space-between",
+	},
+	heading: {
+		color: "white",
+		margin: "auto 0px",
+	},
+	icon: {
+		cursor: "pointer",
+		"&:hover": {
+			color: "grey",
+		},
 	},
 }));
 
@@ -56,7 +69,7 @@ const BidHistory = ({ open, handleClose }: ModalProps) => {
 				date: 749,
 			},
 			{
-			address_street: "860 Ashland Place",
+				address_street: "860 Ashland Place",
 				address_city: "Alamo, Maryland, 2062",
 				address_county: "SAINT CHARLES",
 				address_state: "IL",
@@ -90,7 +103,10 @@ const BidHistory = ({ open, handleClose }: ModalProps) => {
 				aria-labelledby="max-width-dialog-title"
 				maxWidth="md"
 			>
-				<Box className={classes.box}>Bid History</Box>
+				<Box className={classes.box}>
+					<Box className={classes.heading}>Bid History</Box>
+					<CloseIcon onClick={handleClose} className={classes.icon} />
+				</Box>
 				<HotTable settings={state}>
 					{/* <HotColumn width={160} />
 					<HotColumn width={150} />

@@ -1,6 +1,9 @@
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import { useState } from "react";
+import ImageSlider from "./ImageSlider";
+import { images } from "../../../utils/dummyData";
 
 const useStyles = makeStyles((theme) => ({
 	image: {
@@ -30,14 +33,68 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface PhotoProps {
-	image: string;
+	images: string[];
 }
-const PhotoBox = ({ image }: PhotoProps) => {
+const PhotoBox = ({ images }: PhotoProps) => {
 	const classes = useStyles();
+
+	//================imageSlider modal handler==============
+	const [reveal, setReveal] = useState(false);
+
+	const handleReveal = () => {
+		setReveal(true);
+	};
+
+	const handleClose = () => {
+		setReveal(false);
+	};
+
+	const [index, setIndex] = useState<any>(0);
+
+	const handleIndexChange = (operator: string) => {
+		switch (operator) {
+			case "+":
+				setIndex((state: number) => state + 1);
+				break;
+			case "-":
+				setIndex((state: number) => state - 1);
+				break;
+			default:
+				break;
+		}
+	};
+
+	//======arrow keys navigation handler=======
+	const handleKeyPress = (e: any) => {
+		switch (e.keyCode) {
+			case 37:
+				if (index > 0) {
+					setIndex((state: any) => state - 1);
+				} else {
+					setIndex(images.length - 1);
+				}
+				break;
+			case 39:
+				if (index < images.length - 1) {
+					setIndex((state: any) => state + 1);
+				} else {
+					setIndex(0);
+				}
+				break;
+			default:
+				break;
+		}
+	};
+	//========end of arrow nav handler=============
 	return (
 		<>
 			<Box borderRadius={4} width="100%">
-				<img src={image} alt="" className={classes.image} />
+				<img
+					src={images[0]}
+					alt=""
+					className={classes.image}
+					onClick={handleReveal}
+				/>
 				<Box className={classes.box}>
 					<Button
 						variant="contained"
@@ -50,6 +107,14 @@ const PhotoBox = ({ image }: PhotoProps) => {
 						upload new
 					</Button>
 				</Box>
+				<ImageSlider
+					open={reveal}
+					handleClose={handleClose}
+					handleKeyPress={handleKeyPress}
+					images={images}
+					idx={handleIndexChange}
+					index={index}
+				/>
 			</Box>
 		</>
 	);

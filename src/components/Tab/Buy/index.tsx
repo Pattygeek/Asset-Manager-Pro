@@ -13,6 +13,11 @@ import Button from "@material-ui/core/Button";
 import { ReactComponent as FileIcon } from "../../../assets/icons/file.svg";
 import PhotoBox from "./PhotoBox";
 import pix1 from "../../../assets/images/pix1.png";
+import pix2 from "../../../assets/images/pix2.png";
+import pix3 from "../../../assets/images/pix3.png";
+import pix4 from "../../../assets/images/pix4.png";
+import pix5 from "../../../assets/images/pix5.png";
+import pix6 from "../../../assets/images/pix6.png";
 import History from "./History";
 import Document from "./Document";
 import PriceHistory from "./PriceHistory";
@@ -78,7 +83,7 @@ const Buy = () => {
 	const handleClose = () => {
 		setOpen(false);
 	};
-	//=========================================================
+	//======================================================
 
 	//================bidhistory modal handler==============
 	const [show, setShow] = useState(false);
@@ -91,6 +96,8 @@ const Buy = () => {
 		setShow(false);
 	};
 	//=======================================================
+
+	const images = [pix1, pix2, pix3, pix4, pix5, pix6];
 
 	return (
 		<>
@@ -622,8 +629,10 @@ const Buy = () => {
 							helper text
 						</FormHelperText>
 					</FormControl>
-					<p className={classes.price} onClick={handleShow}>View Bid History</p>
-					<BidHistory open={show} handleClose={handleCloseShow}/>
+					<p className={classes.price} onClick={handleShow}>
+						View Bid History
+					</p>
+					<BidHistory open={show} handleClose={handleCloseShow} />
 				</Box>
 			</div>
 			<div className={classes.section}>
@@ -773,7 +782,7 @@ const Buy = () => {
 					</div>
 				</div>
 				<Box width="33%">
-					<PhotoBox image={pix1} />
+					<PhotoBox images={images} />
 				</Box>
 			</div>
 			<Box
