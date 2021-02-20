@@ -4,15 +4,16 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
 import { TabPanel } from "./TabPanel";
-import Buy from './Buy';
+import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
+import Buy from "./Buy";
 import React from "react";
-
 
 interface toggleProps {
 	toggle: boolean;
+	handleClose: () => any;
 }
 
-const StatusTab = ({ toggle }: toggleProps) => {
+const StatusTab = ({ toggle, handleClose }: toggleProps) => {
 	const useStyles = makeStyles((theme) => ({
 		root: {
 			boxShadow:
@@ -25,8 +26,17 @@ const StatusTab = ({ toggle }: toggleProps) => {
 			backgroundColor: "white",
 			position: "absolute",
 			padding: "8px",
-			top: 40,
+			top: 65,
 			zIndex: +5,
+		},
+		icon: {
+			right: 0,
+			position: "absolute",
+			cursor: "pointer",
+			top: -2,
+			"&:hover": {
+				color: "#979797",
+			},
 		},
 		tab: {
 			marginTop: "8px",
@@ -34,7 +44,6 @@ const StatusTab = ({ toggle }: toggleProps) => {
 		text: {
 			textTransform: "capitalize",
 		},
-	
 	}));
 
 	const classes = useStyles();
@@ -47,6 +56,7 @@ const StatusTab = ({ toggle }: toggleProps) => {
 	return (
 		<>
 			<Box className={classes.overlay} mx="auto">
+				<CancelOutlinedIcon className={classes.icon} onClick={handleClose} />
 				<Paper className={classes.root}>
 					<Tabs
 						value={value}

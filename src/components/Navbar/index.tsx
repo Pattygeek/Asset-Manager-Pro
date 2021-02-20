@@ -35,8 +35,8 @@ const useStyles = makeStyles((theme) => ({
 		marginLeft: "auto",
 	},
 	icon: {
-		width: "20px",
-		height: "20px",
+		width: "32px",
+		height: "32px",
 		marginRight: "24px",
 	},
 	iconn: {
@@ -45,8 +45,8 @@ const useStyles = makeStyles((theme) => ({
 		marginRight: "16px",
 	},
 	formula: {
-		width: "20px",
-		height: "20px",
+		width: "32px",
+		height: "32px",
 		fill: "#109CF1",
 		marginRight: "24px",
 	},
