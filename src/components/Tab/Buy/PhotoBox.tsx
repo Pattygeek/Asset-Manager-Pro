@@ -8,14 +8,14 @@ import { images } from "../../../utils/dummyData";
 const useStyles = makeStyles((theme) => ({
 	image: {
 		width: "100%",
-		height: "60%",
+		height: "180px",
 		borderRadius: "4px 4px 0px 0px",
 		cursor: "pointer",
 		objectFit: "cover",
 	},
 	box: {
 		width: "100%",
-		height: "80px",
+		height: "70px",
 		borderRadius: "0px 0px 4px 4px",
 		backgroundColor: "#EDF7FF",
 		boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.25)",
@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 		"&:last-child": {
 			marginRight: "0px",
 		},
+		padding: "4px 24px",
 	},
 }));
 

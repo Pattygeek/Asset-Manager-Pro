@@ -38,9 +38,11 @@ const PriceHistory = ({ open, handleClose }: ModalProps) => {
 	const [state, setState] = useState<any>({
 		colHeaders: ["Date", "Status", "Sale Type", "Amount", "Source"],
 		licenseKey: "non-commercial-and-evaluation",
-		rowHeights: 39,
+		rowHeights: 30,
 		columnHeaderHeight: 35,
 		width: 760,
+		filters: true,
+		columnSorting: true,
 		data: [
 			{
 				address_street: "860 Ashland Place",

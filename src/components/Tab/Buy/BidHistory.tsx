@@ -24,6 +24,9 @@ const useStyles = makeStyles(() => ({
 		color: "white",
 		margin: "auto 0px",
 	},
+	dialog: {
+		width:"870px"
+	},
 	icon: {
 		cursor: "pointer",
 		"&:hover": {
@@ -44,7 +47,7 @@ const BidHistory = ({ open, handleClose }: ModalProps) => {
 				highest_bid: "$167,000",
 			},
 		],
-		className: "htLeft htMiddle",
+		className: "htCenter htMiddle",
 		width: 760,
 		rowHeights: 35,
 		columnHeaderHeight: 35,
@@ -70,6 +73,8 @@ const BidHistory = ({ open, handleClose }: ModalProps) => {
 		rowHeights: 30,
 		columnHeaderHeight: 35,
 		width: 760,
+		filters: true,
+		columnSorting: true,
 		data: [
 			{
 				address_street: "860 Ashland Place",
@@ -78,7 +83,7 @@ const BidHistory = ({ open, handleClose }: ModalProps) => {
 				address_state: "IL",
 				address_zip: 749,
 				status: "IL",
-				date: 749,
+				date: 750,
 			},
 			{
 				address_street: "860 Ashland Place",
@@ -96,7 +101,7 @@ const BidHistory = ({ open, handleClose }: ModalProps) => {
 				address_state: "IL",
 				address_zip: 749,
 				status: "IL",
-				date: 749,
+				date: 789,
 			},
 			{
 				address_street: "860 Ashland Place",
@@ -125,7 +130,7 @@ const BidHistory = ({ open, handleClose }: ModalProps) => {
 				onClose={handleClose}
 				aria-labelledby="max-width-dialog-title"
 				maxWidth="md"
-			>
+				>
 				<Box className={classes.box}>
 					<Box className={classes.heading}>Bid History</Box>
 					<CloseIcon onClick={handleClose} className={classes.icon} />

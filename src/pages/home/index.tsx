@@ -486,6 +486,8 @@ const Home = () => {
 		dropdownMenu: true,
 		manualRowResize: true,
 		manualColumnResize: true,
+		allowInsertColumn: false,
+		allowRemoveColumn: false,
 		//rowHeaders: true,
 		// rowHeaders: ["checkbox", ""],
 		colHeaders: [

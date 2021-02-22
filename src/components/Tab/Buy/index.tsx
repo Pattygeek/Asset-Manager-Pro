@@ -104,53 +104,6 @@ const Buy = () => {
 		<>
 			<div className={classes.div}>
 				<Box>
-					<p className={classes.label}>User</p>
-					<FormControl
-						// className={clsx(classes.margin, classes.textField)}
-						variant="filled"
-					>
-						<FilledInput
-							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
-							placeholder="User"
-							aria-describedby="filled-weight-helper-text"
-							inputProps={{
-								"aria-label": "weight",
-							}}
-						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
-					</FormControl>
-				</Box>
-				<Box>
-					<p className={classes.label}>Auction Status</p>
-					<FormControl
-						// className={clsx(classes.margin, classes.textField)}
-						variant="filled"
-					>
-						<Select
-							native
-							// value={state.age}
-							// onChange={handleChange}
-							inputProps={{
-								name: "age",
-								id: "filled-age-native-simple",
-							}}
-							placeholder="Label"
-						>
-							<option aria-label="None" value="" />
-							<option value={10}>Auction</option>
-							<option value={20}>Removed</option>
-							<option value={30}>Sold</option>
-						</Select>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
-					</FormControl>
-				</Box>
-				<Box>
 					<p className={classes.label}>Status</p>
 					<FormControl
 						// className={clsx(classes.margin, classes.textField)}
@@ -242,6 +195,52 @@ const Buy = () => {
 							// value={values.weight}
 							// onChange={handleChange("weight")}
 							placeholder="Product"
+							aria-describedby="filled-weight-helper-text"
+							inputProps={{
+								"aria-label": "weight",
+							}}
+						/>
+						<FormHelperText id="filled-weight-helper-text">
+							helper text
+						</FormHelperText>
+					</FormControl>
+				</Box>
+				<Box>
+					<p className={classes.label}>Occupancy</p>
+					<FormControl
+						// className={clsx(classes.margin, classes.textField)}
+						variant="filled"
+					>
+						<Select
+							native
+							// value={state.age}
+							// onChange={handleChange}
+							inputProps={{
+								name: "age",
+								id: "filled-age-native-simple",
+							}}
+							placeholder="Label"
+						>
+							<option aria-label="None" value="" />
+							<option value={10}>Occupied</option>
+							<option value={20}>Vacant</option>
+						</Select>
+						<FormHelperText id="filled-weight-helper-text">
+							helper text
+						</FormHelperText>
+					</FormControl>
+				</Box>
+				<Box>
+					<p className={classes.label}>ST RSV ($)</p>
+					<FormControl
+						// className={clsx(classes.margin, classes.textField)}
+						variant="filled"
+					>
+						<FilledInput
+							id="filled-adornment-weight"
+							// value={values.weight}
+							// onChange={handleChange("weight")}
+							placeholder="Year"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -380,7 +379,7 @@ const Buy = () => {
 				</Box>
 			</div>
 			<div>
-				<Box width="60%">
+				<Box width="60%" mb={5}>
 					<p className={classes.label}>Note</p>
 					<FormControl
 						// className={clsx(classes.margin, classes.textField)}
@@ -429,6 +428,7 @@ const Buy = () => {
 								color="primary"
 							/>
 						}
+						style={{ fontSize: "14px" }}
 						label="Agent Confirm"
 					/>
 				</Box>
@@ -475,7 +475,7 @@ const Buy = () => {
 					</FormControl>
 				</Box>
 				<Box>
-					<p className={classes.label}>ST RSV ($)</p>
+					<p className={classes.label}>TPP</p>
 					<FormControl
 						// className={clsx(classes.margin, classes.textField)}
 						variant="filled"
@@ -496,7 +496,7 @@ const Buy = () => {
 					</FormControl>
 				</Box>
 				<Box>
-					<p className={classes.label}>Auction List Price ($)</p>
+					<p className={classes.label}>Annual Taxes ($)</p>
 					<FormControl
 						// className={clsx(classes.margin, classes.textField)}
 						variant="filled"
@@ -515,10 +515,27 @@ const Buy = () => {
 							helper text
 						</FormHelperText>
 					</FormControl>
-					<p className={classes.price} onClick={handleOpen}>
-						View Price History
-					</p>
-					<PriceHistory open={open} handleClose={handleClose} />
+				</Box>
+				<Box>
+					<p className={classes.label}>HUD Exp (%)</p>
+					<FormControl
+						// className={clsx(classes.margin, classes.textField)}
+						variant="filled"
+					>
+						<FilledInput
+							id="filled-adornment-weight"
+							// value={values.weight}
+							// onChange={handleChange("weight")}
+							placeholder="Year"
+							aria-describedby="filled-weight-helper-text"
+							inputProps={{
+								"aria-label": "weight",
+							}}
+						/>
+						<FormHelperText id="filled-weight-helper-text">
+							helper text
+						</FormHelperText>
+					</FormControl>
 				</Box>
 			</div>
 			<div className={classes.div}>
@@ -586,7 +603,7 @@ const Buy = () => {
 					</FormControl>
 				</Box>
 				<Box>
-					<p className={classes.label}>Occupancy</p>
+					<p className={classes.label}>MKT</p>
 					<FormControl
 						// className={clsx(classes.margin, classes.textField)}
 						variant="filled"
@@ -609,6 +626,31 @@ const Buy = () => {
 							helper text
 						</FormHelperText>
 					</FormControl>
+				</Box>
+				<Box>
+					<p className={classes.label}>Auction List Price ($)</p>
+					<FormControl
+						// className={clsx(classes.margin, classes.textField)}
+						variant="filled"
+					>
+						<FilledInput
+							id="filled-adornment-weight"
+							// value={values.weight}
+							// onChange={handleChange("weight")}
+							placeholder="Year"
+							aria-describedby="filled-weight-helper-text"
+							inputProps={{
+								"aria-label": "weight",
+							}}
+						/>
+						<FormHelperText id="filled-weight-helper-text">
+							helper text
+						</FormHelperText>
+					</FormControl>
+					<p className={classes.price} onClick={handleOpen}>
+						View Price History
+					</p>
+					<PriceHistory open={open} handleClose={handleClose} />
 				</Box>
 				<Box>
 					<p className={classes.label}>High Bid ($)</p>
@@ -637,7 +679,7 @@ const Buy = () => {
 				</Box>
 			</div>
 			<div className={classes.section}>
-				<div style={{ width: "67%" }}>
+				<div style={{ width: "67%", marginTop: "20px" }}>
 					<div className={classes.sectionDiv}>
 						<Box>
 							<p className={classes.label}>Auction Agent</p>
@@ -782,7 +824,7 @@ const Buy = () => {
 						</Button>
 					</div>
 				</div>
-				<Box width="33%">
+				<Box width="33%" mt={5}>
 					<PhotoBox images={images} />
 				</Box>
 			</div>
