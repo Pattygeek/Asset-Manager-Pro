@@ -73,6 +73,7 @@ const BidHistory = ({ open, handleClose }: ModalProps) => {
 		rowHeights: 30,
 		columnHeaderHeight: 35,
 		width: 760,
+		className: "htMiddle htCenter",
 		filters: true,
 		columnSorting: true,
 		data: [
@@ -114,13 +115,13 @@ const BidHistory = ({ open, handleClose }: ModalProps) => {
 			},
 		],
 		columns: [
-			{ data: "address_zip", readOnly: true, width: 100 },
-			{ data: "address_state", readOnly: true, width: 100 },
-			{ data: "address_county", readOnly: true, width: 100 },
-			{ data: "address_city", readOnly: true, width: 130 },
+			{ data: "address_zip", readOnly: true, width: 75 },
+			{ data: "address_state", readOnly: true, width: 70 },
+			{ data: "address_county", readOnly: true, width: 120 },
+			{ data: "address_city", readOnly: true, width: 170 },
 			{ data: "address_street", readOnly: true, width: 130 },
 			{ data: "status", readOnly: true, width: 100 },
-			{ data: "date", readOnly: true, width: 100 },
+			{ data: "date", readOnly: true, width: 95 },
 		],
 	});
 	return (

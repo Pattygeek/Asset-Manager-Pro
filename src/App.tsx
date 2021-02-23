@@ -14,6 +14,7 @@ const Search = lazy(() => import("./pages/search"));
 const UploadData = lazy(() => import("./pages/uploadData"));
 const Reporting = lazy(() => import("./pages/reporting"));
 const Formulas = lazy(() => import("./pages/formulas"));
+const Test = lazy(() => import("./pages/test"));
 
 function App() {
 	return (
@@ -33,6 +34,7 @@ function App() {
 							<Route path="/upload-data" exact component={UploadData} />
 							<Route path="/reporting" exact component={Reporting} />
 							<Route path="/formulas" exact component={Formulas} />
+							<Route path="/test" exact component={Test} />
 						</Switch>
 					</Router>
 				</Suspense>
