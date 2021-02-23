@@ -6,6 +6,7 @@ import Box from "@material-ui/core/Box";
 import { TabPanel } from "./TabPanel";
 import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
 import Buy from "./Buy";
+import Escrow from "./Escrow";
 import React from "react";
 
 interface toggleProps {
@@ -66,8 +67,8 @@ const StatusTab = ({ toggle, handleClose }: toggleProps) => {
 						centered
 					>
 						<Tab label="Buy" className={classes.text} />
-						<Tab label="Owned" className={classes.text} />
 						<Tab label="Escrow" className={classes.text} />
+						<Tab label="Owned" className={classes.text} />
 					</Tabs>
 				</Paper>
 				<Paper className={classes.tab}>
@@ -75,7 +76,7 @@ const StatusTab = ({ toggle, handleClose }: toggleProps) => {
 						<Buy />
 					</TabPanel>
 					<TabPanel value={value} index={1}>
-						Item Two
+						<Escrow />
 					</TabPanel>
 					<TabPanel value={value} index={2}>
 						Item Three

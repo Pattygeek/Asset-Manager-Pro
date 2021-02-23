@@ -38,7 +38,7 @@ const PriceHistory = ({ open, handleClose }: ModalProps) => {
 	const [state, setState] = useState<any>({
 		colHeaders: ["Date", "Status", "Sale Type", "Amount", "Source"],
 		licenseKey: "non-commercial-and-evaluation",
-		rowHeights: 30,
+		rowHeights: 26,
 		columnHeaderHeight: 35,
 		width: 760,
 		filters: true,
