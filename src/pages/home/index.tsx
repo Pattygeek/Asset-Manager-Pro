@@ -133,7 +133,7 @@ const Home = () => {
 		autoWrapRow: true,
 		collapsibleColumns: true,
 		minCols: 44,
-		className: "htMiddlet ",
+		className: "htMiddle",
 		// hiddenColumns: true,
 		exportFile: true,
 		manualRowMove: true,
