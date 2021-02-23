@@ -13,89 +13,116 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const History = () => {
+const Utilities = () => {
 	const classes = useStyles();
 
 	const [state, setState] = useState<any>({
-		colHeaders: ["Date", "Time", "User", "Field Name", "Change", "Notes"],
+		colHeaders: [
+			"Date",
+			"Time",
+			"User",
+			"Field Name",
+			"Change",
+			"Bill",
+			"Amount Due",
+			"Amount Paid",
+		],
 		licenseKey: "non-commercial-and-evaluation",
 		rowHeights: 28,
 		columnHeaderHeight: 35,
+		width: 800,
 		className: "htCenter htMiddle",
 		data: [
 			{
 				address_zip: "11/12/20",
 				address_state: "11:29AM",
 				address_county: "John Masaro",
-				address_city: "Hold Time",
-				address_street: "Follow up",
-				notes: "A short note",
+				address_city: "Electric",
+				address_street: "Doc Upload",
+				bill: "Hold Time",
+				due: 12,
+				paid: 12,
 			},
 			{
 				address_zip: "11/12/20",
 				address_state: "11:29AM",
 				address_county: "John Masaro",
-				address_city: "Hold Time",
-				address_street: "Follow up",
-				notes: "A short note",
+				address_city: "Electric",
+				address_street: "Doc Upload",
+				bill: "Hold Time",
+				due: 12,
+				paid: 12,
 			},
 			{
 				address_zip: "11/12/20",
 				address_state: "11:29AM",
 				address_county: "John Masaro",
-				address_city: "Hold Time",
-				address_street: "Follow up",
-				notes: "A short note",
+				address_city: "Electric",
+				address_street: "Doc Upload",
+				bill: "Hold Time",
+				due: 12,
+				paid: 12,
 			},
 			{
 				address_zip: "11/12/20",
 				address_state: "11:29AM",
 				address_county: "John Masaro",
-				address_city: "Hold Time",
-				address_street: "Follow up",
-				notes: "A short note",
+				address_city: "Electric",
+				address_street: "Doc Upload",
+				bill: "Hold Time",
+				due: 12,
+				paid: 12,
 			},
 			{
 				address_zip: "11/12/20",
 				address_state: "11:29AM",
 				address_county: "John Masaro",
-				address_city: "Hold Time",
-				address_street: "Follow up",
-				notes: "A short note",
+				address_city: "Electric",
+				address_street: "Doc Upload",
+				bill: "Hold Time",
+				due: 12,
+				paid: 12,
 			},
 			{
 				address_zip: "11/12/20",
 				address_state: "11:29AM",
 				address_county: "John Masaro",
-				address_city: "Hold Time",
-				address_street: "Follow up",
-				notes: "A short note",
+				address_city: "Electric",
+				address_street: "Doc Upload",
+				bill: "Hold Time",
+				due: 12,
+				paid: 12,
 			},
 			{
 				address_zip: "11/12/20",
 				address_state: "11:29AM",
 				address_county: "John Masaro",
-				address_city: "Hold Time",
-				address_street: "Follow up",
-				notes: "A short note",
+				address_city: "Electric",
+				address_street: "Doc Upload",
+				bill: "Hold Time",
+				due: 12,
+				paid: 12,
 			},
 			{
 				address_zip: "11/12/20",
 				address_state: "11:29AM",
 				address_county: "John Masaro",
-				address_city: "Hold Time",
-				address_street: "Follow up",
-				notes: "A short note",
+				address_city: "Electric",
+				address_street: "Doc Upload",
+				bill: "Hold Time",
+				due: 12,
+				paid: 12,
 			},
 		],
-		width: "100%",
 		columns: [
-			{ data: "address_zip", readOnly: true, width: 90 },
-			{ data: "address_state", readOnly: true, width: 90 },
+			{ data: "address_zip", readOnly: true, width: 70 },
+			{ data: "address_state", readOnly: true, width: 70 },
 			{ data: "address_county", readOnly: true, width: 120 },
-			{ data: "address_city", readOnly: true, width: 120 },
-			{ data: "address_street", readOnly: true, width: 100 },
-			{ data: "notes", readOnly: true, width: 150 },
+			{ data: "address_city", readOnly: true, width: 70 },
+			{ data: "address_street", readOnly: true, width: 90 },
+			{ data: "bill", readOnly: true, width: 80 },
+			{ data: "due", readOnly: true, width: 84},
+			{ data: "paid", readOnly: true, width: 84 },
 		],
 		minRows: 3,
 		filters: true,
@@ -110,7 +137,7 @@ const History = () => {
 				borderColor="#ececec"
 				height="fit-content"
 			>
-				<Box className={classes.box}>History</Box>
+				<Box className={classes.box}>Utilities {"&"} Invoices</Box>
 
 				<HotTable settings={state}>
 					{/* <HotColumn width={100} />
@@ -123,4 +150,4 @@ const History = () => {
 		</>
 	);
 };
-export default History;
+export default Utilities;

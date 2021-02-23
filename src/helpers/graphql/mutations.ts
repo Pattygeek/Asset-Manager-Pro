@@ -1,2 +1,13 @@
+import { gql } from "@apollo/client";
 
-export const querry = "123434";
+const PROPERTY_ENTRY = gql`
+	mutation importReport($input: BatchImport) {
+		import_property_report_batch(input: $input) {
+			message
+			status_code
+			queued_imports
+		}
+	}
+`;
+
+export { PROPERTY_ENTRY };

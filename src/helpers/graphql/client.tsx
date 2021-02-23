@@ -10,6 +10,8 @@ import { onError } from "@apollo/client/link/error";
 
 import Alert from "@material-ui/lab/Alert";
 
+import { typeDefs } from "./resolvers";
+
 const httpLink = createHttpLink({
 	uri: "https://amp-gql-api.herokuapp.com/graphql",
 });
@@ -44,6 +46,7 @@ const link = ApolloLink.from([authLink, httpLink]);
 
 const client = new ApolloClient({
 	link: link,
+	typeDefs,
 	cache: new InMemoryCache(),
 });
 
