@@ -13,9 +13,10 @@ import { useState } from "react";
 interface SidebarProps{
 	toggle: boolean;
 	toggler: () => any;
+	handleEnter: () => any;
 }
 
-const Sidebar = ({toggle, toggler}: SidebarProps) => {
+const Sidebar = ({toggle, toggler, handleEnter}: SidebarProps) => {
 	
 
 	const useStyles = makeStyles((theme) => ({
@@ -24,8 +25,9 @@ const Sidebar = ({toggle, toggler}: SidebarProps) => {
 			width: toggle ? "80px" : "256px",
 			backgroundColor: theme.palette.primary.main,
 			color: theme.palette.background.default,
-			position: "sticky",
+			position: "absolute",
 			top: 0,
+			zIndex: +20
 		},
 		logoBox: {
 			height: "50px",
@@ -71,7 +73,7 @@ const Sidebar = ({toggle, toggler}: SidebarProps) => {
 
 	return (
 		<>
-			<Box className={classes.box} display="flex" flexDirection="column">
+			<Box className={classes.box} display="flex" flexDirection="column" onMouseOver={handleEnter}>
 				<Box
 					fontWeight={500}
 					fontSize={24}

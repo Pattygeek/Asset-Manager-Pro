@@ -42,7 +42,10 @@ const PriceHistory = ({ open, handleClose }: ModalProps) => {
 		columnHeaderHeight: 35,
 		width: 760,
 		filters: true,
+	
 		columnSorting: true,
+		allowInsertColumn: false,
+		allowRemoveColumn: false,
 		data: [
 			{
 				address_street: "860 Ashland Place",
@@ -122,7 +125,18 @@ const PriceHistory = ({ open, handleClose }: ModalProps) => {
 					<Box className={classes.heading}>Price History</Box>
 					<CloseIcon onClick={handleClose} className={classes.icon} />
 				</Box>
-				<HotTable settings={state}>
+				<HotTable
+					settings={state}
+					dropdownMenu={[
+						"alignment",
+						"---------",
+						"filter_by_condition",
+						"---------",
+						"filter_by_value",
+						"---------",
+						"filter_action_bar",
+					]}
+				>
 					{/* <HotColumn width={160} />
 					<HotColumn width={150} />
 					<HotColumn width={150} />

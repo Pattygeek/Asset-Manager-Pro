@@ -47,10 +47,40 @@ code {
   background-color: #f2f2f2 !important;
 } */
 
-/* .handsontable .stripped tr:nth-child(even) {
-	background-color: red;
+/* .handsontable tr:nth-child(odd) {
+	background-color: #f2f2f2 !important;
 } */
 
+.handsontable tr:nth-child(even) {
+	background: #fff !important;
+}
+
+.handsontable tr:nth-child(odd) {
+	background: #f2f2f2 !important;
+}
+
+.handsontable .striped thead tr {
+	z-index: -1 !important;
+}
+
+.handsontable td,
+.handsontable th {
+	/* border-right: none !important;
+	border-bottom: none !important; */
+	background-color: none !important;
+}
+
+.handsontable span.colHeader {
+	font-weight: 500;
+	color: #109cf1;
+}
+
+
+.htDropdownMenu:not(.htGhostTable) {
+	z-index: +2060 !important;
+	position: absolute !important;
+	display: none !important;
+}
 /* .handsontable .stripped {
 	background-color: #f2f2f2;
 } */

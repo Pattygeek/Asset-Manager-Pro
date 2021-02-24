@@ -121,12 +121,13 @@ const Utilities = () => {
 			{ data: "address_city", readOnly: true, width: 70 },
 			{ data: "address_street", readOnly: true, width: 90 },
 			{ data: "bill", readOnly: true, width: 80 },
-			{ data: "due", readOnly: true, width: 84},
+			{ data: "due", readOnly: true, width: 84 },
 			{ data: "paid", readOnly: true, width: 84 },
 		],
 		minRows: 3,
 		filters: true,
 		columnSorting: true,
+		
 	});
 	return (
 		<>
@@ -139,7 +140,18 @@ const Utilities = () => {
 			>
 				<Box className={classes.box}>Utilities {"&"} Invoices</Box>
 
-				<HotTable settings={state}>
+				<HotTable
+					settings={state}
+					dropdownMenu={[
+						"alignment",
+						"---------",
+						"filter_by_condition",
+						"---------",
+						"filter_by_value",
+						"---------",
+						"filter_action_bar",
+					]}
+				>
 					{/* <HotColumn width={100} />
 					<HotColumn width={150} />
 					<HotColumn width={150} />

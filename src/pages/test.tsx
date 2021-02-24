@@ -8,7 +8,7 @@ import { PROPERTY_ENTRY } from "../helpers/graphql/mutations";
 const Test = () => {
 	const [title, setTitle] = useState("");
 
-	let finalData: any = [];
+	let finalData: any;
 	const handleOnDrop = (data: any) => {
 		console.log("---------------------------");
 		console.log(data);
@@ -35,11 +35,23 @@ const Test = () => {
 
 		function convertIntObj(obj: any) {
 			const res: any = {};
+			const remove: any = {};
+			const dollar: any = {};
 			for (const key in obj) {
 				res[key] = {};
+				remove[key] = {};
+				dollar[key] = {};
 				for (const prop in obj[key]) {
-					const parsed = parseInt(obj[key][prop], 10);
-					res[key][prop] = isNaN(parsed) ? obj[key][prop] : parsed;
+					const removeNA = obj[key][prop].replace(/(#N\/A)+/g, "0");
+					const number = Number(obj[key][prop].replace(/[^0-9.-]+/g, ""));
+					dollar[key][prop] = obj[key][prop].includes("$")
+						? number
+						: obj[key][prop];
+					remove[key][prop] = dollar[key][prop].includes("#N/A") //find a way to get this to work
+						? removeNA
+						: dollar[key][prop];
+					const parsed = parseInt(remove[key][prop], 10);
+					res[key][prop] = isNaN(parsed) ? remove[key][prop] : parsed;
 				}
 			}
 			return res;
@@ -83,8 +95,9 @@ const Test = () => {
 				zillow: item._zillow_,
 			};
 		});
-		console.log(newArray);
-		finalData.push(newArray);
+
+		finalData = newArray;
+		console.log(finalData);
 	};
 
 	const handleOnError = (err: any) => {

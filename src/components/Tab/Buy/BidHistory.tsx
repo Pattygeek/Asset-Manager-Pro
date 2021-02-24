@@ -76,6 +76,9 @@ const BidHistory = ({ open, handleClose }: ModalProps) => {
 		className: "htMiddle htCenter",
 		filters: true,
 		columnSorting: true,
+	
+		allowInsertColumn: false,
+		allowRemoveColumn: false,
 		data: [
 			{
 				address_street: "860 Ashland Place",
@@ -131,13 +134,24 @@ const BidHistory = ({ open, handleClose }: ModalProps) => {
 				onClose={handleClose}
 				aria-labelledby="max-width-dialog-title"
 				maxWidth="md"
-				>
+			>
 				<Box className={classes.box}>
 					<Box className={classes.heading}>Bid History</Box>
 					<CloseIcon onClick={handleClose} className={classes.icon} />
 				</Box>
 				<HotTable settings={header}></HotTable>
-				<HotTable settings={state}>
+				<HotTable
+					settings={state}
+					dropdownMenu={[
+						"alignment",
+						"---------",
+						"filter_by_condition",
+						"---------",
+						"filter_by_value",
+						"---------",
+						"filter_action_bar",
+					]}
+				>
 					{/* <HotColumn width={160} />
 					<HotColumn width={150} />
 					<HotColumn width={150} />

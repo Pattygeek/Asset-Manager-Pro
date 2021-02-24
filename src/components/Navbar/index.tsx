@@ -64,13 +64,30 @@ const useStyles = makeStyles((theme) => ({
 	home: {
 		margin: "auto",
 	},
+	logo: {
+		fontWeight: "bold",
+		color: "#109CF1",
+		margin: "auto 48px auto 0px",
+		fontSize: "28px",
+	},
 }));
 
-const Navbar = () => {
+interface NavProps {
+	handleEnter: () => any;
+	handleLeave: () => any;
+}
+const Navbar = ({ handleEnter, handleLeave }: NavProps) => {
 	const classes = useStyles();
 	return (
 		<>
 			<Box className={classes.nav}>
+				<Box
+					className={classes.logo}
+					onMouseOver={handleEnter}
+					onMouseOut={handleLeave}
+				>
+					AMP
+				</Box>
 				<Box className={classes.iconBox}>
 					<FormulaIcon className={classes.formula} />
 					<SearchedIcon className={classes.icon} />

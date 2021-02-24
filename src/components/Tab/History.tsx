@@ -99,7 +99,10 @@ const History = () => {
 		],
 		minRows: 3,
 		filters: true,
+		
 		columnSorting: true,
+		allowInsertColumn: false,
+		allowRemoveColumn: false,
 	});
 	return (
 		<>
@@ -112,7 +115,18 @@ const History = () => {
 			>
 				<Box className={classes.box}>History</Box>
 
-				<HotTable settings={state}>
+				<HotTable
+					settings={state}
+					dropdownMenu={[
+						"alignment",
+						"---------",
+						"filter_by_condition",
+						"---------",
+						"filter_by_value",
+						"---------",
+						"filter_action_bar",
+					]}
+				>
 					{/* <HotColumn width={100} />
 					<HotColumn width={150} />
 					<HotColumn width={150} />
