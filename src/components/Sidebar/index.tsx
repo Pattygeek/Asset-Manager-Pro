@@ -10,24 +10,41 @@ import { ReactComponent as UploadIcon } from "../../assets/icons/upload.svg";
 import { ReactComponent as UsersIcon } from "../../assets/icons/users.svg";
 import { useState } from "react";
 
-interface SidebarProps{
+interface SidebarProps {
 	toggle: boolean;
 	toggler: () => any;
 	handleEnter: () => any;
+	boxClass?: any;
 }
 
-const Sidebar = ({toggle, toggler, handleEnter}: SidebarProps) => {
-	
-
+const Sidebar = ({ toggle, toggler }: SidebarProps) => {
 	const useStyles = makeStyles((theme) => ({
 		box: {
-			height: "100%",
-			width: toggle ? "80px" : "256px",
-			backgroundColor: theme.palette.primary.main,
+			height: toggle ? "100%" : "100vh",
+			width: toggle ? "256px" : "1px",
+			backgroundColor: toggle ? theme.palette.primary.main : "transparent",
 			color: theme.palette.background.default,
-			position: "absolute",
+			position: toggle ? "relative" : "absolute",
 			top: 0,
-			zIndex: +20
+			display: "flex",
+			zIndex: +200,
+			// width: "1px",
+			overflowY: "hidden",
+			"&:hover": {
+				width: "256px",
+				backgroundColor: theme.palette.primary.main,
+			},
+
+			"&:hover p": {
+				display: "block",
+				margin: "auto 0px",
+				paddingTop: "4px",
+				fontSize: "14px",
+			},
+
+			"& p": {
+				display: toggle ? "block" : "none",
+			},
 		},
 		logoBox: {
 			height: "50px",
@@ -52,14 +69,12 @@ const Sidebar = ({toggle, toggler, handleEnter}: SidebarProps) => {
 			height: "20px",
 			width: "20px",
 			margin: "auto 12px auto 0px",
+			// margin: "auto 0px",
 		},
-		text: {
-			margin: "auto 0px",
-			paddingTop: "4px",
-			fontSize: "14px",
-		},
+
 		toggle: {
 			margin: "auto 0px",
+			// display: "none",
 		},
 		formula: {
 			width: "20px",
@@ -73,7 +88,12 @@ const Sidebar = ({toggle, toggler, handleEnter}: SidebarProps) => {
 
 	return (
 		<>
-			<Box className={classes.box} display="flex" flexDirection="column" onMouseOver={handleEnter}>
+			<Box
+				className={classes.box}
+				// display="flex"
+				flexDirection="column"
+				// onMouseOver={handleEnter}
+			>
 				<Box
 					fontWeight={500}
 					fontSize={24}
@@ -83,42 +103,41 @@ const Sidebar = ({toggle, toggler, handleEnter}: SidebarProps) => {
 					display="flex"
 					paddingY={2}
 				>
-					{toggle ? "A" : "AMP"}
+					AMP
 				</Box>
 				<Box className={classes.nav} my={8}>
 					<Box fontWeight={500} className={classes.main}>
 						<HomeIcon className={classes.icon} />
-						{toggle ? "" : <p className={classes.text}>Home</p>}
+						<p>Home</p>
 					</Box>
 					<Box fontWeight={500} className={classes.main}>
 						<SearchIcon className={classes.icon} />
-						{toggle ? "" : <p className={classes.text}>Search</p>}
+						<p>Search</p>
 					</Box>
 					<Box fontWeight={500} className={classes.main}>
 						<UploadIcon className={classes.icon} />
-						{toggle ? "" : <p className={classes.text}>Upload Data</p>}
+						<p>Upload Data</p>
 					</Box>
 					<Box fontWeight={500} className={classes.main}>
 						<ReportIcon className={classes.icon} />
-						{toggle ? "" : <p className={classes.text}>Reporting</p>}
+						<p>Reporting</p>
 					</Box>
 					<Box fontWeight={500} className={classes.main}>
 						<ContactIcon className={classes.icon} />
-						{toggle ? "" : <p className={classes.text}>Contact Rolodex</p>}
+						<p>Contact Rolodex</p>
 					</Box>
 					<Box fontWeight={500} className={classes.main}>
 						<UsersIcon className={classes.icon} />
-						{toggle ? "" : <p className={classes.text}>Manage Users</p>}
+						<p>Manage Users</p>
 					</Box>
 					<Box fontWeight={500} className={classes.main}>
 						<FormulaIcon className={classes.formula} />
-						{toggle ? "" : <p className={classes.text}>Formulas</p>}
+						<p>Formulas</p>
 					</Box>
 				</Box>
 				<Box className={classes.footer} onClick={toggler}>
 					<ToggleIcon className={classes.icon} />
-
-					{toggle ? "" : <p className={classes.toggle}>Toggle Sidebar</p>}
+					<p>Toggle Sidebar</p>
 				</Box>
 			</Box>
 		</>

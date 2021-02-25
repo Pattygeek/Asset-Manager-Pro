@@ -75,19 +75,16 @@ const useStyles = makeStyles((theme) => ({
 interface NavProps {
 	handleEnter: () => any;
 	handleLeave: () => any;
+	logo?: any;
+	toggle: boolean
 }
-const Navbar = ({ handleEnter, handleLeave }: NavProps) => {
+const Navbar = ({ handleEnter, handleLeave, logo, toggle }: NavProps) => {
 	const classes = useStyles();
 	return (
 		<>
 			<Box className={classes.nav}>
-				<Box
-					className={classes.logo}
-					onMouseOver={handleEnter}
-					onMouseOut={handleLeave}
-				>
-					AMP
-				</Box>
+				{!toggle ? <Box className="logo">AMP</Box> : ""}
+
 				<Box className={classes.iconBox}>
 					<FormulaIcon className={classes.formula} />
 					<SearchedIcon className={classes.icon} />

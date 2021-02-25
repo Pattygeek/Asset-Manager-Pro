@@ -75,12 +75,39 @@ code {
 	color: #109cf1;
 }
 
-
 .htDropdownMenu:not(.htGhostTable) {
 	z-index: +2060 !important;
 	position: absolute !important;
-	display: none !important;
+	/* display: none !important; */
 }
 /* .handsontable .stripped {
 	background-color: #f2f2f2;
 } */
+
+.container {
+	height: 100vh;
+	display: flex;
+	position: relative;
+}
+
+.sidy {
+	height: 100%;
+	width: 256px;
+	background-color: #109cf1;
+	color: white;
+	position: absolute;
+	top: 0;
+	z-index: +20;
+	display: none;
+}
+
+.logo {
+	font-weight: bold;
+	color: #109cf1;
+	margin: auto 48px auto 0px;
+	font-size: 28px;
+}
+
+.container div.logo:hover + .sidy {
+	display: flex !important;
+}

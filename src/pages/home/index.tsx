@@ -37,29 +37,14 @@ const Home = () => {
 	// const hotTableComponent = React.createRef();
 
 	const useStyles = makeStyles((theme) => ({
-		container: {
-			height: "100vh",
-			display: "flex",
-			// overflowX: "hidden",
-		},
-		box: {
-			width: "100%",
-			// overflowX: "hidden",
-		},
-		main: {
-			width: "100%",
-			height: "calc(100% - 50px)",
-			display: "flex",
-			//zIndex: -10,
-			// overflowX: "hidden",
-		},
+	
 		mainBox: {
 			backgroundColor: "white",
 			height: "95%", //make it 97% on toggle
 			width: toggle ? "97%" : "95%",
 			// width: "95%",
 			margin: "auto auto",
-			overflowX: "scroll",
+			overflowX: "auto",
 			position: "relative",
 			display: "flex",
 			// flex: "1 1 0",
@@ -73,7 +58,6 @@ const Home = () => {
 	// if (loading) return <p>Loading...</p>;
 	// if (error) return <p>Error :(</p>;
 
-	console.log(data?.list_all_property_reports.edges);
 
 	const [state, setState] = useState({
 		// rowHeaders: true,

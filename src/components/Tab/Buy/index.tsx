@@ -194,7 +194,7 @@ const Buy = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Product"
+							placeholder="Label"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -608,20 +608,16 @@ const Buy = () => {
 						// className={clsx(classes.margin, classes.textField)}
 						variant="filled"
 					>
-						<Select
-							native
-							// value={state.age}
-							// onChange={handleChange}
+						<FilledInput
+							id="filled-adornment-weight"
+							// value={values.weight}
+							// onChange={handleChange("weight")}
+							placeholder="Year"
+							aria-describedby="filled-weight-helper-text"
 							inputProps={{
-								name: "age",
-								id: "filled-age-native-simple",
+								"aria-label": "weight",
 							}}
-							placeholder="Label"
-						>
-							<option aria-label="None" value="" />
-							<option value={10}>Occupied</option>
-							<option value={20}>Vacant</option>
-						</Select>
+						/>
 						<FormHelperText id="filled-weight-helper-text">
 							helper text
 						</FormHelperText>
