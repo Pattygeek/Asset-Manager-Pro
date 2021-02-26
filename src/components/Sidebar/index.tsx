@@ -20,8 +20,8 @@ interface SidebarProps {
 const Sidebar = ({ toggle, toggler }: SidebarProps) => {
 	const useStyles = makeStyles((theme) => ({
 		box: {
-			height: toggle ? "100%" : "100vh",
-			width: toggle ? "256px" : "1px",
+			height: "100%",
+			width: toggle ? "256px" : "20px",
 			backgroundColor: toggle ? theme.palette.primary.main : "transparent",
 			color: theme.palette.background.default,
 			position: toggle ? "relative" : "absolute",
@@ -33,12 +33,14 @@ const Sidebar = ({ toggle, toggler }: SidebarProps) => {
 			"&:hover": {
 				width: "256px",
 				backgroundColor: theme.palette.primary.main,
+				animation: "slide 0.5s forwards",
+				animationDelay: "2s",
 			},
 
 			"&:hover p": {
 				display: "block",
 				margin: "auto 0px",
-				paddingTop: "4px",
+				padding: "14px 0",
 				fontSize: "14px",
 			},
 
@@ -60,7 +62,7 @@ const Sidebar = ({ toggle, toggler }: SidebarProps) => {
 			cursor: "pointer",
 		},
 		main: {
-			padding: "12px 24px",
+			padding: "0px 24px",
 			color: "white",
 			display: "flex",
 			textWrap: "nowrap",
@@ -137,7 +139,7 @@ const Sidebar = ({ toggle, toggler }: SidebarProps) => {
 				</Box>
 				<Box className={classes.footer} onClick={toggler}>
 					<ToggleIcon className={classes.icon} />
-					<p>Toggle Sidebar</p>
+					<p className={classes.toggle}>Toggle Sidebar</p>
 				</Box>
 			</Box>
 		</>

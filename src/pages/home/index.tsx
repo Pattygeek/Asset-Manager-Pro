@@ -5,16 +5,13 @@ import { HotTable, HotColumn } from "@handsontable/react";
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { LIST_ALL_PROPERTY } from "../../helpers/graphql/queries";
+import { useToggle } from "../../helpers/contexts/toggleContext";
 
 //components
 import { Layout, Tab } from "../../components";
 
 const Home = () => {
-	const [toggle, setToggle] = useState<boolean>(false);
-
-	const toggler = () => {
-		setToggle(!toggle);
-	};
+	const { toggle } = useToggle();
 
 	//tab handler
 	const [open, setOpen] = useState<boolean>(false);
@@ -37,7 +34,6 @@ const Home = () => {
 	// const hotTableComponent = React.createRef();
 
 	const useStyles = makeStyles((theme) => ({
-	
 		mainBox: {
 			backgroundColor: "white",
 			height: "95%", //make it 97% on toggle
@@ -57,7 +53,6 @@ const Home = () => {
 
 	// if (loading) return <p>Loading...</p>;
 	// if (error) return <p>Error :(</p>;
-
 
 	const [state, setState] = useState({
 		// rowHeaders: true,

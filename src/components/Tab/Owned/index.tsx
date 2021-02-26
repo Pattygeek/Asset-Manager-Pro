@@ -115,7 +115,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Product"
+							placeholder="TPP"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -136,7 +136,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Product"
+							placeholder="List Price"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -157,7 +157,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Product"
+							placeholder="Profit"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -178,7 +178,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Product"
+							placeholder="ROI"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -199,10 +199,12 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Year"
+							placeholder="6.5"
+							type="number"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
+								step:"0.1"
 							}}
 						/>
 						<FormHelperText id="filled-weight-helper-text">

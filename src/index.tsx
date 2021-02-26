@@ -6,11 +6,14 @@ import reportWebVitals from "./reportWebVitals";
 import "handsontable/dist/handsontable.full.css";
 import { ApolloProvider } from "@apollo/client";
 import client from "./helpers/graphql/client";
+import { ToggleProvider } from "./helpers/contexts/toggleContext";
 
 ReactDOM.render(
 	<React.StrictMode>
 		<ApolloProvider client={client}>
-			<App />
+			<ToggleProvider>
+				<App />
+			</ToggleProvider>
 		</ApolloProvider>
 	</React.StrictMode>,
 	document.getElementById("root")

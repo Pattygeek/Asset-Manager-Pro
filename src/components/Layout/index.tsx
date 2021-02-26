@@ -2,17 +2,20 @@ import { Sidebar, Navbar } from "../../components";
 import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
 import { ReactNode, useState, useCallback } from "react";
+import { useToggle } from "../../helpers/contexts/toggleContext";
 
 interface LayoutProps {
 	children: ReactNode;
 }
 
 const Layout = ({ children }: LayoutProps) => {
-	const [toggle, setToggle] = useState<boolean>(false);
+	// const [toggle, setToggle] = useState<boolean>(false);
 
-	const toggler = () => {
-		setToggle(!toggle);
-	};
+	// const toggler = () => {
+	// 	setToggle(!toggle);
+	// };
+
+	const { toggle, handleToggle } = useToggle();
 
 	const useStyles = makeStyles((theme) => ({
 		container: {
@@ -74,7 +77,7 @@ const Layout = ({ children }: LayoutProps) => {
 			<Box className="container">
 				<Sidebar
 					toggle={toggle}
-					toggler={toggler}
+					toggler={handleToggle}
 					handleEnter={handleEnter}
 					// boxClass={classes.boxClass}
 				/>

@@ -114,7 +114,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Product"
+							placeholder="TPP"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -135,7 +135,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Product"
+							placeholder="Potential Rehab"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -156,7 +156,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Product"
+							placeholder="Potential LP"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -177,7 +177,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Product"
+							placeholder="Potential Profit"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -198,7 +198,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Year"
+							placeholder="Potential ROI"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -242,7 +242,7 @@ const Index = () => {
 									// value={values.weight}
 									// onChange={handleChange("weight")}
 									type="date"
-									placeholder="Product"
+									placeholder="EST COE"
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
@@ -435,7 +435,7 @@ const Index = () => {
 					<EscrowPhoto images={images} />
 				</Box>
 			</div>
-			<div className={classes.div} style={{marginTop: "30px" }}>
+			<div className={classes.div} style={{ marginTop: "30px" }}>
 				<Box>
 					<p className={classes.label}>List Agent</p>
 					<FormControl
@@ -446,7 +446,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Product"
+							placeholder="List Agent"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -467,7 +467,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Product"
+							placeholder="List Agent Number"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -488,7 +488,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Product"
+							placeholder="List Agent Email"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -509,7 +509,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Product"
+							placeholder="Auction Agent"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -530,7 +530,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Product"
+							placeholder="Auction Agent Number"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -551,7 +551,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Product"
+							placeholder="Auction Agent Email"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -597,7 +597,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Product"
+							placeholder="Loan Amount"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -618,7 +618,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Product"
+							placeholder="Down Payment"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -639,7 +639,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Product"
+							placeholder="Loan Interest"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -686,7 +686,7 @@ const Index = () => {
 							// value={values.weight}
 							// onChange={handleChange("weight")}
 							type="date"
-							placeholder="Product"
+							placeholder="Date Ordered"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -808,7 +808,7 @@ const Index = () => {
 							// value={values.weight}
 							// onChange={handleChange("weight")}
 							type="date"
-							placeholder="Product"
+							placeholder="Bought Date"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
