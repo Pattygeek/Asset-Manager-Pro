@@ -10,6 +10,9 @@ import Layout from './components/Layout';
 const Login = lazy(() => import("./pages/login"));
 const Signup = lazy(() => import("./pages/signup"));
 const Test = lazy(() => import("./pages/test"));
+const Forgot = lazy(() => import("./pages/forgot-password"));
+const Reset = lazy(() => import("./pages/reset-password"));
+const Logout = lazy(() => import("./pages/logout"));
 
 function App() {
 	return (
@@ -23,6 +26,9 @@ function App() {
 							<Route path="/login" exact component={Login} />
 							<Route path="/signup" exact component={Signup} />
 							<Route path="/test" exact component={Test} />
+							<Route path="/forgot-password" exact component={Forgot} />
+							<Route path="/reset-password" exact component={Reset} />
+							<Route path="/logout" exact component={Logout} />
 							<Route path="/" component={Layout} />
 						</Switch>
 					</Router>

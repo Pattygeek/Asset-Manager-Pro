@@ -4,6 +4,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import logo from "../../assets/logo/AMP-logo.png";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
 	img: {
@@ -12,29 +13,51 @@ const useStyles = makeStyles(() => ({
 		margin: "0 auto",
 	},
 	text: {
-		fontSize: "18px",
+		fontSize: "16px",
 		lineHeight: "28px",
-		margin: "0 auto",
+		margin: "12px auto",
+		fontWeight: 500,
 	},
 	info: {
-		margin: "0 auto",
-		width: "441px",
+		margin: "9px auto",
+		width: "54%",
 		textAlign: "center",
+		fontSize: "12px",
+		fontWeight: 500,
 	},
 	user: {
 		margin: "0 auto",
 		textAlign: "center",
+		fontSize: "16px",
+		color: "#353535",
+		fontWeight: 500,
+	},
+
+	span: {
+		color: "#109CF1",
 	},
 	input: {
-		margin: "0 auto",
-		width: "441px",
+		margin: "0 auto 20px",
+		width: "55%",
+		backgroundColor: "white",
+		"&:nth-child(5)": {
+			margin: "0 auto",
+		},
 	},
 	button: {
 		margin: "0 auto",
-		width: "441px",
+		width: "55%",
 		color: "white",
 		textTransform: "capitalize",
 		height: "56px",
+		fontSize: "16px",
+	},
+	pass: {
+		color: "#6D6D6D",
+		textAlign: "center",
+		fontSize: "12px",
+		width: "50%",
+		margin: "6px auto",
 	},
 }));
 
@@ -49,7 +72,6 @@ const CssTextField = withStyles({
 		"& .MuiOutlinedInput-root": {
 			"& fieldset": {
 				borderColor: "#109CF1",
-				backgroundColor: "white",
 			},
 			"&:hover fieldset": {
 				borderColor: "#109CF1",
@@ -65,11 +87,10 @@ const Signup = () => {
 	const classes = useStyles();
 	return (
 		<>
-			<Box bgcolor="#EDF7FF" height="100vh" width="100%">
+			<Box bgcolor="#EDF7FF" minHeight="100vh" width="100%">
 				<Box
 					width="50%"
 					marginX="auto"
-					border={1}
 					display="flex"
 					flexDirection="column"
 					paddingY={6}
@@ -94,6 +115,10 @@ const Signup = () => {
 						variant="outlined"
 						id="custom-css-outlined-input"
 					/>
+					<p className={classes.pass}>
+						Password: Make sure it's at least 8 characters including a number
+						and a lowercase letter
+					</p>
 					<CssTextField
 						className={classes.input}
 						label="Confirm Password"
@@ -116,17 +141,21 @@ const Signup = () => {
 						variant="contained"
 						color="primary"
 						className={classes.button}
+						disableElevation
 					>
 						Signup
 					</Button>
 					<p className={classes.info}>
 						By clicking the "Signup" button, you are creating an AMP account,
-						and you agree to <span>AMP's Terms of Use</span> and
-						<span>Privacy Policy</span>.
+						and you agree to{" "}
+						<span className={classes.span}>AMP's Terms of Use</span> and&nbsp;
+						<span className={classes.span}>Privacy Policy</span>.
 					</p>
-					<p className={classes.user}>
-						Already a user?<span>Signin</span>
-					</p>
+					<Link to="/login">
+						<p className={classes.user}>
+							Already a user?&nbsp;<span className={classes.span}>Signin</span>
+						</p>
+					</Link>
 				</Box>
 			</Box>
 		</>
