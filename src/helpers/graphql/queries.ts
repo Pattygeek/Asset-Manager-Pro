@@ -37,4 +37,11 @@ const LIST_ALL_PROPERTY = gql`
 	}
 `;
 
-export { LIST_ALL_PROPERTY };
+const LOGIN = gql`
+	query login($email: String, $password: String) {
+		default_user_login(email: $email, password: $password) {
+			token
+		}
+	}
+`;
+export { LIST_ALL_PROPERTY, LOGIN };

@@ -23,4 +23,28 @@ const PROCESS_ENTRY = gql`
 	}
 `;
 
-export { PROPERTY_ENTRY, PROCESS_ENTRY };
+const FORGOT_PASSWORD = gql`
+	mutation forgot($email: String) {
+		forgot_password_request(email: $email) {
+			message
+		}
+	}
+`;
+
+const RESET_PASSWORD = gql`
+	mutation reset($user_id: String, new_password: String, confirm_password: String){
+		reset_password_request(user_id: $user_id, new_password: $new_password, confirm_password: $confirm_password ){
+			first_name
+		}
+	}
+`;
+
+const REGISTER = gql`
+	mutation register($email: String!, password:String!){
+		default_user_registration(email: $email, password: $password){
+			token
+		}
+	}
+`;
+
+export { PROPERTY_ENTRY, PROCESS_ENTRY, FORGOT_PASSWORD, RESET_PASSWORD, REGISTER };

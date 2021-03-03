@@ -4,6 +4,8 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import logo from "../../assets/logo/AMP-logo.png";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
@@ -97,54 +99,104 @@ const Signup = () => {
 				>
 					<img src={logo} className={classes.img} />
 					<p className={classes.text}>Create a new account</p>
-					<CssTextField
-						className={classes.input}
-						label="First Name"
-						variant="outlined"
-						id="custom-css-outlined-input"
-					/>
-					<CssTextField
-						className={classes.input}
-						label="Last Name"
-						variant="outlined"
-						id="custom-css-outlined-input"
-					/>
-					<CssTextField
-						className={classes.input}
-						label="Password"
-						variant="outlined"
-						id="custom-css-outlined-input"
-					/>
-					<p className={classes.pass}>
-						Password: Make sure it's at least 8 characters including a number
-						and a lowercase letter
-					</p>
-					<CssTextField
-						className={classes.input}
-						label="Confirm Password"
-						variant="outlined"
-						id="custom-css-outlined-input"
-					/>
-					<CssTextField
-						className={classes.input}
-						label="Email"
-						variant="outlined"
-						id="custom-css-outlined-input"
-					/>
-					<CssTextField
-						className={classes.input}
-						label="Phone Number"
-						variant="outlined"
-						id="custom-css-outlined-input"
-					/>
-					<Button
-						variant="contained"
-						color="primary"
-						className={classes.button}
-						disableElevation
+					<Formik
+						initialValues={{
+							firstName: "",
+							lastName: "",
+							password: "",
+							confirmPassword: "",
+							email: "",
+							phone: "",
+						}}
+						onSubmit={() => {}}
+						validationSchema={Yup.object().shape({
+							firstName: Yup.string().required("This field is required"),
+							lastName: Yup.string().required("This field is required"),
+							email: Yup.string().email().required("This field is required"),
+							password: Yup.string().required("This field is required"),
+							confirmPassword: Yup.string().oneOf(
+								[Yup.ref("password")],
+								"Passwords do not match"
+							),
+							phone: Yup.string().required("This field is required"),
+						})}
 					>
-						Signup
-					</Button>
+						{(props) => {
+							const {
+								values,
+								touched,
+								errors,
+								dirty,
+								isSubmitting,
+								handleChange,
+								handleBlur,
+								handleSubmit,
+								handleReset,
+							} = props;
+							return (
+								<form onSubmit={handleSubmit}>
+									<CssTextField
+										className={classes.input}
+										label="First Name"
+										variant="outlined"
+										id="custom-css-outlined-input"
+										value={values.firstName}
+										onChange={handleChange}
+										onBlur={handleBlur}
+										error={
+											touched.firstName && Boolean(errors.firstName)
+										}
+										helperText={
+											errors.firstName && touched.firstName && errors.firstName
+										}
+									/>
+									<CssTextField
+										className={classes.input}
+										label="Last Name"
+										variant="outlined"
+										id="custom-css-outlined-input"
+									/>
+									<CssTextField
+										className={classes.input}
+										label="Password"
+										variant="outlined"
+										id="custom-css-outlined-input"
+									/>
+									<p className={classes.pass}>
+										Password: Make sure it's at least 8 characters including a
+										number and a lowercase letter
+									</p>
+									<CssTextField
+										className={classes.input}
+										label="Confirm Password"
+										variant="outlined"
+										id="custom-css-outlined-input"
+									/>
+									<CssTextField
+										className={classes.input}
+										label="Email"
+										variant="outlined"
+										id="custom-css-outlined-input"
+									/>
+									<CssTextField
+										className={classes.input}
+										label="Phone Number"
+										variant="outlined"
+										id="custom-css-outlined-input"
+									/>
+									<Button
+										variant="contained"
+										color="primary"
+										type="submit"
+										className={classes.button}
+										disableElevation
+									>
+										Signup
+									</Button>
+								</form>
+							);
+						}}
+					</Formik>
 					<p className={classes.info}>
 						By clicking the "Signup" button, you are creating an AMP account,
 						and you agree to{" "}
