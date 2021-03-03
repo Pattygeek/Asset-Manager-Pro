@@ -12,6 +12,10 @@ code {
 		monospace;
 }
 
+a:-webkit-any-link {
+	text-decoration: none !important;
+}
+
 /* .MuiInputBase-input {
   height: 0.5em !important;
 } */
@@ -73,6 +77,7 @@ code {
 .handsontable span.colHeader {
 	font-weight: 500;
 	color: #109cf1;
+	background-color: white;
 }
 
 .htDropdownMenu:not(.htGhostTable) {
@@ -110,4 +115,23 @@ code {
 
 .container div.logo:hover + .sidy {
 	display: flex !important;
+}
+
+body .handsontable td {
+	border-bottom: 1px solid #fff;
+	border-right: 1px solid #fff;
+	font-size: 12px;
+}
+
+body .handsontable th {
+	color: red;
+}
+
+.handsontable .greyRow {
+	background: #f2f2f2;
+	border-right: 1px solid #f2f2f2;
+	border-bottom: 1px solid #fff;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 12px;
 }

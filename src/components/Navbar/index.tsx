@@ -11,6 +11,7 @@ import { ReactComponent as SearchedIcon } from "../../assets/icons/searched.svg"
 import { ReactComponent as NotifIcon } from "../../assets/icons/notif.svg";
 import { ReactComponent as ActionIcon } from "../../assets/icons/action.svg";
 import { ReactComponent as FormulaIcon } from "../../assets/icons/formula.svg";
+import { ReactComponent as ResetIcon } from "../../assets/icons/reset.svg";
 import pix from "../../assets/images/pix.png";
 
 const useStyles = makeStyles((theme) => ({
@@ -35,9 +36,9 @@ const useStyles = makeStyles((theme) => ({
 		marginLeft: "auto",
 	},
 	icon: {
-		width: "32px",
-		height: "32px",
-		marginRight: "24px",
+		width: "18px",
+		height: "18px",
+		// marginRight: "24px",
 	},
 	iconn: {
 		width: "20px",
@@ -76,9 +77,16 @@ interface NavProps {
 	handleEnter: () => any;
 	handleLeave: () => any;
 	logo?: any;
-	toggle: boolean
+	toggle: boolean;
+	pageTitle: string;
 }
-const Navbar = ({ handleEnter, handleLeave, logo, toggle }: NavProps) => {
+const Navbar = ({
+	handleEnter,
+	handleLeave,
+	logo,
+	toggle,
+	pageTitle,
+}: NavProps) => {
 	const classes = useStyles();
 	return (
 		<>
@@ -86,10 +94,34 @@ const Navbar = ({ handleEnter, handleLeave, logo, toggle }: NavProps) => {
 				{!toggle ? <Box className="logo">AMP</Box> : ""}
 
 				<Box className={classes.iconBox}>
-					<FormulaIcon className={classes.formula} />
+					{/* <FormulaIcon className={classes.formula} />
 					<SearchedIcon className={classes.icon} />
-					<FilterIcon className={classes.icon} />
-					<ActionIcon className={classes.icon} />
+					<FilterIcon className={classes.icon} /> */}
+					<Box
+						display="flex"
+						flexDirection="column"
+						alignItems="center"
+						marginRight={4}
+					>
+						<ActionIcon className={classes.icon} />
+						<Box fontSize={11} color="#6D6D6D" textAlign="left">
+							Export
+						</Box>
+					</Box>
+					<Box
+						display="flex"
+						flexDirection="column"
+						alignItems="center"
+						marginRight={8}
+						flexWrap="nowrap"
+						width="150px"
+					>
+						<ResetIcon className={classes.icon} />
+						<Box fontSize={11} color="#6D6D6D" textAlign="center" width="100%">
+							Reset View
+						</Box>
+					</Box>
+
 					<FormControl className={classes.formControl}>
 						<NativeSelect
 							className={classes.selectEmpty}
@@ -106,7 +138,7 @@ const Navbar = ({ handleEnter, handleLeave, logo, toggle }: NavProps) => {
 					</FormControl>
 				</Box>
 				<Box className={classes.home} fontWeight={500} fontSize={20}>
-					Home
+					{pageTitle}
 				</Box>
 				<Box className={classes.info}>
 					<NotifIcon className={classes.iconn} />

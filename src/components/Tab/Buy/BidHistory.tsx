@@ -76,7 +76,13 @@ const BidHistory = ({ open, handleClose }: ModalProps) => {
 		className: "htMiddle htCenter",
 		filters: true,
 		columnSorting: true,
-	
+		cells: function (row: number) {
+			let cp: any = {};
+			if (row % 2 === 0) {
+				cp.className = "greyRow";
+			}
+			return cp;
+		},
 		allowInsertColumn: false,
 		allowRemoveColumn: false,
 		data: [

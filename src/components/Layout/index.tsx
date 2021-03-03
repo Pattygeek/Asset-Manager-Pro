@@ -3,18 +3,20 @@ import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
 import { ReactNode, useState, useCallback } from "react";
 import { useToggle } from "../../helpers/contexts/toggleContext";
+import { Route, Switch, useLocation } from "react-router-dom";
+import { Suspense, lazy } from "react";
 
-interface LayoutProps {
-	children: ReactNode;
-}
+const Contact = lazy(() => import("../../pages/contactRolodex"));
+const ManageUsers = lazy(() => import("../../pages/manageUsers"));
+const Search = lazy(() => import("../../pages/search"));
+const UploadData = lazy(() => import("../../pages/uploadData"));
+const Reporting = lazy(() => import("../../pages/reporting"));
+const Formulas = lazy(() => import("../../pages/formulas"));
+const Home = lazy(() => import("../../pages/home"));
 
-const Layout = ({ children }: LayoutProps) => {
-	// const [toggle, setToggle] = useState<boolean>(false);
-
-	// const toggler = () => {
-	// 	setToggle(!toggle);
-	// };
-
+const Layout = () => {
+	const location = useLocation();
+	console.log(location.pathname);
 	const { toggle, handleToggle } = useToggle();
 
 	const useStyles = makeStyles((theme) => ({
@@ -72,6 +74,35 @@ const Layout = ({ children }: LayoutProps) => {
 	const handleEnter = useCallback(() => {
 		setShow(true);
 	}, []);
+
+	let title;
+	//switch for page title
+	switch (location.pathname) {
+		case "/":
+			title = "Home";
+			break;
+		case "/upload-data":
+			title = "Upload Data";
+			break;
+		case "/search":
+			title = "Search";
+			break;
+		case "/reporting":
+			title = "Reporting";
+			break;
+		case "/contact-rolodex":
+			title = "Contact Rolodex";
+			break;
+		case "/manage-users":
+			title = "Manage Users";
+			break;
+		case "/formulas":
+			title = "Formulas";
+			break;
+		default:
+			title = "Home";
+			break;
+	}
 	return (
 		<>
 			<Box className="container">
@@ -87,9 +118,21 @@ const Layout = ({ children }: LayoutProps) => {
 						handleLeave={handleLeave}
 						// logo={classes.logo}
 						toggle={toggle}
+						pageTitle={title}
 					/>
 					<Box bgcolor="secondary.main" className={classes.main}>
-						{children}
+						<Switch>
+							<Suspense fallback={null}>
+								<Route path="/" exact component={Home} />
+								<Route path="/contact-rolodex" component={Contact} />
+								<Route path="/manage-users" component={ManageUsers} />
+								<Route path="/search" component={Search} />
+								<Route path="/upload-data" component={UploadData} />
+								<Route path="/reporting" component={Reporting} />
+								<Route path="/formulas" component={Formulas} />
+							</Suspense>
+						</Switch>
+						{/* {children} */}
 					</Box>
 				</Box>
 			</Box>

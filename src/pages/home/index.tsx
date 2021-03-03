@@ -6,6 +6,8 @@ import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { LIST_ALL_PROPERTY } from "../../helpers/graphql/queries";
 import { useToggle } from "../../helpers/contexts/toggleContext";
+import ArrowBackIosOutlinedIcon from "@material-ui/icons/ArrowBackIosOutlined";
+import ArrowForwardIosOutlinedIcon from "@material-ui/icons/ArrowForwardIosOutlined";
 
 //components
 import { Layout, Tab } from "../../components";
@@ -25,9 +27,21 @@ const Home = () => {
 	};
 
 	useEffect((): void => {
+		// var cells = document.getElementsByTagName("td");
+		// for (var i = 0; i < cells.length; i++) {
+		// 	cells[i].addEventListener("dblclick", function (e) {
+		// 		handleOpen();
+		// 	});
+		// }
 		document.body.addEventListener("dblclick", function (e) {
-			handleOpen();
-			// alert(hotter.getSelected());
+			handleOpen(); // opens the tab component);
+			// var targetElement = e.target
+			// console.log(targetElement);
+			// const cells =
+			// console.log(e);
+			// if(element.tagName === "td"){
+
+			// }
 		});
 	}, []);
 
@@ -43,13 +57,21 @@ const Home = () => {
 			overflowX: "auto",
 			position: "relative",
 			display: "flex",
+			flexDirection: "column",
+			
 			// flex: "1 1 0",
 			justifyContent: "center",
 		},
 	}));
 	const classes = useStyles();
 
-	const { loading, error, data } = useQuery(LIST_ALL_PROPERTY);
+	const { loading, error, data, fetchMore } = useQuery(LIST_ALL_PROPERTY, {
+		variables: {
+			limit: 18,
+		},
+	});
+
+	console.log(data?.list_all_property_reports?.edges);
 
 	// if (loading) return <p>Loading...</p>;
 	// if (error) return <p>Error :(</p>;
@@ -172,44 +194,56 @@ const Home = () => {
 			"Sold Price",
 			"Auction Status",
 		],
+		cells: function (row: number) {
+			let cp: any = {};
+			if (row % 2 === 0) {
+				cp.className = "greyRow";
+			}
+			return cp;
+		},
 		licenseKey: "non-commercial-and-evaluation",
 	});
 
 	return (
 		<>
-			<Layout>
-				<Box className={classes.mainBox}>
-					{data?.list_all_property_reports?.edges && (
-						<HotTable
-							settings={state}
-							id="hot"
-							data={data?.list_all_property_reports?.edges}
-							dropdownMenu={[
-								"alignment",
-								"---------",
-								"filter_by_condition",
-								"---------",
-								"filter_by_value",
-								"---------",
-								"filter_action_bar",
-							]}
+			{/* <Layout> */}
+			<Box className={classes.mainBox}>
+				{data?.list_all_property_reports?.edges && (
+					<HotTable
+						settings={state}
+						id="hot"
+						data={data?.list_all_property_reports?.edges}
+						dropdownMenu={[
+							"alignment",
+							"---------",
+							"filter_by_condition",
+							"---------",
+							"filter_by_value",
+							"---------",
+							"filter_action_bar",
+						]}
 
-							// rowHeaders={[
+						// rowHeaders={[
 
-							// 		type: "checkbox",
-							// 		checkedTemplate: "yes",
-							// 		uncheckedTemplate: "no",
+						// 		type: "checkbox",
+						// 		checkedTemplate: "yes",
+						// 		uncheckedTemplate: "no",
 
-							// ]}
-						>
-							{/* <HotColumn width={100}></HotColumn>
+						// ]}
+					>
+						{/* <HotColumn width={100}></HotColumn>
 								<HotColumn width={150}></HotColumn>
 								<HotColumn width={150}></HotColumn> */}
-						</HotTable>
-					)}
-					{open ? <Tab toggle={toggle} handleClose={handleClose} /> : ""}
-				</Box>
-			</Layout>
+					</HotTable>
+				)}
+				{/* <Box width="inherit" display="flex" height="fit-content">
+					<ArrowBackIosOutlinedIcon />
+					<ArrowForwardIosOutlinedIcon />
+				</Box> */}
+				{open ? <Tab toggle={toggle} handleClose={handleClose} /> : ""}
+			</Box>
+
+			{/* </Layout> */}
 		</>
 	);
 };

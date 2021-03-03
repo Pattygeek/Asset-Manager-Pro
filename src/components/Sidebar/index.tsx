@@ -8,7 +8,7 @@ import { ReactComponent as ReportIcon } from "../../assets/icons/report.svg";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search.svg";
 import { ReactComponent as UploadIcon } from "../../assets/icons/upload.svg";
 import { ReactComponent as UsersIcon } from "../../assets/icons/users.svg";
-import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 interface SidebarProps {
 	toggle: boolean;
@@ -29,7 +29,7 @@ const Sidebar = ({ toggle, toggler }: SidebarProps) => {
 			display: "flex",
 			zIndex: +200,
 			// width: "1px",
-			overflowY: "hidden",
+			overflow: "hidden",
 			"&:hover": {
 				width: "256px",
 				backgroundColor: theme.palette.primary.main,
@@ -108,34 +108,48 @@ const Sidebar = ({ toggle, toggler }: SidebarProps) => {
 					AMP
 				</Box>
 				<Box className={classes.nav} my={8}>
-					<Box fontWeight={500} className={classes.main}>
-						<HomeIcon className={classes.icon} />
-						<p>Home</p>
-					</Box>
-					<Box fontWeight={500} className={classes.main}>
-						<SearchIcon className={classes.icon} />
-						<p>Search</p>
-					</Box>
-					<Box fontWeight={500} className={classes.main}>
-						<UploadIcon className={classes.icon} />
-						<p>Upload Data</p>
-					</Box>
-					<Box fontWeight={500} className={classes.main}>
-						<ReportIcon className={classes.icon} />
-						<p>Reporting</p>
-					</Box>
-					<Box fontWeight={500} className={classes.main}>
-						<ContactIcon className={classes.icon} />
-						<p>Contact Rolodex</p>
-					</Box>
-					<Box fontWeight={500} className={classes.main}>
-						<UsersIcon className={classes.icon} />
-						<p>Manage Users</p>
-					</Box>
-					<Box fontWeight={500} className={classes.main}>
-						<FormulaIcon className={classes.formula} />
-						<p>Formulas</p>
-					</Box>
+					<NavLink to="/">
+						<Box fontWeight={500} className={classes.main}>
+							<HomeIcon className={classes.icon} />
+							<p>Home</p>
+						</Box>
+					</NavLink>
+					<NavLink to="/search">
+						<Box fontWeight={500} className={classes.main}>
+							<SearchIcon className={classes.icon} />
+							<p>Search</p>
+						</Box>
+					</NavLink>
+					<NavLink to="/upload-data">
+						<Box fontWeight={500} className={classes.main}>
+							<UploadIcon className={classes.icon} />
+							<p>Upload Data</p>
+						</Box>
+					</NavLink>
+					<NavLink to="/reporting">
+						<Box fontWeight={500} className={classes.main}>
+							<ReportIcon className={classes.icon} />
+							<p>Reporting</p>
+						</Box>
+					</NavLink>
+					<NavLink to="/contact-rolodex">
+						<Box fontWeight={500} className={classes.main}>
+							<ContactIcon className={classes.icon} />
+							<p>Contact Rolodex</p>
+						</Box>
+					</NavLink>
+					<NavLink to="/manage-users">
+						<Box fontWeight={500} className={classes.main}>
+							<UsersIcon className={classes.icon} />
+							<p>Manage Users</p>
+						</Box>
+					</NavLink>
+					<NavLink to="/formulas">
+						<Box fontWeight={500} className={classes.main}>
+							<FormulaIcon className={classes.formula} />
+							<p>Formulas</p>
+						</Box>
+					</NavLink>
 				</Box>
 				<Box className={classes.footer} onClick={toggler}>
 					<ToggleIcon className={classes.icon} />
