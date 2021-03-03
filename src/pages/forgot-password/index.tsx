@@ -3,8 +3,9 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import logo from "../../assets/logo/AMP-logo.png";
-
 
 const CssTextField = withStyles({
 	root: {
@@ -28,12 +29,16 @@ const CssTextField = withStyles({
 	},
 })(TextField);
 
-
 const useStyles = makeStyles(() => ({
 	img: {
 		width: "138px",
 		height: "105px",
 		margin: "0 auto",
+	},
+	form: {
+		margin: "0 auto",
+		textAlign: "center",
+		width: "55%",
 	},
 	text: {
 		fontSize: "16px",
@@ -43,15 +48,20 @@ const useStyles = makeStyles(() => ({
 	},
 	input: {
 		margin: "0 auto 20px",
-		width: "55%",
+		width: "100%",
 		backgroundColor: "white",
 		"&:nth-child(5)": {
 			margin: "0 auto",
 		},
 	},
+	helperText: {
+		error: {
+			backgroundColor: "transparent",
+		},
+	},
 	button: {
 		margin: "0 auto 4px",
-		width: "55%",
+		width: "100%",
 		color: "white",
 		textTransform: "capitalize",
 		height: "56px",
@@ -59,9 +69,37 @@ const useStyles = makeStyles(() => ({
 	},
 }));
 
+const helperTextStyles = makeStyles((theme) => ({
+	root: {
+		margin: 0,
+        paddingTop: 4,
+		color: "black",
+	},
+	error: {
+		"&.MuiFormHelperText-root.Mui-error": {
+			color: "red",
+			backgroundColor: "#EDF7FF",
+		},
+	},
+}));
 
+const validationSchema = Yup.object().shape({
+	email: Yup.string().email().required("This field is required"),
+});
 const Forgot = () => {
-    const classes = useStyles();
+	const classes = useStyles();
+
+	const helperTextClass = helperTextStyles();
+
+	const formik = useFormik({
+		initialValues: {
+			email: "",
+		},
+		validationSchema: validationSchema,
+		onSubmit: (values) => {
+			alert(JSON.stringify(values, null, 2));
+		},
+	});
 	return (
 		<>
 			<Box bgcolor="#EDF7FF" height="100vh" width="100%">
@@ -76,20 +114,37 @@ const Forgot = () => {
 					<p className={classes.text}>
 						Enter your email to retrieve your password
 					</p>
-					<CssTextField
-						className={classes.input}
-						label="Email"
-						variant="outlined"
-						id="custom-css-outlined-input"
-					/>
-					<Button
-						variant="contained"
-						color="primary"
-						className={classes.button}
-						disableElevation
-					>
-						Submit
-					</Button>
+					<form onSubmit={formik.handleSubmit} className={classes.form}>
+						<CssTextField
+							className={classes.input}
+							label="Email"
+							variant="outlined"
+							id="custom-css-outlined-input"
+							type="email"
+							value={formik.values.email}
+							onChange={formik.handleChange}
+							name="email"
+							onBlur={formik.handleBlur}
+							error={formik.touched.email && Boolean(formik.errors.email)}
+							helperText={
+								formik.errors.email &&
+								formik.touched.email &&
+								formik.errors.email
+							}
+							FormHelperTextProps={{
+								classes: helperTextClass,
+							}}
+						/>
+						<Button
+							variant="contained"
+							color="primary"
+							className={classes.button}
+							disableElevation
+							type="submit"
+						>
+							Submit
+						</Button>
+					</form>
 				</Box>
 			</Box>
 		</>

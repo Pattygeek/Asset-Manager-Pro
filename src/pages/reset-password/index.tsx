@@ -3,6 +3,8 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import logo from "../../assets/logo/AMP-logo.png";
 
 const CssTextField = withStyles({
@@ -41,15 +43,20 @@ const useStyles = makeStyles(() => ({
 	},
 	input: {
 		margin: "0 auto 20px",
-		width: "55%",
+		width: "100%",
 		backgroundColor: "white",
 		"&:nth-child(5)": {
 			margin: "0 auto",
 		},
 	},
+	form: {
+		margin: "0 auto",
+		textAlign: "center",
+		width: "55%",
+	},
 	button: {
 		margin: "0 auto 4px",
-		width: "55%",
+		width: "100%",
 		color: "white",
 		textTransform: "capitalize",
 		height: "56px",
@@ -57,45 +64,111 @@ const useStyles = makeStyles(() => ({
 	},
 }));
 
+const helperTextStyles = makeStyles((theme) => ({
+	root: {
+		margin: 0,
+		paddingTop: 4,
+		color: "black",
+	},
+	error: {
+		"&.MuiFormHelperText-root.Mui-error": {
+			color: "red",
+			backgroundColor: "#EDF7FF",
+		},
+	},
+}));
+
+const validationSchema = Yup.object().shape({
+	password: Yup.string().required("This field is required"),
+	confirmPassword: Yup.string()
+		.required("This field is required")
+		.oneOf(["password"], "Both passwords do not match"),
+});
+
 const Reset = () => {
-    const classes = useStyles();
-return (
-	<>
-		<Box bgcolor="#EDF7FF" height="100vh" width="100%">
-			<Box
-				width="50%"
-				marginX="auto"
-				display="flex"
-				flexDirection="column"
-				paddingY={6}
-			>
-				<img src={logo} className={classes.img} />
-				<p className={classes.text}>
-					Enter your new password
-				</p>
-				<CssTextField
-					className={classes.input}
-					label="Password"
-					variant="outlined"
-					id="custom-css-outlined-input"
-				/>
-				<CssTextField
-					className={classes.input}
-					label="Confirm Password"
-					variant="outlined"
-					id="custom-css-outlined-input"
-				/>
-				<Button
-					variant="contained"
-					color="primary"
-					className={classes.button}
-					disableElevation
+	const classes = useStyles();
+
+	const helperTextClass = helperTextStyles();
+
+	const formik = useFormik({
+		initialValues: {
+			password: "",
+			confirmPassword: "",
+		},
+		validationSchema: validationSchema,
+		onSubmit: (values) => {
+			alert(JSON.stringify(values, null, 2));
+		},
+	});
+	return (
+		<>
+			<Box bgcolor="#EDF7FF" height="100vh" width="100%">
+				<Box
+					width="50%"
+					marginX="auto"
+					display="flex"
+					flexDirection="column"
+					paddingY={6}
 				>
-					Submit
-				</Button>
+					<img src={logo} className={classes.img} />
+					<p className={classes.text}>Enter your new password</p>
+					<form onSubmit={formik.handleSubmit} className={classes.form}>
+						<CssTextField
+							className={classes.input}
+							label="Password"
+							variant="outlined"
+							id="custom-css-outlined-input"
+							type="password"
+							value={formik.values.password}
+							onChange={formik.handleChange}
+							name="password"
+							onBlur={formik.handleBlur}
+							error={formik.touched.password && Boolean(formik.errors.password)}
+							helperText={
+								formik.errors.password &&
+								formik.touched.password &&
+								formik.errors.password
+							}
+							FormHelperTextProps={{
+								classes: helperTextClass,
+							}}
+						/>
+						<CssTextField
+							className={classes.input}
+							label="Confirm Password"
+							variant="outlined"
+							id="custom-css-outlined-input"
+							type="password"
+							value={formik.values.confirmPassword}
+							onChange={formik.handleChange}
+							name="confirmPassword"
+							onBlur={formik.handleBlur}
+							error={
+								formik.touched.confirmPassword &&
+								Boolean(formik.errors.confirmPassword)
+							}
+							helperText={
+								formik.errors.confirmPassword &&
+								formik.touched.confirmPassword &&
+								formik.errors.confirmPassword
+							}
+							FormHelperTextProps={{
+								classes: helperTextClass,
+							}}
+						/>
+						<Button
+							variant="contained"
+							color="primary"
+							className={classes.button}
+							disableElevation
+							type="submit"
+						>
+							Submit
+						</Button>
+					</form>
+				</Box>
 			</Box>
-		</Box>
-	</>
-);
-}
+		</>
+	);
+};
 export default Reset;

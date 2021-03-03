@@ -4,7 +4,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import logo from "../../assets/logo/AMP-logo.png";
-import { Formik, Form } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
 
@@ -27,6 +27,10 @@ const useStyles = makeStyles(() => ({
 		fontSize: "12px",
 		fontWeight: 500,
 	},
+	form: {
+		margin: "0 auto",
+		textAlign: "center",
+	},
 	user: {
 		margin: "0 auto",
 		textAlign: "center",
@@ -42,7 +46,7 @@ const useStyles = makeStyles(() => ({
 		margin: "0 auto 20px",
 		width: "55%",
 		backgroundColor: "white",
-		"&:nth-child(5)": {
+		"&:nth-child(3)": {
 			margin: "0 auto",
 		},
 	},
@@ -85,8 +89,52 @@ const CssTextField = withStyles({
 	},
 })(TextField);
 
+const validationSchema = Yup.object().shape({
+	firstName: Yup.string().required("This field is required"),
+	lastName: Yup.string().required("This field is required"),
+	email: Yup.string().email().required("This field is required"),
+	password: Yup.string().required("This field is required"),
+	confirmPassword: Yup.string()
+		.required("This field is required")
+		.oneOf([Yup.ref("password")], "Passwords do not match"),
+	phone: Yup.string().required("This field is required"),
+});
+
+//custom style for the helpertext
+const helperTextStyles = makeStyles((theme) => ({
+	root: {
+		margin: 0,
+		paddingTop: 4,
+		color: "black",
+	},
+	error: {
+		"&.MuiFormHelperText-root.Mui-error": {
+			color: "red",
+			backgroundColor: "#EDF7FF",
+		},
+	},
+}));
+
+
 const Signup = () => {
 	const classes = useStyles();
+
+	const helperTextClass = helperTextStyles();
+
+	const formik = useFormik({
+		initialValues: {
+			firstName: "",
+			lastName: "",
+			password: "",
+			confirmPassword: "",
+			email: "",
+			phone: "",
+		},
+		validationSchema: validationSchema,
+		onSubmit: (values) => {
+			alert(JSON.stringify(values, null, 2));
+		},
+	});
 	return (
 		<>
 			<Box bgcolor="#EDF7FF" minHeight="100vh" width="100%">
@@ -99,104 +147,145 @@ const Signup = () => {
 				>
 					<img src={logo} className={classes.img} />
 					<p className={classes.text}>Create a new account</p>
-					<Formik
-						initialValues={{
-							firstName: "",
-							lastName: "",
-							password: "",
-							confirmPassword: "",
-							email: "",
-							phone: "",
-						}}
-						onSubmit={() => {}}
-						validationSchema={Yup.object().shape({
-							firstName: Yup.string().required("This field is required"),
-							lastName: Yup.string().required("This field is required"),
-							email: Yup.string().email().required("This field is required"),
-							password: Yup.string().required("This field is required"),
-							confirmPassword: Yup.string().oneOf(
-								[Yup.ref("password")],
-								"Passwords do not match"
-							),
-							phone: Yup.string().required("This field is required"),
-						})}
-					>
-						{(props) => {
-							const {
-								values,
-								touched,
-								errors,
-								dirty,
-								isSubmitting,
-								handleChange,
-								handleBlur,
-								handleSubmit,
-								handleReset,
-							} = props;
-							return (
-								<form onSubmit={handleSubmit}>
-									<CssTextField
-										className={classes.input}
-										label="First Name"
-										variant="outlined"
-										id="custom-css-outlined-input"
-										value={values.firstName}
-										onChange={handleChange}
-										onBlur={handleBlur}
-										error={
-											touched.firstName && Boolean(errors.firstName)
-										}
-										helperText={
-											errors.firstName && touched.firstName && errors.firstName
-										}
-									/>
-									<CssTextField
-										className={classes.input}
-										label="Last Name"
-										variant="outlined"
-										id="custom-css-outlined-input"
-									/>
-									<CssTextField
-										className={classes.input}
-										label="Password"
-										variant="outlined"
-										id="custom-css-outlined-input"
-									/>
-									<p className={classes.pass}>
-										Password: Make sure it's at least 8 characters including a
-										number and a lowercase letter
-									</p>
-									<CssTextField
-										className={classes.input}
-										label="Confirm Password"
-										variant="outlined"
-										id="custom-css-outlined-input"
-									/>
-									<CssTextField
-										className={classes.input}
-										label="Email"
-										variant="outlined"
-										id="custom-css-outlined-input"
-									/>
-									<CssTextField
-										className={classes.input}
-										label="Phone Number"
-										variant="outlined"
-										id="custom-css-outlined-input"
-									/>
-									<Button
-										variant="contained"
-										color="primary"
-										type="submit"
-										className={classes.button}
-										disableElevation
-									>
-										Signup
-									</Button>
-								</form>
-							);
-						}}
-					</Formik>
+					<form onSubmit={formik.handleSubmit} className={classes.form}>
+						<CssTextField
+							className={classes.input}
+							label="First Name"
+							variant="outlined"
+							id="custom-css-outlined-input"
+							value={formik.values.firstName}
+							onChange={formik.handleChange}
+							name="firstName"
+							onBlur={formik.handleBlur}
+							error={
+								formik.touched.firstName && Boolean(formik.errors.firstName)
+							}
+							helperText={
+								formik.errors.firstName &&
+								formik.touched.firstName &&
+								formik.errors.firstName
+							}
+							FormHelperTextProps={{
+								classes: helperTextClass,
+							}}
+						/>
+						<CssTextField
+							className={classes.input}
+							label="Last Name"
+							variant="outlined"
+							id="custom-css-outlined-input"
+							value={formik.values.lastName}
+							onChange={formik.handleChange}
+							name="lastName"
+							onBlur={formik.handleBlur}
+							error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+							helperText={
+								formik.errors.lastName &&
+								formik.touched.lastName &&
+								formik.errors.lastName
+							}
+							FormHelperTextProps={{
+								classes: helperTextClass,
+							}}
+						/>
+						<CssTextField
+							className={classes.input}
+							label="Password"
+							variant="outlined"
+							type="password"
+							id="custom-css-outlined-input"
+							value={formik.values.password}
+							onChange={formik.handleChange}
+							name="password"
+							onBlur={formik.handleBlur}
+							error={formik.touched.password && Boolean(formik.errors.password)}
+							helperText={
+								formik.errors.password &&
+								formik.touched.password &&
+								formik.errors.password
+							}
+							FormHelperTextProps={{
+								classes: helperTextClass,
+							}}
+						/>
+						<p className={classes.pass}>
+							Password: Make sure it's at least 8 characters including a number
+							and a lowercase letter
+						</p>
+						<CssTextField
+							className={classes.input}
+							label="Confirm Password"
+							type="password"
+							variant="outlined"
+							id="custom-css-outlined-input"
+							value={formik.values.confirmPassword}
+							onChange={formik.handleChange}
+							name="confirmPassword"
+							onBlur={formik.handleBlur}
+							error={
+								formik.touched.confirmPassword &&
+								Boolean(formik.errors.confirmPassword)
+							}
+							helperText={
+								formik.errors.confirmPassword &&
+								formik.touched.confirmPassword &&
+								formik.errors.confirmPassword
+							}
+							FormHelperTextProps={{
+								classes: helperTextClass,
+							}}
+						/>
+						<CssTextField
+							className={classes.input}
+							label="Email"
+							variant="outlined"
+							id="custom-css-outlined-input"
+							type="email"
+							value={formik.values.email}
+							onChange={formik.handleChange}
+							name="email"
+							onBlur={formik.handleBlur}
+							error={formik.touched.email && Boolean(formik.errors.email)}
+							helperText={
+								formik.errors.email &&
+								formik.touched.email &&
+								formik.errors.email
+							}
+							FormHelperTextProps={{
+								classes: helperTextClass,
+							}}
+						/>
+						<CssTextField
+							className={classes.input}
+							label="Phone Number"
+							variant="outlined"
+							id="custom-css-outlined-input"
+							value={formik.values.phone}
+							onChange={formik.handleChange}
+							name="phone"
+							type="tel"
+							onBlur={formik.handleBlur}
+							error={formik.touched.phone && Boolean(formik.errors.phone)}
+							helperText={
+								formik.errors.phone &&
+								formik.touched.phone &&
+								formik.errors.phone
+							}
+							FormHelperTextProps={{
+								classes: helperTextClass,
+							}}
+						/>
+						<Button
+							variant="contained"
+							color="primary"
+							type="submit"
+							className={classes.button}
+							disableElevation
+						>
+							Signup
+						</Button>
+					</form>
+
 					<p className={classes.info}>
 						By clicking the "Signup" button, you are creating an AMP account,
 						and you agree to{" "}
