@@ -8,7 +8,7 @@ import { PROPERTY_ENTRY, PROCESS_ENTRY } from "../../helpers/graphql/mutations";
 import UploadStatus from "../../components/UploadStatus/index";
 import { ReactComponent as UploadSuccess } from "../../assets/icons/uploadSuccess.svg";
 import { ReactComponent as UploadFailure } from "../../assets/icons/uploadFailure.svg";
-import React from "react";
+import React, {useState} from "react";
 
 const useStyles = makeStyles(() => ({
 	icon: {
@@ -141,6 +141,8 @@ const UploadData = () => {
 			return null;
 		},
 	});
+
+	const [countProcessedRecords, setCountProcessedRecords] = useState<any>(null)
 
 	//second api call
 	const [

@@ -32,19 +32,45 @@ const FORGOT_PASSWORD = gql`
 `;
 
 const RESET_PASSWORD = gql`
-	mutation reset($user_id: String, new_password: String, confirm_password: String){
-		reset_password_request(user_id: $user_id, new_password: $new_password, confirm_password: $confirm_password ){
+	mutation reset(
+		$user_id: String
+		$new_password: String
+		$confirm_password: String
+	) {
+		reset_password_request(
+			user_id: $user_id
+			new_password: $new_password
+			confirm_password: $confirm_password
+		) {
 			first_name
 		}
 	}
 `;
 
 const REGISTER = gql`
-	mutation register($email: String!, password:String!){
-		default_user_registration(email: $email, password: $password){
+	mutation register(
+		$email: String!
+		$password: String!
+		$first_name: String
+		$last_name: String
+		$phone_number: String
+	) {
+		default_user_registration(
+			email: $email
+			password: $password
+			first_name: $first_name
+			last_name: $last_name
+			phone_number: $phone_number
+		) {
 			token
 		}
 	}
 `;
 
-export { PROPERTY_ENTRY, PROCESS_ENTRY, FORGOT_PASSWORD, RESET_PASSWORD, REGISTER };
+export {
+	PROPERTY_ENTRY,
+	PROCESS_ENTRY,
+	FORGOT_PASSWORD,
+	RESET_PASSWORD,
+	REGISTER,
+};

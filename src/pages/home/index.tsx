@@ -54,7 +54,7 @@ const Home = () => {
 			width: toggle ? "97%" : "95%",
 			// width: "95%",
 			margin: "auto auto",
-			overflowX: "auto",
+			overflowX: "hidden",
 			position: "relative",
 			display: "flex",
 			flexDirection: "column",
@@ -71,7 +71,7 @@ const Home = () => {
 		},
 	});
 
-	console.log(data?.list_all_property_reports?.edges);
+
 
 	// if (loading) return <p>Loading...</p>;
 	// if (error) return <p>Error :(</p>;

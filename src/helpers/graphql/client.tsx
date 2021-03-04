@@ -11,6 +11,7 @@ import { onError } from "@apollo/client/link/error";
 import Alert from "@material-ui/lab/Alert";
 
 import { typeDefs } from "./resolvers";
+import Cookies from "js-cookie";
 
 const httpLink = createHttpLink({
 	uri: "https://amp-gql-api.herokuapp.com/graphql",
@@ -33,7 +34,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 
 const authLink = setContext((_, { headers }) => {
-	// const token = Cookies.get("x-auth");
+	const token = Cookies.get("auth");
 	return {
 		headers: {
 			...headers,
@@ -42,7 +43,7 @@ const authLink = setContext((_, { headers }) => {
 	};
 });
 
-const link = ApolloLink.from([authLink, httpLink]);
+const link = ApolloLink.from([authLink, httpLink, errorLink]);
 
 const client = new ApolloClient({
 	link: link,

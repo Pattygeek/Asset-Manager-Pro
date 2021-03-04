@@ -6,7 +6,10 @@ import Button from "@material-ui/core/Button";
 import logo from "../../assets/logo/AMP-logo.png";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useLazyQuery } from "@apollo/client";
+import { LOGIN } from "../../helpers/graphql/queries";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const CssTextField = withStyles({
 	root: {
@@ -53,6 +56,16 @@ const useStyles = makeStyles(() => ({
 
 	span: {
 		color: "#109CF1",
+	},
+	error: {
+		margin: "0 auto 20px",
+		width: "55%",
+		color: "#B00020",
+		padding: "12px 0",
+		backgroundColor: "#fff1f1",
+		textAlign: "center",
+		fontWeight: 500,
+		fontSize: "16px",
 	},
 	input: {
 		margin: "0 auto 20px",
@@ -101,6 +114,22 @@ const Login = () => {
 
 	const helperTextClass = helperTextStyles();
 
+	const history = useHistory();
+
+	//signup mutation
+	const [default_user_login, { loading, error, data }] = useLazyQuery(LOGIN, {
+		onCompleted() {
+			document.cookie = "x-auth=" + data.default_user_login.token;
+			history.push("/");
+		},
+		onError(err) {
+			console.log(err);
+			return null;
+		},
+	});
+
+	// console.log(error?.errors[0].message);
+
 	const formik = useFormik({
 		initialValues: {
 			password: "",
@@ -108,7 +137,13 @@ const Login = () => {
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values) => {
-			alert(JSON.stringify(values, null, 2));
+			//alert(JSON.stringify(values, null, 2));
+			default_user_login({
+				variables: {
+					email: values.email,
+					password: values.password,
+				},
+			});
 		},
 	});
 	return (
@@ -123,6 +158,11 @@ const Login = () => {
 				>
 					<img src={logo} className={classes.img} />
 					<p className={classes.text}>Login</p>
+					{/* {error && (
+						<Box className={classes.error} border={1} borderColor="#B00020">
+							{error.errors[0].message}
+						</Box>
+					)} */}
 					<form onSubmit={formik.handleSubmit} className={classes.form}>
 						<CssTextField
 							className={classes.input}
@@ -171,7 +211,7 @@ const Login = () => {
 							disableElevation
 							type="submit"
 						>
-							Login
+							{loading ? <CircularProgress /> : "Login"}
 						</Button>
 					</form>
 					<Link to="/forgot-password">

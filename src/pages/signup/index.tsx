@@ -6,7 +6,10 @@ import Button from "@material-ui/core/Button";
 import logo from "../../assets/logo/AMP-logo.png";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { REGISTER } from "../../helpers/graphql/mutations";
+import { useMutation } from "@apollo/client";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles(() => ({
 	img: {
@@ -41,6 +44,7 @@ const useStyles = makeStyles(() => ({
 
 	span: {
 		color: "#109CF1",
+		cursor: "pointer",
 	},
 	input: {
 		margin: "0 auto 20px",
@@ -76,13 +80,13 @@ const CssTextField = withStyles({
 			borderBottomColor: "#109CF1",
 		},
 		"& .MuiOutlinedInput-root": {
-			"& fieldset": {
+			"& valueset": {
 				borderColor: "#109CF1",
 			},
-			"&:hover fieldset": {
+			"&:hover valueset": {
 				borderColor: "#109CF1",
 			},
-			"&.Mui-focused fieldset": {
+			"&.Mui-focused valueset": {
 				borderColor: "#109CF1",
 			},
 		},
@@ -115,11 +119,24 @@ const helperTextStyles = makeStyles((theme) => ({
 	},
 }));
 
-
 const Signup = () => {
 	const classes = useStyles();
 
 	const helperTextClass = helperTextStyles();
+
+	const history = useHistory();
+
+	//signup mutation
+	const [default_user_registration, { loading }] = useMutation(REGISTER, {
+		onCompleted({ default_user_registration }) {
+			document.cookie = "x-auth=" + default_user_registration.token;
+			history.push("/");
+		},
+		onError(err) {
+			console.log(err);
+			return null;
+		},
+	});
 
 	const formik = useFormik({
 		initialValues: {
@@ -132,7 +149,17 @@ const Signup = () => {
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values) => {
-			alert(JSON.stringify(values, null, 2));
+			//alert(JSON.stringify(values, null, 2));
+
+			default_user_registration({
+				variables: {
+					first_name: values.firstName,
+					last_name: values.lastName,
+					phone_number: values.phone,
+					email: values.email,
+					password: values.password,
+				},
+			});
 		},
 	});
 	return (
@@ -282,13 +309,13 @@ const Signup = () => {
 							className={classes.button}
 							disableElevation
 						>
-							Signup
+							{loading ? <CircularProgress /> : "Signup"}
 						</Button>
 					</form>
 
 					<p className={classes.info}>
 						By clicking the "Signup" button, you are creating an AMP account,
-						and you agree to{" "}
+						and you agree to&nbsp;
 						<span className={classes.span}>AMP's Terms of Use</span> and&nbsp;
 						<span className={classes.span}>Privacy Policy</span>.
 					</p>
