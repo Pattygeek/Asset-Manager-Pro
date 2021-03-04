@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 		position: "sticky",
 		backgroundColor: "white",
 		top: 0,
-		zIndex: +10,
+		zIndex: +50,
 	},
 	iconBox: {
 		display: "flex",

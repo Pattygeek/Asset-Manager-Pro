@@ -50,28 +50,24 @@ const Home = () => {
 	const useStyles = makeStyles((theme) => ({
 		mainBox: {
 			backgroundColor: "white",
-			height: "95%", //make it 97% on toggle
+			minHeight: "95%", //make it 97% on toggle
 			width: toggle ? "97%" : "95%",
 			// width: "95%",
-			margin: "auto auto",
+			margin: "24px auto",
 			overflowX: "hidden",
+			overflowY:"auto",
 			position: "relative",
 			display: "flex",
 			flexDirection: "column",
-			
+			borderRadius:"4px",
+			boxShadow: "0px 2px 2px 2px rgba(0, 0, 0, 0.07)",
 			// flex: "1 1 0",
 			justifyContent: "center",
 		},
 	}));
 	const classes = useStyles();
 
-	const { loading, error, data, fetchMore } = useQuery(LIST_ALL_PROPERTY, {
-		variables: {
-			limit: 18,
-		},
-	});
-
-
+	const { loading, error, data, fetchMore } = useQuery(LIST_ALL_PROPERTY);
 
 	// if (loading) return <p>Loading...</p>;
 	// if (error) return <p>Error :(</p>;
@@ -80,6 +76,10 @@ const Home = () => {
 		// rowHeaders: true,
 		rowHeights: 28,
 		columnHeaderHeight: 35,
+		// afterSelection: function (r: any, c: any) {
+		// 	var data = getDataAtRow(r);
+		// 	console.log(data);
+		// },
 		columns: [
 			{
 				data: "checked",
@@ -141,6 +141,7 @@ const Home = () => {
 		manualColumnMove: true,
 		contextMenu: true,
 		filters: true,
+		height: "inherit",
 		// dropdownMenu: true,
 		manualRowResize: true,
 		columnSorting: true,

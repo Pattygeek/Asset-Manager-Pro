@@ -37,7 +37,7 @@ const Layout = () => {
 			width: "100%",
 			// width: toggle ? "calc(100% - 0px)" : "100%",
 			// width: "inherit",
-			height: "calc(100% - 50px)",
+			minHeight: "calc(100% - 50px)",
 			display: "flex",
 			zIndex: -10,
 			// overflowX: "hidden",

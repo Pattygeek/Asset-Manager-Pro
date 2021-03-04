@@ -135,3 +135,44 @@ body .handsontable th {
 	vertical-align: middle;
 	font-size: 12px;
 }
+
+.handsontable thead th {
+	background: #fff;
+	border: 1px solid #fff !important;
+	position: sticky;
+	top: 50;
+	/* z-index: -2; */
+}
+
+.handsontable tr:first-child td {
+	border-top: 1px solid #fff !important;
+}
+
+.handsontable td:first-of-type {
+	border-left: 1px solid #fff !important;
+}
+
+body .handsontable ::-webkit-scrollbar {
+	width: 4px;
+}
+
+/* Track */
+body .handsontable ::-webkit-scrollbar-track {
+	background: #ebeff2;
+	border-radius: 8px;
+}
+
+/* Handle */
+body .handsontable ::-webkit-scrollbar-thumb {
+	background: rgba(109, 109, 109, 0.36);
+	border-radius: 8px;
+}
+
+.handsontable table {
+	border-radius: 4px !important;
+	border: 1pz solid #fff !important;
+}
+
+.handsontable .htDimmed {
+	color: rgba(0, 0, 0, 0.87) !important;
+}

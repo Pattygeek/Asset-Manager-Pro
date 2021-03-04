@@ -116,7 +116,7 @@ const Login = () => {
 
 	const history = useHistory();
 
-	//signup mutation
+	//login mutation
 	const [default_user_login, { loading, error, data }] = useLazyQuery(LOGIN, {
 		onCompleted() {
 			document.cookie = "x-auth=" + data.default_user_login.token;

@@ -4,8 +4,15 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { useFormik } from "formik";
+import { useMutation } from "@apollo/client";
+import { FORGOT_PASSWORD } from "../../helpers/graphql/mutations";
 import * as Yup from "yup";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
+import CheckIcon from "@material-ui/icons/Check";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import logo from "../../assets/logo/AMP-logo.png";
+import React, { useState } from "react";
 
 const CssTextField = withStyles({
 	root: {
@@ -72,7 +79,7 @@ const useStyles = makeStyles(() => ({
 const helperTextStyles = makeStyles((theme) => ({
 	root: {
 		margin: 0,
-        paddingTop: 4,
+		paddingTop: 4,
 		color: "black",
 	},
 	error: {
@@ -86,10 +93,41 @@ const helperTextStyles = makeStyles((theme) => ({
 const validationSchema = Yup.object().shape({
 	email: Yup.string().email().required("This field is required"),
 });
+
+function Alert(props: AlertProps) {
+	return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 const Forgot = () => {
 	const classes = useStyles();
 
 	const helperTextClass = helperTextStyles();
+
+	const [open, setOpen] = useState(false);
+
+	const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+		if (reason === "clickaway") {
+			return;
+		}
+
+		setOpen(false);
+	};
+
+	//forgot password mutation
+	const [forgot_password_request, { loading }] = useMutation(FORGOT_PASSWORD, {
+		onCompleted({ forgot_password_request }) {
+            setOpen(true);
+			<Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+				<Alert onClose={handleClose} severity="success">
+					{forgot_password_request.message}
+				</Alert>
+			</Snackbar>;
+		},
+		onError(err) {
+			console.log(err);
+			return null;
+		},
+	});
 
 	const formik = useFormik({
 		initialValues: {
@@ -97,7 +135,12 @@ const Forgot = () => {
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values) => {
-			alert(JSON.stringify(values, null, 2));
+			//alert(JSON.stringify(values, null, 2));
+			forgot_password_request({
+				variables: {
+					email: values.email,
+				},
+			});
 		},
 	});
 	return (
@@ -142,7 +185,7 @@ const Forgot = () => {
 							disableElevation
 							type="submit"
 						>
-							Submit
+							{loading ? <CircularProgress /> : "Submit"}
 						</Button>
 					</form>
 				</Box>

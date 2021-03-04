@@ -3,9 +3,13 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import logo from "../../assets/logo/AMP-logo.png";
+import Alert from "@material-ui/lab/Alert";
+import { useMutation } from "@apollo/client";
+import { RESET_PASSWORD } from "../../helpers/graphql/mutations";
 
 const CssTextField = withStyles({
 	root: {
@@ -90,6 +94,17 @@ const Reset = () => {
 
 	const helperTextClass = helperTextStyles();
 
+	//reset password mutation
+	const [reset_password_request, { loading }] = useMutation(RESET_PASSWORD, {
+		onCompleted({ reset_password_request }) {
+			<Alert severity="success">{reset_password_request.message}</Alert>;
+		},
+		onError(err) {
+			console.log(err);
+			return null;
+		},
+	});
+
 	const formik = useFormik({
 		initialValues: {
 			password: "",
@@ -97,7 +112,13 @@ const Reset = () => {
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values) => {
-			alert(JSON.stringify(values, null, 2));
+			//alert(JSON.stringify(values, null, 2));
+			reset_password_request({
+				variables: {
+					new_password: values.password,
+					confirm_password: values.confirmPassword,
+				},
+			});
 		},
 	});
 	return (
@@ -163,7 +184,7 @@ const Reset = () => {
 							disableElevation
 							type="submit"
 						>
-							Submit
+							{loading ? <CircularProgress /> : "Submit"}
 						</Button>
 					</form>
 				</Box>
