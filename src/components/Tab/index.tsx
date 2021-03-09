@@ -9,6 +9,7 @@ import Buy from "./Buy";
 import Escrow from "./Escrow";
 import Owned from "./Owned";
 import React from "react";
+import useVisibleHook from "../../utils/useVisibleHook";
 
 interface tabProps {
 	handleClose: () => any;
@@ -149,37 +150,42 @@ const StatusTab = ({ handleClose, status }: tabProps) => {
 		setValue(newValue);
 	};
 
+	//visible hook
+	const { visibleRef, isVisible } = useVisibleHook(true);
+
 	return (
 		<>
-			<Box className={classes.overlay} mx="auto">
-				<Box className={classes.iconBox} onClick={handleClose}>
-					<CancelOutlinedIcon className={classes.icon} />
-				</Box>
-				<Paper className={classes.root}>
-					<Tabs
-						value={value}
-						onChange={handleChange}
-						indicatorColor="primary"
-						textColor="primary"
-						centered
-					>
-						<Tab label="Buy" className={classes.text} />
-						<Tab label="Escrow" className={classes.text} />
-						<Tab label="Owned" className={classes.text} />
-					</Tabs>
-				</Paper>
-				<Paper className={classes.tab}>
-					<TabPanel value={value} index={0}>
-						<Buy />
-					</TabPanel>
-					<TabPanel value={value} index={1}>
-						<Escrow />
-					</TabPanel>
-					<TabPanel value={value} index={2}>
-						<Owned />
-					</TabPanel>
-				</Paper>
-			</Box>
+			{isVisible && (
+				<div className={classes.overlay} ref={visibleRef}>
+					<Box className={classes.iconBox} onClick={handleClose}>
+						<CancelOutlinedIcon className={classes.icon} />
+					</Box>
+					<Paper className={classes.root}>
+						<Tabs
+							value={value}
+							onChange={handleChange}
+							indicatorColor="primary"
+							textColor="primary"
+							centered
+						>
+							<Tab label="Buy" className={classes.text} />
+							<Tab label="Escrow" className={classes.text} />
+							<Tab label="Owned" className={classes.text} />
+						</Tabs>
+					</Paper>
+					<Paper className={classes.tab}>
+						<TabPanel value={value} index={0}>
+							<Buy />
+						</TabPanel>
+						<TabPanel value={value} index={1}>
+							<Escrow />
+						</TabPanel>
+						<TabPanel value={value} index={2}>
+							<Owned />
+						</TabPanel>
+					</Paper>
+				</div>
+			)}
 		</>
 	);
 };

@@ -6,11 +6,12 @@ import React, { useState, useEffect, useRef, createRef } from "react";
 import { useQuery } from "@apollo/client";
 import { LIST_ALL_PROPERTY } from "../../helpers/graphql/queries";
 import { useToggle } from "../../helpers/contexts/toggleContext";
+import useVisibleHook from "../../utils/useVisibleHook";
 import ArrowBackIosOutlinedIcon from "@material-ui/icons/ArrowBackIosOutlined";
 import ArrowForwardIosOutlinedIcon from "@material-ui/icons/ArrowForwardIosOutlined";
 
 //components
-import { Layout, Tab } from "../../components";
+import { Tab } from "../../components";
 
 const Home = () => {
 	const { toggle } = useToggle();
@@ -34,7 +35,7 @@ const Home = () => {
 			// width: "95%",
 			margin: "24px auto",
 			overflowX: "hidden",
-			overflowY: "hidden",
+			overflowY: "auto",
 			position: "relative",
 			display: "flex",
 			flexDirection: "column",
@@ -56,13 +57,8 @@ const Home = () => {
 	// if (error) return <p>Error :(</p>;
 
 	const [state, setState] = useState({
-		// rowHeaders: true,
 		rowHeights: 28,
 		columnHeaderHeight: 35,
-		// afterSelection: function (r: any, c: any) {
-		// 	let data = getDataAtRow(r);
-		// 	console.log(data);
-		// },
 		columns: [
 			{
 				data: "checked",
@@ -193,8 +189,11 @@ const Home = () => {
 	//state to handle propertyStatus
 	const [status, setStatus] = useState("");
 
+	const { handleClickInside } = useVisibleHook(true);
+
 	const handleDoubleClick = () => {
 		handleTabOpen();
+		// handleClickInside();
 		if (hotTableComponentRef.current) {
 			var currentHandsonTable = hotTableComponentRef.current.hotInstance;
 			var currentCell = currentHandsonTable.getSelected();

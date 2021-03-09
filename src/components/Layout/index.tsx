@@ -13,7 +13,7 @@ const UploadData = lazy(() => import("../../pages/uploadData"));
 const Reporting = lazy(() => import("../../pages/reporting"));
 const Formulas = lazy(() => import("../../pages/formulas"));
 const Home = lazy(() => import("../../pages/home"));
-const AddContact = lazy(() => import('../../pages/contactRolodex/add-contact'))
+const AddContact = lazy(() => import("../../pages/contactRolodex/add-contact"));
 
 const Layout = () => {
 	const location = useLocation();
@@ -41,6 +41,7 @@ const Layout = () => {
 			minHeight: "calc(100% - 50px)",
 			display: "flex",
 			zIndex: -10,
+			overflowY: "hidden",
 			// overflowX: "hidden",
 		},
 		boxClass: {
@@ -67,7 +68,7 @@ const Layout = () => {
 	const classes = useStyles();
 
 	const [show, setShow] = useState(false);
-	console.log(show);
+
 	const handleLeave = () => {
 		setShow(false);
 	};
