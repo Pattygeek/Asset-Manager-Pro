@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 		position: "sticky",
 		backgroundColor: "white",
 		top: 0,
-		zIndex: +50,
+		zIndex: +200,
 	},
 	iconBox: {
 		display: "flex",
@@ -122,7 +122,7 @@ const Navbar = ({
 						</Box>
 					</Box>
 
-					<FormControl className={classes.formControl}>
+					{/* <FormControl className={classes.formControl}>
 						<NativeSelect
 							className={classes.selectEmpty}
 							//value={state.age}
@@ -135,7 +135,7 @@ const Navbar = ({
 							<option value={20}>Action 1</option>
 							<option value={30}>Action 2</option>
 						</NativeSelect>
-					</FormControl>
+					</FormControl> */}
 				</Box>
 				<Box className={classes.home} fontWeight={500} fontSize={20}>
 					{pageTitle}

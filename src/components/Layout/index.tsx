@@ -13,6 +13,7 @@ const UploadData = lazy(() => import("../../pages/uploadData"));
 const Reporting = lazy(() => import("../../pages/reporting"));
 const Formulas = lazy(() => import("../../pages/formulas"));
 const Home = lazy(() => import("../../pages/home"));
+const AddContact = lazy(() => import('../../pages/contactRolodex/add-contact'))
 
 const Layout = () => {
 	const location = useLocation();
@@ -91,7 +92,10 @@ const Layout = () => {
 			title = "Reporting";
 			break;
 		case "/contact-rolodex":
-			title = "Contact Rolodex";
+			title = "Contact";
+			break;
+		case "/contact/add-contact":
+			title = "Contact";
 			break;
 		case "/manage-users":
 			title = "Manage Users";
@@ -130,6 +134,7 @@ const Layout = () => {
 								<Route path="/upload-data" component={UploadData} />
 								<Route path="/reporting" component={Reporting} />
 								<Route path="/formulas" component={Formulas} />
+								<Route path="/contact/add-contact" component={AddContact} />
 							</Suspense>
 						</Switch>
 						{/* {children} */}

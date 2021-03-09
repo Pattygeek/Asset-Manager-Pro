@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Handsontable from "handsontable";
 import { HotTable, HotColumn } from "@handsontable/react";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, createRef } from "react";
 import { useQuery } from "@apollo/client";
 import { LIST_ALL_PROPERTY } from "../../helpers/graphql/queries";
 import { useToggle } from "../../helpers/contexts/toggleContext";
@@ -18,34 +18,13 @@ const Home = () => {
 	//tab handler
 	const [open, setOpen] = useState<boolean>(false);
 
-	const handleOpen = () => {
+	const handleTabOpen = () => {
 		setOpen(true);
 	};
 
-	const handleClose = () => {
+	const handleTabClose = () => {
 		setOpen(false);
 	};
-
-	useEffect((): void => {
-		// var cells = document.getElementsByTagName("td");
-		// for (var i = 0; i < cells.length; i++) {
-		// 	cells[i].addEventListener("dblclick", function (e) {
-		// 		handleOpen();
-		// 	});
-		// }
-		document.body.addEventListener("dblclick", function (e) {
-			handleOpen(); // opens the tab component);
-			// var targetElement = e.target
-			// console.log(targetElement);
-			// const cells =
-			// console.log(e);
-			// if(element.tagName === "td"){
-
-			// }
-		});
-	}, []);
-
-	// const hotTableComponent = React.createRef();
 
 	const useStyles = makeStyles((theme) => ({
 		mainBox: {
@@ -55,11 +34,11 @@ const Home = () => {
 			// width: "95%",
 			margin: "24px auto",
 			overflowX: "hidden",
-			overflowY:"auto",
+			overflowY: "hidden",
 			position: "relative",
 			display: "flex",
 			flexDirection: "column",
-			borderRadius:"4px",
+			borderRadius: "4px",
 			boxShadow: "0px 2px 2px 2px rgba(0, 0, 0, 0.07)",
 			// flex: "1 1 0",
 			justifyContent: "center",
@@ -67,7 +46,11 @@ const Home = () => {
 	}));
 	const classes = useStyles();
 
-	const { loading, error, data, fetchMore } = useQuery(LIST_ALL_PROPERTY);
+	const { loading, error, data, fetchMore } = useQuery(LIST_ALL_PROPERTY, {
+		variables: {
+			limit: 20,
+		},
+	});
 
 	// if (loading) return <p>Loading...</p>;
 	// if (error) return <p>Error :(</p>;
@@ -77,7 +60,7 @@ const Home = () => {
 		rowHeights: 28,
 		columnHeaderHeight: 35,
 		// afterSelection: function (r: any, c: any) {
-		// 	var data = getDataAtRow(r);
+		// 	let data = getDataAtRow(r);
 		// 	console.log(data);
 		// },
 		columns: [
@@ -205,12 +188,37 @@ const Home = () => {
 		licenseKey: "non-commercial-and-evaluation",
 	});
 
+	const hotTableComponentRef = useRef<HotTable>(null);
+
+	//state to handle propertyStatus
+	const [status, setStatus] = useState("");
+
+	const handleDoubleClick = () => {
+		handleTabOpen();
+		if (hotTableComponentRef.current) {
+			var currentHandsonTable = hotTableComponentRef.current.hotInstance;
+			var currentCell = currentHandsonTable.getSelected();
+			if (typeof currentCell != "undefined") {
+				var currentCellNumber = currentCell[0];
+				var currentRowNumber = currentCellNumber[0];
+				var currentRowData: any = {};
+				currentRowData = currentHandsonTable.getSourceDataAtRow(
+					currentRowNumber
+				);
+				var currentRowPropertyStatus = currentRowData["property_status"];
+				setStatus(currentRowPropertyStatus);
+			}
+			console.log(currentHandsonTable);
+		}
+	};
+
 	return (
 		<>
 			{/* <Layout> */}
-			<Box className={classes.mainBox}>
+			<Box className={classes.mainBox} onDoubleClick={handleDoubleClick}>
 				{data?.list_all_property_reports?.edges && (
 					<HotTable
+						ref={hotTableComponentRef}
 						settings={state}
 						id="hot"
 						data={data?.list_all_property_reports?.edges}
@@ -241,7 +249,7 @@ const Home = () => {
 					<ArrowBackIosOutlinedIcon />
 					<ArrowForwardIosOutlinedIcon />
 				</Box> */}
-				{open ? <Tab toggle={toggle} handleClose={handleClose} /> : ""}
+				{open ? <Tab handleClose={handleTabClose} status={status} /> : ""}
 			</Box>
 
 			{/* </Layout> */}

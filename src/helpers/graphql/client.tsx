@@ -62,7 +62,7 @@ const authLink = setContext((_, { headers }) => {
 	return {
 		headers: {
 			...headers,
-			authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjAxNTU1YzJiMjM5NmM4MTY4ODdmYWZmIiwiaWF0IjoxNjEyNTkzNTM3LCJleHAiOjE2MTUxODU1Mzd9.dCWuxQgaZVgABKqK7HlC4YOUODIB2Ice5VqRwRVzcRU`,
+			authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjAxNTU1YzJiMjM5NmM4MTY4ODdmYWZmIiwiaWF0IjoxNjE1MjAwMDEzLCJleHAiOjE2MTc3OTIwMTN9.lNLmUUWHL9ous20ilcq6Iz7IfMPY2juH9dfBZ_O2hkw`,
 		},
 	};
 });

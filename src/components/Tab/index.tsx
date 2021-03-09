@@ -10,12 +10,12 @@ import Escrow from "./Escrow";
 import Owned from "./Owned";
 import React from "react";
 
-interface toggleProps {
-	toggle: boolean;
+interface tabProps {
 	handleClose: () => any;
+	status: string;
 }
 
-const StatusTab = ({ toggle, handleClose }: toggleProps) => {
+const StatusTab = ({ handleClose, status }: tabProps) => {
 	const useStyles = makeStyles((theme) => ({
 		root: {
 			boxShadow:
@@ -32,13 +32,19 @@ const StatusTab = ({ toggle, handleClose }: toggleProps) => {
 			zIndex: +5,
 		},
 		icon: {
-			right: 0,
-			position: "absolute",
 			cursor: "pointer",
-			top: -2,
 			"&:hover": {
 				color: "#979797",
 			},
+		},
+		iconBox: {
+			right: -5,
+			position: "absolute",
+			cursor: "pointer",
+			justifyContent: "center",
+			width: "40px",
+			display: "flex",
+			height: "40px",
 		},
 		tab: {
 			marginTop: "8px",
@@ -50,15 +56,105 @@ const StatusTab = ({ toggle, handleClose }: toggleProps) => {
 
 	const classes = useStyles();
 
-	const [value, setValue] = React.useState(0);
+	//switch statement to handle active tab according to the property status value
+	let statusValue: number;
+	switch (status) {
+		case "NEW_ASSET":
+			statusValue = 0;
+			break;
+
+		case "NOT_REVIEWED":
+			statusValue = 0;
+			break;
+		case "NEW_LEAD":
+			statusValue = 0;
+			break;
+		case "RE_REVIEW":
+			statusValue = 0;
+			break;
+		case "NOT_INTERESTED":
+			statusValue = 0;
+			break;
+		case "CALL_AGENT":
+			statusValue = 0;
+			break;
+		case "PENDING_INTEL":
+			statusValue = 0;
+			break;
+		case "FOLLOW_UP":
+			statusValue = 0;
+			break;
+		case "BID_PENDING":
+			statusValue = 0;
+			break;
+		case "PROXY":
+			statusValue = 0;
+			break;
+		case "BID":
+			statusValue = 0;
+			break;
+		case "REJECTED":
+			statusValue = 0;
+			break;
+		case "SALE_CANCELLED":
+			statusValue = 0;
+			break;
+		case "LOST":
+			statusValue = 0;
+			break;
+		case "WON":
+			statusValue = 1;
+			break;
+		case "IN_CLOSING":
+			statusValue = 1;
+			break;
+		case "CLOSED":
+			statusValue = 2;
+			break;
+		case "OCCUPIED":
+			statusValue = 2;
+			break;
+		case "PENDING_VACANCY":
+			statusValue = 2;
+			break;
+		case "IN_EVICTION":
+			statusValue = 2;
+			break;
+		case "PENDING_BID":
+			statusValue = 2;
+			break;
+		case "BEING_REHABBED":
+			statusValue = 2;
+			break;
+		case "LISTED":
+			statusValue = 2;
+			break;
+		case "IN_CLOSING":
+			statusValue = 2;
+			break;
+		case "SOLD":
+			statusValue = 2;
+			break;
+		case "AUCTION_SOLD":
+			statusValue = 2;
+			break;
+		default:
+			statusValue = 0;
+			break;
+	}
+
+	const [value, setValue] = React.useState(statusValue);
 
 	const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
 		setValue(newValue);
 	};
+
 	return (
 		<>
 			<Box className={classes.overlay} mx="auto">
-				<CancelOutlinedIcon className={classes.icon} onClick={handleClose} />
+				<Box className={classes.iconBox} onClick={handleClose}>
+					<CancelOutlinedIcon className={classes.icon} />
+				</Box>
 				<Paper className={classes.root}>
 					<Tabs
 						value={value}
