@@ -20,6 +20,17 @@ import pix4 from "../../../assets/images/pix4.png";
 import pix5 from "../../../assets/images/pix5.png";
 import pix6 from "../../../assets/images/pix6.png";
 
+import { useState } from "react";
+import {
+	NumberCurrencyFormatCustom,
+	RegularNumberWithoutDecimalFormat,
+	RegularNumberWithDecimalFormat,
+	YearFormat,
+	PercentageFormat,
+	PercentageWithoutDecimalFormat,
+	PhoneNumberFormat,
+} from "../../../utils/formats";
+
 const useStyles = makeStyles(() => ({
 	label: {
 		marginBottom: "2px",
@@ -74,6 +85,55 @@ const Index = () => {
 	const classes = useStyles();
 
 	const images = [pix1, pix2, pix3, pix4, pix5, pix6];
+
+	const [data, setData] = useState({
+		status: "",
+		tpp: "",
+		list_price: "",
+		profit: "",
+		roi: "",
+		hold_time: "",
+		note: "",
+		occupancy: "",
+		eviction: "",
+		cfk: "",
+		cfk_amount: "",
+		occupant: "",
+		occupant_number: "",
+		occupant_email: "",
+		eviction_date: "",
+		attorney_name: "",
+		attorney_number: "",
+		attorney_email: "",
+		eviction_cost: "",
+		water_co: "",
+		water_co_nuumber: "",
+		electric_co: "",
+		electric_co_number: "",
+		gas_co: "",
+		gas_co_number: "",
+		taxes: "",
+		taxes_number: "",
+		contractor_bid_received: "",
+		rehab: "",
+		gc: "",
+		gc_number: "",
+		gc_email: "",
+		list_agent: "",
+		list_agent_email: "",
+		list_agent_number: "",
+		sold_date: "",
+		sold_price: "",
+	});
+
+	//onchange handler for input fields
+	const handleChange = (event: React.ChangeEvent<any>) => {
+		const { name, value } = event.target;
+		setData({
+			...data,
+			[name]: value,
+		});
+	};
 	return (
 		<>
 			<div className={classes.div}>
@@ -85,12 +145,9 @@ const Index = () => {
 					>
 						<Select
 							native
-							// value={state.age}
-							// onChange={handleChange}
-							inputProps={{
-								name: "age",
-								id: "filled-age-native-simple",
-							}}
+							value={data.status}
+							onChange={handleChange}
+							name="status"
 							placeholder=""
 						>
 							<option aria-label="None" value="" />
@@ -100,9 +157,7 @@ const Index = () => {
 							<option value={30}>RE-REVIEW</option>
 							<option value={30}>NOT INTERESTED</option>
 						</Select>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -113,17 +168,15 @@ const Index = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
-							placeholder=""
-							aria-describedby="filled-weight-helper-text"
+							name="tpp"
+							value={data.tpp}
+							onChange={handleChange}
 							inputProps={{
-								"aria-label": "weight",
+								maxLength: 11,
 							}}
+							inputComponent={NumberCurrencyFormatCustom as any}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -134,17 +187,15 @@ const Index = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
-							placeholder=""
-							aria-describedby="filled-weight-helper-text"
+							name="list_price"
+							value={data.list_price}
+							onChange={handleChange}
 							inputProps={{
-								"aria-label": "weight",
+								maxLength: 11,
 							}}
+							inputComponent={NumberCurrencyFormatCustom as any}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -155,17 +206,15 @@ const Index = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
-							placeholder=""
-							aria-describedby="filled-weight-helper-text"
+							name="profit"
+							value={data.profit}
+							onChange={handleChange}
 							inputProps={{
-								"aria-label": "weight",
+								maxLength: 11,
 							}}
+							inputComponent={NumberCurrencyFormatCustom as any}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -176,17 +225,15 @@ const Index = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
-							placeholder=""
-							aria-describedby="filled-weight-helper-text"
+							name="roi"
+							value={data.roi}
+							onChange={handleChange}
 							inputProps={{
-								"aria-label": "weight",
+								maxLength: 5,
 							}}
+							inputComponent={PercentageWithoutDecimalFormat as any}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -197,19 +244,15 @@ const Index = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
-							placeholder=""
-							type="number"
-							aria-describedby="filled-weight-helper-text"
+							name="hold_time"
+							value={data.hold_time}
+							onChange={handleChange}
 							inputProps={{
-								"aria-label": "weight",
-								step:"0.1"
+								maxLength: 5,
 							}}
+							inputComponent={RegularNumberWithDecimalFormat as any}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 			</div>
@@ -224,12 +267,13 @@ const Index = () => {
 							id="filled-multiline-static"
 							multiline
 							rows={3}
+							name="note"
+							value={data.note}
+							onChange={handleChange}
 							// defaultValue="Default Value"
 							variant="filled"
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 			</div>
@@ -245,8 +289,8 @@ const Index = () => {
 							>
 								<Select
 									native
-									// value={state.age}
-									// onChange={handleChange}
+									value={data.occupancy}
+									onChange={handleChange}
 									inputProps={{
 										name: "age",
 										id: "filled-age-native-simple",
@@ -257,9 +301,7 @@ const Index = () => {
 									<option value={10}>Occupied</option>
 									<option value={20}>Vacant</option>
 								</Select>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 						<Box>
@@ -270,8 +312,8 @@ const Index = () => {
 							>
 								<Select
 									native
-									// value={state.age}
-									// onChange={handleChange}
+									value={data.eviction}
+									onChange={handleChange}
 									inputProps={{
 										name: "age",
 										id: "filled-age-native-simple",
@@ -282,9 +324,7 @@ const Index = () => {
 									<option value={10}>Yes</option>
 									<option value={20}>No</option>
 								</Select>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 						<Box>
@@ -295,8 +335,8 @@ const Index = () => {
 							>
 								<Select
 									native
-									// value={state.age}
-									// onChange={handleChange}
+									value={data.cfk}
+									onChange={handleChange}
 									inputProps={{
 										name: "age",
 										id: "filled-age-native-simple",
@@ -307,9 +347,7 @@ const Index = () => {
 									<option value={10}>Yes</option>
 									<option value={20}>No</option>
 								</Select>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 						<Box>
@@ -320,18 +358,15 @@ const Index = () => {
 							>
 								<FilledInput
 									id="filled-adornment-weight"
-									// value={values.weight}
-									// onChange={handleChange("weight")}
-
-									placeholder=""
-									aria-describedby="filled-weight-helper-text"
+									name="cfk_amount"
+									value={data.hold_time}
+									onChange={handleChange}
 									inputProps={{
-										"aria-label": "weight",
+										maxLength: 5,
 									}}
+									inputComponent={NumberCurrencyFormatCustom as any}
 								/>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 						<Box>
@@ -342,18 +377,16 @@ const Index = () => {
 							>
 								<FilledInput
 									id="filled-adornment-weight"
-									// value={values.weight}
-									// onChange={handleChange("weight")}
-
+									value={data.occupant}
+									onChange={handleChange}
+									name="occupant"
 									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
 									}}
 								/>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 						<Box>
@@ -364,18 +397,17 @@ const Index = () => {
 							>
 								<FilledInput
 									id="filled-adornment-weight"
-									// value={values.weight}
-									// onChange={handleChange("weight")}
-
+									value={data.occupant_number}
+									onChange={handleChange}
+									name="occupant_number"
+									inputComponent={PhoneNumberFormat as any}
 									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
 									}}
 								/>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 						<Box>
@@ -386,18 +418,17 @@ const Index = () => {
 							>
 								<FilledInput
 									id="filled-adornment-weight"
-									// value={values.weight}
-									// onChange={handleChange("weight")}
-
+									value={data.occupant_email}
+									onChange={handleChange}
+									name="occupant_email"
+									type="email"
 									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
 									}}
 								/>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 						<Box>
@@ -408,8 +439,9 @@ const Index = () => {
 							>
 								<FilledInput
 									id="filled-adornment-weight"
-									// value={values.weight}
-									// onChange={handleChange("weight")}
+									value={data.eviction_date}
+									onChange={handleChange}
+									name="eviction_date"
 									type="date"
 									placeholder=""
 									aria-describedby="filled-weight-helper-text"
@@ -417,9 +449,7 @@ const Index = () => {
 										"aria-label": "weight",
 									}}
 								/>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 						<Box>
@@ -430,18 +460,16 @@ const Index = () => {
 							>
 								<FilledInput
 									id="filled-adornment-weight"
-									// value={values.weight}
-									// onChange={handleChange("weight")}
-
+									value={data.attorney_name}
+									onChange={handleChange}
+									name="attorney_name"
 									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
 									}}
 								/>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 						<Box>
@@ -452,18 +480,17 @@ const Index = () => {
 							>
 								<FilledInput
 									id="filled-adornment-weight"
-									// value={values.weight}
-									// onChange={handleChange("weight")}
-
+									value={data.attorney_number}
+									onChange={handleChange}
+									name="attorney_number"
+									inputComponent={PhoneNumberFormat as any}
 									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
 									}}
 								/>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 						<Box>
@@ -474,18 +501,17 @@ const Index = () => {
 							>
 								<FilledInput
 									id="filled-adornment-weight"
-									// value={values.weight}
-									// onChange={handleChange("weight")}
-
+									value={data.attorney_email}
+									onChange={handleChange}
+									name="attorney_email"
+									type="email"
 									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
 									}}
 								/>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 						<Box>
@@ -496,18 +522,16 @@ const Index = () => {
 							>
 								<FilledInput
 									id="filled-adornment-weight"
-									// value={values.weight}
-									// onChange={handleChange("weight")}
-
+									value={data.eviction_cost}
+									onChange={handleChange}
+									inputComponent={NumberCurrencyFormatCustom as any}
 									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
 									}}
 								/>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 						<Box>
@@ -518,18 +542,16 @@ const Index = () => {
 							>
 								<FilledInput
 									id="filled-adornment-weight"
-									// value={values.weight}
-									// onChange={handleChange("weight")}
-
+									value={data.water_co}
+									onChange={handleChange}
+									name="water_co"
 									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
 									}}
 								/>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 						<Box>
@@ -540,18 +562,17 @@ const Index = () => {
 							>
 								<FilledInput
 									id="filled-adornment-weight"
-									// value={values.weight}
-									// onChange={handleChange("weight")}
-
+									value={data.water_co_nuumber}
+									onChange={handleChange}
+									name="water_co_number"
+									inputComponent={PhoneNumberFormat as any}
 									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
 									}}
 								/>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 						<Box>
@@ -562,18 +583,16 @@ const Index = () => {
 							>
 								<FilledInput
 									id="filled-adornment-weight"
-									// value={values.weight}
-									// onChange={handleChange("weight")}
-
+									value={data.electric_co}
+									onChange={handleChange}
+									name="electric_co"
 									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
 									}}
 								/>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 						<Box>
@@ -584,18 +603,17 @@ const Index = () => {
 							>
 								<FilledInput
 									id="filled-adornment-weight"
-									// value={values.weight}
-									// onChange={handleChange("weight")}
-
+									value={data.electric_co_number}
+									onChange={handleChange}
+									name="electric_co_number"
+									inputComponent={PhoneNumberFormat as any}
 									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
 									}}
 								/>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 						<Box>
@@ -606,18 +624,16 @@ const Index = () => {
 							>
 								<FilledInput
 									id="filled-adornment-weight"
-									// value={values.weight}
-									// onChange={handleChange("weight")}
-
+									value={data.gas_co}
+									onChange={handleChange}
+									name="gas_co"
 									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
 									}}
 								/>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 						<Box>
@@ -628,18 +644,17 @@ const Index = () => {
 							>
 								<FilledInput
 									id="filled-adornment-weight"
-									// value={values.weight}
-									// onChange={handleChange("weight")}
-
+									value={data.gas_co_number}
+									onChange={handleChange}
+									inputComponent={PhoneNumberFormat as any}
+									name="gas_co_number"
 									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
 									}}
 								/>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 						<Box>
@@ -650,18 +665,16 @@ const Index = () => {
 							>
 								<FilledInput
 									id="filled-adornment-weight"
-									// value={values.weight}
-									// onChange={handleChange("weight")}
-
+									value={data.taxes}
+									onChange={handleChange}
+									name="taxes"
 									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
 									}}
 								/>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 						<Box>
@@ -672,18 +685,17 @@ const Index = () => {
 							>
 								<FilledInput
 									id="filled-adornment-weight"
-									// value={values.weight}
-									// onChange={handleChange("weight")}
-
+									value={data.taxes_number}
+									onChange={handleChange}
+									name="taxes_number"
+									inputComponent={PhoneNumberFormat as any}
 									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
 									}}
 								/>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 					</div>
@@ -702,8 +714,9 @@ const Index = () => {
 					>
 						<Select
 							native
-							// value={state.age}
-							// onChange={handleChange}
+							value={data.contractor_bid_received}
+							onChange={handleChange}
+							name="contractor_bid_received"
 							inputProps={{
 								name: "age",
 								id: "filled-age-native-simple",
@@ -714,9 +727,7 @@ const Index = () => {
 							<option value={10}>Yes</option>
 							<option value={20}>No</option>
 						</Select>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -727,18 +738,17 @@ const Index = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
-
+							value={data.rehab}
+							onChange={handleChange}
+							name="rehab"
+							inputComponent={NumberCurrencyFormatCustom as any}
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
 							}}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -749,18 +759,16 @@ const Index = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
-
+							value={data.gc}
+							onChange={handleChange}
+							name="gc"
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
 							}}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -771,18 +779,17 @@ const Index = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
-
+							value={data.gc_number}
+							onChange={handleChange}
+							name="gc_number"
+							inputComponent={PhoneNumberFormat as any}
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
 							}}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -793,18 +800,17 @@ const Index = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
-
+							value={data.gc_email}
+							onChange={handleChange}
+							name="gc_email"
+							type="email"
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
 							}}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 			</div>
@@ -817,18 +823,16 @@ const Index = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
-
+							value={data.list_agent}
+							onChange={handleChange}
+							name="list_agent"
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
 							}}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -839,18 +843,17 @@ const Index = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
-
+							value={data.list_agent_number}
+							onChange={handleChange}
+							name="list_agent_number"
+							inputComponent={PhoneNumberFormat as any}
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
 							}}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -861,18 +864,17 @@ const Index = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
-
+							value={data.list_agent_email}
+							onChange={handleChange}
+							name="list_agent_email"
+							type="email"
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
 							}}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -883,18 +885,17 @@ const Index = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
-
+							value={data.sold_price}
+							onChange={handleChange}
+							name="sold_price"
+							inputComponent={NumberCurrencyFormatCustom as any}
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
 							}}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -905,8 +906,9 @@ const Index = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
+							value={data.sold_date}
+							onChange={handleChange}
+							name="sold_date"
 							type="date"
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
@@ -914,9 +916,7 @@ const Index = () => {
 								"aria-label": "weight",
 							}}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 			</div>

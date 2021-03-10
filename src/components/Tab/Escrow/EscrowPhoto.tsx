@@ -13,8 +13,8 @@ const useStyles = makeStyles((theme) => ({
 		objectFit: "cover",
 	},
 	img: {
-        height: "32px",
-        cursor: "pointer",
+		height: "32px",
+		cursor: "pointer",
 	},
 	imgBox: {
 		display: "grid",
@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 		height: "fit-content",
 		marginRight: "8px",
 		padding: "4px 16px",
+		color: "white",
 	},
 	buttonn: {
 		height: "fit-content",

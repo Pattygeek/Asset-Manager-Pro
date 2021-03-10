@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
 	button: {
 		height: "fit-content",
 		marginRight: "12px",
+		color: "#FFF",
 		"&:last-child": {
 			marginRight: "0px",
 		},
@@ -110,7 +111,11 @@ const PhotoBox = ({ images }: PhotoProps) => {
 					>
 						photo gallery
 					</Button>
-					<Button variant="outlined" color="primary" className={classes.buttonn}>
+					<Button
+						variant="outlined"
+						color="primary"
+						className={classes.buttonn}
+					>
 						upload new
 					</Button>
 				</Box>

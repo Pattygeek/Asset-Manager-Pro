@@ -23,6 +23,15 @@ import Document from "../Document";
 import PriceHistory from "./PriceHistory";
 import BidHistory from "./BidHistory";
 import { useState } from "react";
+import {
+	NumberCurrencyFormatCustom,
+	RegularNumberWithoutDecimalFormat,
+	RegularNumberWithDecimalFormat,
+	YearFormat,
+	PercentageFormat,
+	PercentageWithoutDecimalFormat,
+	PhoneNumberFormat,
+} from "../../../utils/formats";
 
 const useStyles = makeStyles((theme) => ({
 	label: {
@@ -100,18 +109,62 @@ const Buy = () => {
 
 	const images = [pix1, pix2, pix3, pix4, pix5, pix6];
 
-	const toCurrency = (number: number): any => {
-		const formatter = new Intl.NumberFormat("en-US", {
-			style: "currency",
-			currency: "USD",
+	//state handler for all the input fields
+	const [data, setData] = useState({
+		stRsv: "",
+		sqft: "",
+		br: "",
+		ba: "",
+		lot: "",
+		year: "",
+		resale: "",
+		rehab: "",
+		buy_price: "",
+		tpp: "",
+		annual_tax: "",
+		hud_exp: "",
+		profit: "",
+		roi: "",
+		hold_time: "",
+		mkt: "",
+		auction_list_price: "",
+		high_bid: "",
+		auction_agent: "",
+		list_agent: "",
+		potential_rehab: "",
+		potential_lp: "",
+		potential_profit: "",
+		potential_roi: "",
+		loan_amount: "",
+		down_payment: "",
+		interest: "",
+		cfk_amount: "",
+		attorney_name: "",
+		water_co_number: "",
+		electric_co_number: "",
+		gas_co_number: "",
+		taxes_number: "",
+		gc: "",
+		sold_price: "",
+		auction_agent_number: "",
+		auction_agent_email: "",
+		list_agent_number: "",
+		list_agent_email: "",
+		reason: "",
+		access: "",
+		occupancy: "",
+		product: "",
+		status: "",
+		property_type: "",
+	});
+
+	//onchange handler for input fields
+	const handleChange = (event: React.ChangeEvent<any>) => {
+		const { name, value } = event.target;
+		setData({
+			...data,
+			[name]: value,
 		});
-
-		return formatter.format(number);
-	};
-
-	const [st, setST] = useState(0);
-	const handleChange = (e: React.ChangeEvent<any>) => {
-		setST(e.target.value);
 	};
 	return (
 		<>
@@ -124,12 +177,13 @@ const Buy = () => {
 					>
 						<Select
 							native
-							// value={state.age}
-							// onChange={handleChange}
-							inputProps={{
-								name: "age",
-								id: "filled-age-native-simple",
-							}}
+							value={data.status}
+							onChange={handleChange}
+							name="status"
+							// inputProps={{
+							// 	name: "age",
+							// 	id: "filled-age-native-simple",
+							// }}
 							placeholder=""
 						>
 							<option aria-label="None" value="" />
@@ -139,9 +193,7 @@ const Buy = () => {
 							<option value={30}>RE-REVIEW</option>
 							<option value={30}>NOT INTERESTED</option>
 						</Select>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -152,12 +204,13 @@ const Buy = () => {
 					>
 						<Select
 							native
-							// value={state.age}
-							// onChange={handleChange}
-							inputProps={{
-								name: "age",
-								id: "filled-age-native-simple",
-							}}
+							value={data.reason}
+							onChange={handleChange}
+							name="reason"
+							// inputProps={{
+							// 	name: "reason",
+							// 	// id: "filled-age-native-simple",
+							// }}
 							placeholder=""
 						>
 							<option aria-label="None" value="" />
@@ -167,9 +220,7 @@ const Buy = () => {
 							<option value={30}>Land Only</option>
 							<option value={30}>Hard Eviction</option>
 						</Select>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -180,21 +231,20 @@ const Buy = () => {
 					>
 						<Select
 							native
-							// value={state.age}
-							// onChange={handleChange}
-							inputProps={{
-								name: "age",
-								id: "filled-age-native-simple",
-							}}
+							value={data.access}
+							onChange={handleChange}
+							name="access"
+							// inputProps={{
+							// 	name: "age",
+							// 	id: "filled-age-native-simple",
+							// }}
 							placeholder=""
 						>
 							<option aria-label="None" value="" />
 							<option value={10}>Yes</option>
 							<option value={20}>No</option>
 						</Select>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -205,17 +255,16 @@ const Buy = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
+							value={data.product}
+							onChange={handleChange}
+							name="product"
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
 							}}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -226,21 +275,20 @@ const Buy = () => {
 					>
 						<Select
 							native
-							// value={state.age}
-							// onChange={handleChange}
-							inputProps={{
-								name: "age",
-								id: "filled-age-native-simple",
-							}}
+							value={data.occupancy}
+							onChange={handleChange}
+							name="occupancy"
+							// inputProps={{
+							// 	name: "age",
+							// 	id: "filled-age-native-simple",
+							// }}
 							placeholder=""
 						>
 							<option aria-label="None" value="" />
 							<option value={10}>Occupied</option>
 							<option value={20}>Vacant</option>
 						</Select>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -251,19 +299,14 @@ const Buy = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							value={toCurrency(st)}
+							value={data.stRsv}
+							name="stRsv"
 							onChange={handleChange}
-							// type="number"
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
-							inputProps={{
-								"aria-label": "weight",
-								step: "1",
-							}}
+							inputComponent={NumberCurrencyFormatCustom as any}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -274,17 +317,16 @@ const Buy = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
+							value={data.property_type}
+							onChange={handleChange}
+							name="property_type"
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
 							}}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -299,13 +341,15 @@ const Buy = () => {
 							// onChange={handleChange("weight")}
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
+							name="sqft"
+							value={data.sqft}
+							onChange={handleChange}
 							inputProps={{
-								"aria-label": "weight",
+								maxLength: 7,
 							}}
+							inputComponent={NumberCurrencyFormatCustom as any}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -320,13 +364,15 @@ const Buy = () => {
 							// onChange={handleChange("weight")}
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
+							name="br"
+							value={data.br}
+							onChange={handleChange}
 							inputProps={{
-								"aria-label": "weight",
+								maxLength: 2,
 							}}
+							inputComponent={RegularNumberWithoutDecimalFormat as any}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -337,38 +383,35 @@ const Buy = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
+							name="ba"
+							value={data.ba}
+							onChange={handleChange}
 							inputProps={{
-								"aria-label": "weight",
+								maxLength: 5,
 							}}
+							inputComponent={RegularNumberWithDecimalFormat as any}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
 					<p className={classes.label}>Lot</p>
-					<FormControl
-						// className={clsx(classes.margin, classes.textField)}
-						variant="filled"
-					>
+					<FormControl variant="filled">
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
+							name="lot"
+							value={data.lot}
+							onChange={handleChange}
 							inputProps={{
-								"aria-label": "weight",
+								maxLength: 6,
 							}}
+							inputComponent={RegularNumberWithDecimalFormat as any}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -379,17 +422,17 @@ const Buy = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
+							name="year"
+							value={data.year}
+							onChange={handleChange}
 							inputProps={{
-								"aria-label": "weight",
+								maxLength: 4, //TODO - Year format is not perfectly done, remember to come back to it.
 							}}
+							inputComponent={YearFormat as any}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 			</div>
@@ -407,9 +450,7 @@ const Buy = () => {
 							// defaultValue="Default Value"
 							variant="filled"
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 			</div>
@@ -422,17 +463,17 @@ const Buy = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
+							name="resale"
+							value={data.resale}
+							onChange={handleChange}
 							inputProps={{
-								"aria-label": "weight",
+								maxLength: 11,
 							}}
+							inputComponent={NumberCurrencyFormatCustom as any}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 					<FormControlLabel
 						control={
@@ -455,17 +496,17 @@ const Buy = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
+							name="rehab"
+							value={data.rehab}
+							onChange={handleChange}
 							inputProps={{
-								"aria-label": "weight",
+								maxLength: 11,
 							}}
+							inputComponent={NumberCurrencyFormatCustom as any}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -476,17 +517,17 @@ const Buy = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
+							name="buy_price"
+							value={data.buy_price}
+							onChange={handleChange}
 							inputProps={{
-								"aria-label": "weight",
+								maxLength: 11,
 							}}
+							inputComponent={NumberCurrencyFormatCustom as any}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -497,17 +538,17 @@ const Buy = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
+							name="tpp"
+							value={data.tpp}
+							onChange={handleChange}
 							inputProps={{
-								"aria-label": "weight",
+								maxLength: 11,
 							}}
+							inputComponent={NumberCurrencyFormatCustom as any}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -518,17 +559,17 @@ const Buy = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
+							name="annual_tax"
+							value={data.annual_tax}
+							onChange={handleChange}
 							inputProps={{
-								"aria-label": "weight",
+								maxLength: 11,
 							}}
+							inputComponent={NumberCurrencyFormatCustom as any}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
@@ -539,17 +580,17 @@ const Buy = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
+							name="hud_exp"
+							value={data.hud_exp}
+							onChange={handleChange}
 							inputProps={{
-								"aria-label": "weight",
+								maxLength: 11,
 							}}
+							inputComponent={PercentageFormat as any}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 			</div>
@@ -562,105 +603,86 @@ const Buy = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
+							name="profit"
+							value={data.profit}
+							onChange={handleChange}
 							inputProps={{
-								"aria-label": "weight",
+								maxLength: 11,
 							}}
+							inputComponent={NumberCurrencyFormatCustom as any}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
 					<p className={classes.label}>ROI %</p>
-					<FormControl
-						// className={clsx(classes.margin, classes.textField)}
-						variant="filled"
-					>
+					<FormControl variant="filled">
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
+							name="roi"
+							value={data.roi}
+							onChange={handleChange}
 							inputProps={{
-								"aria-label": "weight",
+								maxLength: 5,
 							}}
+							inputComponent={PercentageWithoutDecimalFormat as any}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
 					<p className={classes.label}>Hold Time</p>
-					<FormControl
-						// className={clsx(classes.margin, classes.textField)}
-						variant="filled"
-					>
+					<FormControl variant="filled">
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
+							value={data.hold_time}
+							onChange={handleChange}
 							placeholder=""
-							type="number"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
-								"aria-label": "weight",
-								step: "0.1",
+								maxLength: 5,
 							}}
+							inputComponent={RegularNumberWithDecimalFormat as any}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
 					<p className={classes.label}>MKT</p>
-					<FormControl
-						// className={clsx(classes.margin, classes.textField)}
-						variant="filled"
-					>
+					<FormControl variant="filled">
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
-							type="number"
+							value={data.mkt}
+							onChange={handleChange}
 							inputProps={{
-								"aria-label": "weight",
-								step: "0.1",
+								maxLength: 5,
 							}}
+							inputComponent={RegularNumberWithDecimalFormat as any}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 				</Box>
 				<Box>
 					<p className={classes.label}>Auction List Price ($)</p>
-					<FormControl
-						// className={clsx(classes.margin, classes.textField)}
-						variant="filled"
-					>
+					<FormControl variant="filled">
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
+							value={data.auction_list_price}
+							onChange={handleChange}
 							inputProps={{
-								"aria-label": "weight",
+								maxLength: 11,
 							}}
+							inputComponent={NumberCurrencyFormatCustom as any}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 					<p className={classes.price} onClick={handleOpen}>
 						View Price History
@@ -683,9 +705,7 @@ const Buy = () => {
 								"aria-label": "weight",
 							}}
 						/>
-						<FormHelperText id="filled-weight-helper-text">
-							helper text
-						</FormHelperText>
+						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
 					<p className={classes.price} onClick={handleShow}>
 						View Bid History
@@ -704,17 +724,16 @@ const Buy = () => {
 							>
 								<FilledInput
 									id="filled-adornment-weight"
-									// value={values.weight}
-									// onChange={handleChange("weight")}
+									value={data.auction_agent}
+									onChange={handleChange}
+									name="auction_agent"
 									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
 									}}
 								/>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 						<Box>
@@ -725,17 +744,17 @@ const Buy = () => {
 							>
 								<FilledInput
 									id="filled-adornment-weight"
-									// value={values.weight}
-									// onChange={handleChange("weight")}
+									value={data.auction_agent_number}
+									onChange={handleChange}
+									name="auction_agent_number"
 									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
 									}}
+									inputComponent={PhoneNumberFormat as any}
 								/>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 						<Box>
@@ -746,17 +765,17 @@ const Buy = () => {
 							>
 								<FilledInput
 									id="filled-adornment-weight"
-									// value={values.weight}
-									// onChange={handleChange("weight")}
+									value={data.auction_agent_email}
+									onChange={handleChange}
+									name="auction_agent_email"
+									type="email"
 									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
 									}}
 								/>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 					</div>
@@ -769,17 +788,16 @@ const Buy = () => {
 							>
 								<FilledInput
 									id="filled-adornment-weight"
-									// value={values.weight}
-									// onChange={handleChange("weight")}
+									value={data.list_agent}
+									onChange={handleChange}
+									name="list_agent"
 									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
 									}}
 								/>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 						<Box>
@@ -790,17 +808,17 @@ const Buy = () => {
 							>
 								<FilledInput
 									id="filled-adornment-weight"
-									// value={values.weight}
-									// onChange={handleChange("weight")}
+									value={data.list_agent_number}
+									onChange={handleChange}
+									name="list_agent_number"
 									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
 									}}
+									inputComponent={PhoneNumberFormat as any}
 								/>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 						<Box>
@@ -811,17 +829,17 @@ const Buy = () => {
 							>
 								<FilledInput
 									id="filled-adornment-weight"
-									// value={values.weight}
-									// onChange={handleChange("weight")}
+									value={data.list_agent_email}
+									onChange={handleChange}
+									name="list_agent_email"
+									type="email"
 									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
 									}}
 								/>
-								<FormHelperText id="filled-weight-helper-text">
-									helper text
-								</FormHelperText>
+								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>
 					</div>
