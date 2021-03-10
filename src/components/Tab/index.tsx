@@ -155,7 +155,7 @@ const StatusTab = ({ handleClose, status }: tabProps) => {
 
 	return (
 		<>
-			{isVisible && (
+			{/* {isVisible && ( */}
 				<div className={classes.overlay} ref={visibleRef}>
 					<Box className={classes.iconBox} onClick={handleClose}>
 						<CancelOutlinedIcon className={classes.icon} />
@@ -185,7 +185,7 @@ const StatusTab = ({ handleClose, status }: tabProps) => {
 						</TabPanel>
 					</Paper>
 				</div>
-			)}
+			{/* )} */}
 		</>
 	);
 };

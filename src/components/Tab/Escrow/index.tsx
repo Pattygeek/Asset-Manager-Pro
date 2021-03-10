@@ -90,7 +90,7 @@ const Index = () => {
 								name: "age",
 								id: "filled-age-native-simple",
 							}}
-							placeholder="Label"
+							placeholder=""
 						>
 							<option aria-label="None" value="" />
 							<option value={10}>NEW ASSET</option>
@@ -114,7 +114,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="TPP"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -135,7 +135,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Potential Rehab"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -156,7 +156,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Potential LP"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -177,7 +177,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Potential Profit"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -198,7 +198,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Potential ROI"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -242,7 +242,7 @@ const Index = () => {
 									// value={values.weight}
 									// onChange={handleChange("weight")}
 									type="date"
-									placeholder="EST COE"
+									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
@@ -267,7 +267,7 @@ const Index = () => {
 										name: "age",
 										id: "filled-age-native-simple",
 									}}
-									placeholder="Label"
+									placeholder=""
 								>
 									<option aria-label="None" value="" />
 									<option value={10}>Occupied</option>
@@ -292,7 +292,7 @@ const Index = () => {
 										name: "age",
 										id: "filled-age-native-simple",
 									}}
-									placeholder="Label"
+									placeholder=""
 								>
 									<option aria-label="None" value="" />
 									<option value={10}>Yes</option>
@@ -317,7 +317,7 @@ const Index = () => {
 										name: "age",
 										id: "filled-age-native-simple",
 									}}
-									placeholder="Label"
+									placeholder=""
 								>
 									<option aria-label="None" value="" />
 									<option value={10}>Yes</option>
@@ -342,7 +342,7 @@ const Index = () => {
 										name: "age",
 										id: "filled-age-native-simple",
 									}}
-									placeholder="Label"
+									placeholder=""
 								>
 									<option aria-label="None" value="" />
 									<option value={10}>Yes</option>
@@ -367,7 +367,7 @@ const Index = () => {
 										name: "age",
 										id: "filled-age-native-simple",
 									}}
-									placeholder="Label"
+									placeholder=""
 								>
 									<option aria-label="None" value="" />
 									<option value={10}>Yes</option>
@@ -392,7 +392,7 @@ const Index = () => {
 										name: "age",
 										id: "filled-age-native-simple",
 									}}
-									placeholder="Label"
+									placeholder=""
 								>
 									<option aria-label="None" value="" />
 									<option value={10}>Yes</option>
@@ -417,7 +417,7 @@ const Index = () => {
 										name: "age",
 										id: "filled-age-native-simple",
 									}}
-									placeholder="Label"
+									placeholder=""
 								>
 									<option aria-label="None" value="" />
 									<option value={10}>Yes</option>
@@ -446,7 +446,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="List Agent"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -467,7 +467,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="List Agent Number"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -488,7 +488,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="List Agent Email"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -509,7 +509,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Auction Agent"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -530,7 +530,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Auction Agent Number"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -551,7 +551,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Auction Agent Email"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -576,7 +576,7 @@ const Index = () => {
 								name: "age",
 								id: "filled-age-native-simple",
 							}}
-							placeholder="Label"
+							placeholder=""
 						>
 							<option aria-label="None" value="" />
 							<option value={10}>Loan</option>
@@ -597,7 +597,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Loan Amount"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -618,7 +618,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Down Payment"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -639,7 +639,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Loan Interest"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -664,7 +664,7 @@ const Index = () => {
 								name: "age",
 								id: "filled-age-native-simple",
 							}}
-							placeholder="Label"
+							placeholder=""
 						>
 							<option aria-label="None" value="" />
 							<option value={10}>Yes</option>
@@ -686,7 +686,7 @@ const Index = () => {
 							// value={values.weight}
 							// onChange={handleChange("weight")}
 							type="date"
-							placeholder="Date Ordered"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -711,7 +711,7 @@ const Index = () => {
 								name: "age",
 								id: "filled-age-native-simple",
 							}}
-							placeholder="Label"
+							placeholder=""
 						>
 							<option aria-label="None" value="" />
 							<option value={10}>Yes</option>
@@ -736,12 +736,12 @@ const Index = () => {
 								name: "age",
 								id: "filled-age-native-simple",
 							}}
-							placeholder="Label"
+							placeholder=""
 						>
 							<option aria-label="None" value="" />
 							<option value={10}>Yes</option>
 							<option value={20}>No</option>
-						</Select>
+					</Select>
 						<FormHelperText id="filled-weight-helper-text">
 							helper text
 						</FormHelperText>
@@ -761,7 +761,7 @@ const Index = () => {
 								name: "age",
 								id: "filled-age-native-simple",
 							}}
-							placeholder="Label"
+							placeholder=""
 						>
 							<option aria-label="None" value="" />
 							<option value={10}>Yes</option>
@@ -786,7 +786,7 @@ const Index = () => {
 								name: "age",
 								id: "filled-age-native-simple",
 							}}
-							placeholder="Label"
+							placeholder=""
 						>
 							<option aria-label="None" value="" />
 							<option value={10}>Yes</option>
@@ -808,7 +808,7 @@ const Index = () => {
 							// value={values.weight}
 							// onChange={handleChange("weight")}
 							type="date"
-							placeholder="Bought Date"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",

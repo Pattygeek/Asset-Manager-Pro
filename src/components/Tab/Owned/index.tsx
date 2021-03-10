@@ -91,7 +91,7 @@ const Index = () => {
 								name: "age",
 								id: "filled-age-native-simple",
 							}}
-							placeholder="Label"
+							placeholder=""
 						>
 							<option aria-label="None" value="" />
 							<option value={10}>NEW ASSET</option>
@@ -115,7 +115,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="TPP"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -136,7 +136,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="List Price"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -157,7 +157,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Profit"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -178,7 +178,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="ROI"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -199,7 +199,7 @@ const Index = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="6.5"
+							placeholder=""
 							type="number"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
@@ -251,7 +251,7 @@ const Index = () => {
 										name: "age",
 										id: "filled-age-native-simple",
 									}}
-									placeholder="Label"
+									placeholder=""
 								>
 									<option aria-label="None" value="" />
 									<option value={10}>Occupied</option>
@@ -276,7 +276,7 @@ const Index = () => {
 										name: "age",
 										id: "filled-age-native-simple",
 									}}
-									placeholder="Label"
+									placeholder=""
 								>
 									<option aria-label="None" value="" />
 									<option value={10}>Yes</option>
@@ -323,7 +323,7 @@ const Index = () => {
 									// value={values.weight}
 									// onChange={handleChange("weight")}
 
-									placeholder="Product"
+									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
@@ -345,7 +345,7 @@ const Index = () => {
 									// value={values.weight}
 									// onChange={handleChange("weight")}
 
-									placeholder="Product"
+									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
@@ -367,7 +367,7 @@ const Index = () => {
 									// value={values.weight}
 									// onChange={handleChange("weight")}
 
-									placeholder="Product"
+									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
@@ -389,7 +389,7 @@ const Index = () => {
 									// value={values.weight}
 									// onChange={handleChange("weight")}
 
-									placeholder="Product"
+									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
@@ -411,7 +411,7 @@ const Index = () => {
 									// value={values.weight}
 									// onChange={handleChange("weight")}
 									type="date"
-									placeholder="Product"
+									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
@@ -433,7 +433,7 @@ const Index = () => {
 									// value={values.weight}
 									// onChange={handleChange("weight")}
 
-									placeholder="Product"
+									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
@@ -455,7 +455,7 @@ const Index = () => {
 									// value={values.weight}
 									// onChange={handleChange("weight")}
 
-									placeholder="Product"
+									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
@@ -477,7 +477,7 @@ const Index = () => {
 									// value={values.weight}
 									// onChange={handleChange("weight")}
 
-									placeholder="Product"
+									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
@@ -499,7 +499,7 @@ const Index = () => {
 									// value={values.weight}
 									// onChange={handleChange("weight")}
 
-									placeholder="Product"
+									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
@@ -521,7 +521,7 @@ const Index = () => {
 									// value={values.weight}
 									// onChange={handleChange("weight")}
 
-									placeholder="Product"
+									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
@@ -543,7 +543,7 @@ const Index = () => {
 									// value={values.weight}
 									// onChange={handleChange("weight")}
 
-									placeholder="Product"
+									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
@@ -565,7 +565,7 @@ const Index = () => {
 									// value={values.weight}
 									// onChange={handleChange("weight")}
 
-									placeholder="Product"
+									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
@@ -587,7 +587,7 @@ const Index = () => {
 									// value={values.weight}
 									// onChange={handleChange("weight")}
 
-									placeholder="Product"
+									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
@@ -609,7 +609,7 @@ const Index = () => {
 									// value={values.weight}
 									// onChange={handleChange("weight")}
 
-									placeholder="Product"
+									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
@@ -631,7 +631,7 @@ const Index = () => {
 									// value={values.weight}
 									// onChange={handleChange("weight")}
 
-									placeholder="Product"
+									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
@@ -653,7 +653,7 @@ const Index = () => {
 									// value={values.weight}
 									// onChange={handleChange("weight")}
 
-									placeholder="Product"
+									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
@@ -675,7 +675,7 @@ const Index = () => {
 									// value={values.weight}
 									// onChange={handleChange("weight")}
 
-									placeholder="Product"
+									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
@@ -708,7 +708,7 @@ const Index = () => {
 								name: "age",
 								id: "filled-age-native-simple",
 							}}
-							placeholder="Label"
+							placeholder=""
 						>
 							<option aria-label="None" value="" />
 							<option value={10}>Yes</option>
@@ -730,7 +730,7 @@ const Index = () => {
 							// value={values.weight}
 							// onChange={handleChange("weight")}
 
-							placeholder="Product"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -752,7 +752,7 @@ const Index = () => {
 							// value={values.weight}
 							// onChange={handleChange("weight")}
 
-							placeholder="Product"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -774,7 +774,7 @@ const Index = () => {
 							// value={values.weight}
 							// onChange={handleChange("weight")}
 
-							placeholder="Product"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -796,7 +796,7 @@ const Index = () => {
 							// value={values.weight}
 							// onChange={handleChange("weight")}
 
-							placeholder="Product"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -820,7 +820,7 @@ const Index = () => {
 							// value={values.weight}
 							// onChange={handleChange("weight")}
 
-							placeholder="Product"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -842,7 +842,7 @@ const Index = () => {
 							// value={values.weight}
 							// onChange={handleChange("weight")}
 
-							placeholder="Product"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -864,7 +864,7 @@ const Index = () => {
 							// value={values.weight}
 							// onChange={handleChange("weight")}
 
-							placeholder="Product"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -886,7 +886,7 @@ const Index = () => {
 							// value={values.weight}
 							// onChange={handleChange("weight")}
 
-							placeholder="Product"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -908,7 +908,7 @@ const Index = () => {
 							// value={values.weight}
 							// onChange={handleChange("weight")}
 							type="date"
-							placeholder="Product"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",

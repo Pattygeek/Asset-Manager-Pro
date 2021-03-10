@@ -100,6 +100,19 @@ const Buy = () => {
 
 	const images = [pix1, pix2, pix3, pix4, pix5, pix6];
 
+	const toCurrency = (number: number): any => {
+		const formatter = new Intl.NumberFormat("en-US", {
+			style: "currency",
+			currency: "USD",
+		});
+
+		return formatter.format(number);
+	};
+
+	const [st, setST] = useState(0);
+	const handleChange = (e: React.ChangeEvent<any>) => {
+		setST(e.target.value);
+	};
 	return (
 		<>
 			<div className={classes.div}>
@@ -117,7 +130,7 @@ const Buy = () => {
 								name: "age",
 								id: "filled-age-native-simple",
 							}}
-							placeholder="Label"
+							placeholder=""
 						>
 							<option aria-label="None" value="" />
 							<option value={10}>NEW ASSET</option>
@@ -145,7 +158,7 @@ const Buy = () => {
 								name: "age",
 								id: "filled-age-native-simple",
 							}}
-							placeholder="Label"
+							placeholder=""
 						>
 							<option aria-label="None" value="" />
 							<option value={10}>No Spread</option>
@@ -173,7 +186,7 @@ const Buy = () => {
 								name: "age",
 								id: "filled-age-native-simple",
 							}}
-							placeholder="Label"
+							placeholder=""
 						>
 							<option aria-label="None" value="" />
 							<option value={10}>Yes</option>
@@ -194,7 +207,7 @@ const Buy = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Label"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -219,7 +232,7 @@ const Buy = () => {
 								name: "age",
 								id: "filled-age-native-simple",
 							}}
-							placeholder="Label"
+							placeholder=""
 						>
 							<option aria-label="None" value="" />
 							<option value={10}>Occupied</option>
@@ -238,12 +251,14 @@ const Buy = () => {
 					>
 						<FilledInput
 							id="filled-adornment-weight"
-							// value={values.weight}
-							// onChange={handleChange("weight")}
-							placeholder="ST RSV"
+							value={toCurrency(st)}
+							onChange={handleChange}
+							// type="number"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
+								step: "1",
 							}}
 						/>
 						<FormHelperText id="filled-weight-helper-text">
@@ -261,7 +276,7 @@ const Buy = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Property Type"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -282,7 +297,7 @@ const Buy = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="SQFT"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -303,7 +318,7 @@ const Buy = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="BR"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -324,7 +339,7 @@ const Buy = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="BA"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -345,7 +360,7 @@ const Buy = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Lot"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -366,7 +381,7 @@ const Buy = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Year"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -409,7 +424,7 @@ const Buy = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Resale"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -442,7 +457,7 @@ const Buy = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Rehab"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -463,7 +478,7 @@ const Buy = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Buy Price"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -484,7 +499,7 @@ const Buy = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="TPP"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -505,7 +520,7 @@ const Buy = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Annual Taxes"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -526,7 +541,7 @@ const Buy = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="HUD Exp"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -549,7 +564,7 @@ const Buy = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Profit"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -570,7 +585,7 @@ const Buy = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="ROI"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -591,7 +606,7 @@ const Buy = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="6.5"
+							placeholder=""
 							type="number"
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
@@ -614,7 +629,7 @@ const Buy = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="6.5"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							type="number"
 							inputProps={{
@@ -637,7 +652,7 @@ const Buy = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="Auction List Price"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -662,7 +677,7 @@ const Buy = () => {
 							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
-							placeholder="High Bid"
+							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							inputProps={{
 								"aria-label": "weight",
@@ -691,7 +706,7 @@ const Buy = () => {
 									id="filled-adornment-weight"
 									// value={values.weight}
 									// onChange={handleChange("weight")}
-									placeholder="Auction Agent"
+									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
@@ -712,7 +727,7 @@ const Buy = () => {
 									id="filled-adornment-weight"
 									// value={values.weight}
 									// onChange={handleChange("weight")}
-									placeholder="Auction Agent Number"
+									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
@@ -733,7 +748,7 @@ const Buy = () => {
 									id="filled-adornment-weight"
 									// value={values.weight}
 									// onChange={handleChange("weight")}
-									placeholder="Auction Agent Email"
+									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
@@ -756,7 +771,7 @@ const Buy = () => {
 									id="filled-adornment-weight"
 									// value={values.weight}
 									// onChange={handleChange("weight")}
-									placeholder="List Agent"
+									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
@@ -777,7 +792,7 @@ const Buy = () => {
 									id="filled-adornment-weight"
 									// value={values.weight}
 									// onChange={handleChange("weight")}
-									placeholder="List Agent Number"
+									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
@@ -798,7 +813,7 @@ const Buy = () => {
 									id="filled-adornment-weight"
 									// value={values.weight}
 									// onChange={handleChange("weight")}
-									placeholder="List Agent Email"
+									placeholder=""
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
 										"aria-label": "weight",
