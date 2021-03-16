@@ -14,9 +14,10 @@ import useVisibleHook from "../../utils/useVisibleHook";
 interface tabProps {
 	handleClose: () => any;
 	status: string;
+	rowData: object;
 }
 
-const StatusTab = ({ handleClose, status }: tabProps) => {
+const StatusTab = ({ handleClose, status, rowData }: tabProps) => {
 	const useStyles = makeStyles((theme) => ({
 		root: {
 			boxShadow:
@@ -56,6 +57,8 @@ const StatusTab = ({ handleClose, status }: tabProps) => {
 	}));
 
 	const classes = useStyles();
+
+	console.log(rowData);
 
 	//switch statement to handle active tab according to the property status value
 	let statusValue: number;
@@ -156,35 +159,35 @@ const StatusTab = ({ handleClose, status }: tabProps) => {
 	return (
 		<>
 			{/* {isVisible && ( */}
-				<div className={classes.overlay} ref={visibleRef}>
-					<Box className={classes.iconBox} onClick={handleClose}>
-						<CancelOutlinedIcon className={classes.icon} />
-					</Box>
-					<Paper className={classes.root}>
-						<Tabs
-							value={value}
-							onChange={handleChange}
-							indicatorColor="primary"
-							textColor="primary"
-							centered
-						>
-							<Tab label="Buy" className={classes.text} />
-							<Tab label="Escrow" className={classes.text} />
-							<Tab label="Owned" className={classes.text} />
-						</Tabs>
-					</Paper>
-					<Paper className={classes.tab}>
-						<TabPanel value={value} index={0}>
-							<Buy />
-						</TabPanel>
-						<TabPanel value={value} index={1}>
-							<Escrow />
-						</TabPanel>
-						<TabPanel value={value} index={2}>
-							<Owned />
-						</TabPanel>
-					</Paper>
-				</div>
+			<div className={classes.overlay} ref={visibleRef}>
+				<Box className={classes.iconBox} onClick={handleClose}>
+					<CancelOutlinedIcon className={classes.icon} />
+				</Box>
+				<Paper className={classes.root}>
+					<Tabs
+						value={value}
+						onChange={handleChange}
+						indicatorColor="primary"
+						textColor="primary"
+						centered
+					>
+						<Tab label="Buy" className={classes.text} />
+						<Tab label="Escrow" className={classes.text} />
+						<Tab label="Owned" className={classes.text} />
+					</Tabs>
+				</Paper>
+				<Paper className={classes.tab}>
+					<TabPanel value={value} index={0}>
+						<Buy />
+					</TabPanel>
+					<TabPanel value={value} index={1}>
+						<Escrow />
+					</TabPanel>
+					<TabPanel value={value} index={2}>
+						<Owned />
+					</TabPanel>
+				</Paper>
+			</div>
 			{/* )} */}
 		</>
 	);

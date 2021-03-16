@@ -64,33 +64,45 @@ const ImageSlider = ({
 		};
 	}, [handleKeyPress]);
 
+	const [currentIndex, setCurrentIndex] = React.useState<any>(0);
+
+	const handleClickBack = () => {
+		if (currentIndex > 0) {
+			setCurrentIndex((state: any) => state - 1);
+		} else {
+			setCurrentIndex(images.length - 1);
+		}
+	};
+
+	const handleClickForward = () => {
+		if (currentIndex < images.length - 1) {
+			setCurrentIndex((state: any) => state + 1);
+		} else {
+			setCurrentIndex(0);
+		}
+	};
+
 	return (
 		<>
 			<Dialog open={open} onClose={handleClose} maxWidth="md">
-				<img src={images[index]} alt="" className={classes.image} />
+				<img src={images[currentIndex]} alt="" className={classes.image} />
 				<Box className={classes.box}>
-					{index !== 0 ? (
-						<ArrowBackIosOutlinedIcon
-							className={classes.icon}
-							onClick={() => idx("-")}
-						/>
-					) : (
-						""
-					)}
+					<ArrowBackIosOutlinedIcon
+						className={classes.icon}
+						// onClick={() => idx("-")}
+						onClick={handleClickBack}
+					/>
 
-					{index === images.length - 1 ? (
-						""
-					) : (
-						<ArrowForwardIosOutlinedIcon
-							className={classes.icon}
-							style={{ right: 5, position: "absolute" }}
-							onClick={() => idx("+")}
-						/>
-					)}
+					<ArrowForwardIosOutlinedIcon
+						className={classes.icon}
+						style={{ right: 5, position: "absolute" }}
+						// onClick={() => idx("+")}
+						onClick={handleClickForward}
+					/>
 				</Box>
 
 				<p className={classes.footer}>
-					{index + 1} of {images.length}
+					{currentIndex + 1} of {images.length}
 				</p>
 			</Dialog>
 		</>

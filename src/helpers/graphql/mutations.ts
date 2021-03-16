@@ -67,10 +67,51 @@ const REGISTER = gql`
 	}
 `;
 
+const ADD_CONTACT = gql`
+	mutation addcontact(
+		$contact_type: String
+		$contact_first_name: String
+		$contact_last_name: String
+		$contact_email: String
+		$contact_cell_phone: String
+		$contact_office_phone: String
+		$contact_fax_number: String
+		$contact_company: String
+		$contact_company_address: String
+		$contact_company_address_city: String
+		$contact_company_address_state: String
+		$contact_company_address_zip: String
+		$has_property: Boolean
+		$contact_title: String
+	) {
+		add_contact(
+			input: {
+				contact_type: $contact_type
+				contact_first_name: $contact_first_name
+				contact_last_name: $contact_last_name
+				contact_email: $contact_email
+				contact_cell_phone: $contact_cell_phone
+				contact_office_phone: $contact_office_phone
+				contact_fax_number: $contact_fax_number
+				contact_company: $contact_company
+				contact_company_address: $contact_company_address
+				contact_company_address_state: $contact_company_address_state
+				contact_company_address_zip: $contact_company_address_zip
+				contact_company_address_city: $contact_company_address_city
+				has_property: $has_property
+				contact_title: $contact_title
+			}
+		) {
+			message
+		}
+	}
+`;
+
 export {
 	PROPERTY_ENTRY,
 	PROCESS_ENTRY,
 	FORGOT_PASSWORD,
 	RESET_PASSWORD,
 	REGISTER,
+	ADD_CONTACT,
 };

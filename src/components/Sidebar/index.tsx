@@ -27,7 +27,7 @@ const Sidebar = ({ toggle, toggler }: SidebarProps) => {
 			position: toggle ? "relative" : "absolute",
 			top: 0,
 			display: "flex",
-			zIndex: +200,
+			zIndex: +500,
 			// width: "1px",
 			overflow: "hidden",
 			"&:hover": {

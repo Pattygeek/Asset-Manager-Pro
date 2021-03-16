@@ -137,7 +137,6 @@ const Buy = () => {
 		potential_roi: "",
 		loan_amount: "",
 		down_payment: "",
-		interest: "",
 		cfk_amount: "",
 		attorney_name: "",
 		water_co_number: "",
@@ -166,6 +165,15 @@ const Buy = () => {
 			[name]: value,
 		});
 	};
+
+	//function to get current year
+	const currentYear = () => {
+		let date = new Date();
+		let presentYear = date.getFullYear();
+		return presentYear;
+	};
+
+	//input validations that needs to be reviewed *BA, LOT, Year, HUDExp, INTEREST
 	return (
 		<>
 			<div className={classes.div}>
@@ -180,18 +188,34 @@ const Buy = () => {
 							value={data.status}
 							onChange={handleChange}
 							name="status"
-							// inputProps={{
-							// 	name: "age",
-							// 	id: "filled-age-native-simple",
-							// }}
-							placeholder=""
 						>
 							<option aria-label="None" value="" />
-							<option value={10}>NEW ASSET</option>
-							<option value={20}>NOT REVIEWED</option>
-							<option value={30}>NEW LEAD</option>
-							<option value={30}>RE-REVIEW</option>
-							<option value={30}>NOT INTERESTED</option>
+							<option value="new_asset">NEW ASSET</option>
+							<option value="not reviewed">NOT REVIEWED</option>
+							<option value="new_lead">NEW LEAD</option>
+							<option value="re_review">RE-REVIEW</option>
+							<option value="not_interested">NOT INTERESTED</option>
+							<option value="call_agent">CALL AGENT</option>
+							<option value="pending_intel">PENDING INTEL</option>
+							<option value="follow_up">FOLLOW UP</option>
+							<option value="bid_pending">BID PENDING</option>
+							<option value="proxy">PROXY</option>
+							<option value="bid">BID</option>
+							<option value="won">WON</option>
+							<option value="rejected">REJECTED</option>
+							<option value="sale_cancelled">SALE CANCELLED</option>
+							<option value="lost">LOST</option>
+							<option value="sold">AUCTION SOLD</option>
+							<option value="in_closing_b">IN CLOSING (B)</option>
+							<option value="closed">CLOSED</option>
+							<option value="occupied">OCCUPIED</option>
+							<option value="pending_vacancy">PENDING VACANCY</option>
+							<option value="in_eviction">IN EVICTION</option>
+							<option value="pending_bid">PENDING BID</option>
+							<option value="being_rehabbed">BEING REHABBED</option>
+							<option value="listed">LISTED</option>
+							<option value="in_closing_s">IN CLOSING (S)</option>
+							<option value="sold">SOLD</option>
 						</Select>
 						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
@@ -214,11 +238,14 @@ const Buy = () => {
 							placeholder=""
 						>
 							<option aria-label="None" value="" />
-							<option value={10}>No Spread</option>
-							<option value={20}>Too Rural</option>
-							<option value={30}>Too Much Work</option>
-							<option value={30}>Land Only</option>
-							<option value={30}>Hard Eviction</option>
+							<option value="no_spread">No Spread</option>
+							<option value="too_rural">Too Rural</option>
+							<option value="too_much_work">Too Much Work</option>
+							<option value="land_only">Land Only</option>
+							<option value="hard_eviction">Hard Eviction</option>
+							<option value="teardown">Teardown</option>
+							<option value="55+">55+</option>
+							<option value="raised_home">Raised Home</option>
 						</Select>
 						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
@@ -254,7 +281,6 @@ const Buy = () => {
 						variant="filled"
 					>
 						<FilledInput
-							id="filled-adornment-weight"
 							value={data.product}
 							onChange={handleChange}
 							name="product"
@@ -298,7 +324,6 @@ const Buy = () => {
 						variant="filled"
 					>
 						<FilledInput
-							id="filled-adornment-weight"
 							value={data.stRsv}
 							name="stRsv"
 							onChange={handleChange}
@@ -316,7 +341,6 @@ const Buy = () => {
 						variant="filled"
 					>
 						<FilledInput
-							id="filled-adornment-weight"
 							value={data.property_type}
 							onChange={handleChange}
 							name="property_type"
@@ -336,7 +360,6 @@ const Buy = () => {
 						variant="filled"
 					>
 						<FilledInput
-							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
 							placeholder=""
@@ -359,7 +382,6 @@ const Buy = () => {
 						variant="filled"
 					>
 						<FilledInput
-							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
 							placeholder=""
@@ -382,7 +404,6 @@ const Buy = () => {
 						variant="filled"
 					>
 						<FilledInput
-							id="filled-adornment-weight"
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							name="ba"
@@ -400,7 +421,6 @@ const Buy = () => {
 					<p className={classes.label}>Lot</p>
 					<FormControl variant="filled">
 						<FilledInput
-							id="filled-adornment-weight"
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							name="lot"
@@ -421,16 +441,18 @@ const Buy = () => {
 						variant="filled"
 					>
 						<FilledInput
-							id="filled-adornment-weight"
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							name="year"
+							type="number"
 							value={data.year}
 							onChange={handleChange}
 							inputProps={{
+								min: 1800,
+								max: currentYear(),
 								maxLength: 4, //TODO - Year format is not perfectly done, remember to come back to it.
 							}}
-							inputComponent={YearFormat as any}
+							// inputComponent={YearFormat as any}
 						/>
 						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
@@ -462,7 +484,6 @@ const Buy = () => {
 						variant="filled"
 					>
 						<FilledInput
-							id="filled-adornment-weight"
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							name="resale"
@@ -495,7 +516,6 @@ const Buy = () => {
 						variant="filled"
 					>
 						<FilledInput
-							id="filled-adornment-weight"
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							name="rehab"
@@ -516,7 +536,6 @@ const Buy = () => {
 						variant="filled"
 					>
 						<FilledInput
-							id="filled-adornment-weight"
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							name="buy_price"
@@ -537,7 +556,6 @@ const Buy = () => {
 						variant="filled"
 					>
 						<FilledInput
-							id="filled-adornment-weight"
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							name="tpp"
@@ -558,7 +576,6 @@ const Buy = () => {
 						variant="filled"
 					>
 						<FilledInput
-							id="filled-adornment-weight"
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							name="annual_tax"
@@ -579,14 +596,13 @@ const Buy = () => {
 						variant="filled"
 					>
 						<FilledInput
-							id="filled-adornment-weight"
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							name="hud_exp"
 							value={data.hud_exp}
 							onChange={handleChange}
 							inputProps={{
-								maxLength: 11,
+								maxLength: 6,
 							}}
 							inputComponent={PercentageFormat as any}
 						/>
@@ -602,7 +618,6 @@ const Buy = () => {
 						variant="filled"
 					>
 						<FilledInput
-							id="filled-adornment-weight"
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							name="profit"
@@ -620,7 +635,6 @@ const Buy = () => {
 					<p className={classes.label}>ROI %</p>
 					<FormControl variant="filled">
 						<FilledInput
-							id="filled-adornment-weight"
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							name="roi"
@@ -638,7 +652,6 @@ const Buy = () => {
 					<p className={classes.label}>Hold Time</p>
 					<FormControl variant="filled">
 						<FilledInput
-							id="filled-adornment-weight"
 							value={data.hold_time}
 							onChange={handleChange}
 							placeholder=""
@@ -655,7 +668,6 @@ const Buy = () => {
 					<p className={classes.label}>MKT</p>
 					<FormControl variant="filled">
 						<FilledInput
-							id="filled-adornment-weight"
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							value={data.mkt}
@@ -672,7 +684,6 @@ const Buy = () => {
 					<p className={classes.label}>Auction List Price ($)</p>
 					<FormControl variant="filled">
 						<FilledInput
-							id="filled-adornment-weight"
 							placeholder=""
 							aria-describedby="filled-weight-helper-text"
 							value={data.auction_list_price}
@@ -696,7 +707,6 @@ const Buy = () => {
 						variant="filled"
 					>
 						<FilledInput
-							id="filled-adornment-weight"
 							// value={values.weight}
 							// onChange={handleChange("weight")}
 							placeholder=""
@@ -723,7 +733,7 @@ const Buy = () => {
 								variant="filled"
 							>
 								<FilledInput
-									id="filled-adornment-weight"
+	
 									value={data.auction_agent}
 									onChange={handleChange}
 									name="auction_agent"
@@ -743,7 +753,7 @@ const Buy = () => {
 								variant="filled"
 							>
 								<FilledInput
-									id="filled-adornment-weight"
+	
 									value={data.auction_agent_number}
 									onChange={handleChange}
 									name="auction_agent_number"
@@ -764,7 +774,7 @@ const Buy = () => {
 								variant="filled"
 							>
 								<FilledInput
-									id="filled-adornment-weight"
+	
 									value={data.auction_agent_email}
 									onChange={handleChange}
 									name="auction_agent_email"
@@ -787,7 +797,7 @@ const Buy = () => {
 								variant="filled"
 							>
 								<FilledInput
-									id="filled-adornment-weight"
+	
 									value={data.list_agent}
 									onChange={handleChange}
 									name="list_agent"
@@ -807,7 +817,7 @@ const Buy = () => {
 								variant="filled"
 							>
 								<FilledInput
-									id="filled-adornment-weight"
+	
 									value={data.list_agent_number}
 									onChange={handleChange}
 									name="list_agent_number"
@@ -828,7 +838,7 @@ const Buy = () => {
 								variant="filled"
 							>
 								<FilledInput
-									id="filled-adornment-weight"
+	
 									value={data.list_agent_email}
 									onChange={handleChange}
 									name="list_agent_email"

@@ -91,8 +91,9 @@ export function YearFormat(props: NumberFormatCustomProps) {
 				});
 			}}
 			format="####"
-			mask={["Y", "Y", "Y", "Y"]}
+			mask={["YYYY"]}
 			isNumericString
+			decimalScale={0}
 		/>
 	);
 }

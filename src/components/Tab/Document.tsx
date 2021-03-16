@@ -33,32 +33,36 @@ const Document = () => {
 				boxShadow="2px 2px 4px rgba(0, 0, 0, 0.25)"
 			>
 				<p className={classes.heading}>Documents</p>
-				<Box
-					border={1}
-					borderRadius={4}
-					width="80%"
-					paddingY={1}
-					className={classes.price}
-					paddingX={2}
-					display="flex"
-					justifyContent="space-between"
-				>
-					Contractor Bid.zip
-					<ZipIcon className={classes.icon} />
-				</Box>
-				<Box
-					border={1}
-					borderRadius={4}
-					width="80%"
-					paddingY={1}
-					className={classes.price}
-					paddingX={2}
-					display="flex"
-					justifyContent="space-between"
-				>
-					Contractor Bid.zip
-					<ZipIcon className={classes.icon} />
-				</Box>
+				<a href="https://downloadpdf.com" target="_blank">
+					<Box
+						border={1}
+						borderRadius={4}
+						width="80%"
+						paddingY={1}
+						className={classes.price}
+						paddingX={2}
+						display="flex"
+						justifyContent="space-between"
+					>
+						Contractor Bid.zip
+						<ZipIcon className={classes.icon} />
+					</Box>
+				</a>
+				<a href="https://downloadpdf.com" target="_blank">
+					<Box
+						border={1}
+						borderRadius={4}
+						width="80%"
+						paddingY={1}
+						className={classes.price}
+						paddingX={2}
+						display="flex"
+						justifyContent="space-between"
+					>
+						Contractor Bid.zip
+						<ZipIcon className={classes.icon} />
+					</Box>
+				</a>
 				<Box
 					border={1}
 					borderRadius={4}

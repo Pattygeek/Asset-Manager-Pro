@@ -36,7 +36,7 @@ a:-webkit-any-link {
 }
 
 .MuiFilledInput-underline:before {
-	border-bottom: 2px solid #2196f3 !important;
+	border-bottom: 2px solid hsl(207, 90%, 54%) !important;
 }
 
 .MuiFilledInput-multiline {
@@ -127,7 +127,7 @@ body .handsontable th {
 	color: red;
 }
 
-.handsontable .greyRow {
+.htCore tr:nth-child(odd) td {
 	background: #f2f2f2;
 	border-right: 1px solid #f2f2f2;
 	border-bottom: 1px solid #fff;
@@ -175,4 +175,10 @@ body .handsontable ::-webkit-scrollbar-thumb {
 
 .handsontable .htDimmed {
 	color: rgba(0, 0, 0, 0.87) !important;
+}
+
+
+
+.MuiFormControl-marginNormal {
+    margin-top: 0px !important;
 }

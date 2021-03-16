@@ -1,14 +1,11 @@
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
-import Handsontable from "handsontable";
-import { HotTable, HotColumn } from "@handsontable/react";
-import React, { useState, useEffect, useRef, createRef } from "react";
+import { HotTable } from "@handsontable/react";
+import React, { useState, useRef } from "react";
 import { useQuery } from "@apollo/client";
 import { LIST_ALL_PROPERTY } from "../../helpers/graphql/queries";
 import { useToggle } from "../../helpers/contexts/toggleContext";
 import useVisibleHook from "../../utils/useVisibleHook";
-import ArrowBackIosOutlinedIcon from "@material-ui/icons/ArrowBackIosOutlined";
-import ArrowForwardIosOutlinedIcon from "@material-ui/icons/ArrowForwardIosOutlined";
 
 //components
 import { Tab } from "../../components";
@@ -59,6 +56,9 @@ const Home = () => {
 	const [state, setState] = useState({
 		rowHeights: 28,
 		columnHeaderHeight: 35,
+		viewportRowRenderingOffset: 20,
+		viewportColumnRenderingOffset: 15,
+		colWidths: 150,
 		columns: [
 			{
 				data: "checked",
@@ -87,19 +87,18 @@ const Home = () => {
 			{ data: "resale_price" },
 			{ data: "profit", readOnly: true },
 			{ data: "return_on_investment", readOnly: true },
-			{ data: "auction_agent" },
-			{ data: "auction_agent_number" },
-			{ data: "auction_agent_email" },
+			{ data: "contact_first_name" + "contact_last_name" },
+			{ data: "contact_cell_phone" },
+			{ data: "contact_email" },
 			{ data: "user" },
 			{ data: "property_status" },
 			{ data: "reason" },
 			{ data: "note" },
 			{ data: "access" },
-			{ data: "reason" },
 			{ data: "occupancy" },
 			{ data: "product", readOnly: true },
 			{ data: "prop_type" },
-			{ data: "sqft" },
+			{ data: "square_feet" },
 			{ data: "bed_rooms" },
 			{ data: "bath_rooms" },
 			{ data: "lot_size" },
@@ -113,12 +112,11 @@ const Home = () => {
 		autoWrapRow: true,
 		collapsibleColumns: true,
 		minCols: 44,
-		className: "htMiddle htCenter striped",
+		className: "htMiddle htCenter",
 		// hiddenColumns: true,
 		exportFile: true,
 		manualRowMove: true,
 		manualColumnMove: true,
-		contextMenu: true,
 		filters: true,
 		height: "inherit",
 		// dropdownMenu: true,
@@ -127,8 +125,9 @@ const Home = () => {
 		manualColumnResize: true,
 		allowInsertColumn: false,
 		allowRemoveColumn: false,
-		//rowHeaders: true,
-		// rowHeaders: ["checkbox", ""],
+		hiddenColumns: {
+			indicators: true,
+		},
 		colHeaders: [
 			"",
 			"Property ID",
@@ -174,13 +173,6 @@ const Home = () => {
 			"Sold Price",
 			"Auction Status",
 		],
-		cells: function (row: number) {
-			let cp: any = {};
-			if (row % 2 === 0) {
-				cp.className = "greyRow";
-			}
-			return cp;
-		},
 		licenseKey: "non-commercial-and-evaluation",
 	});
 
@@ -188,6 +180,9 @@ const Home = () => {
 
 	//state to handle propertyStatus
 	const [status, setStatus] = useState("");
+
+	//state to handle row data
+	const [rowData, setRowData] = useState({});
 
 	const { handleClickInside } = useVisibleHook(true);
 
@@ -207,7 +202,7 @@ const Home = () => {
 				var currentRowPropertyStatus = currentRowData["property_status"];
 				setStatus(currentRowPropertyStatus);
 			}
-			console.log(currentHandsonTable);
+			setRowData(currentRowData);
 		}
 	};
 
@@ -230,7 +225,13 @@ const Home = () => {
 							"---------",
 							"filter_action_bar",
 						]}
-
+						contextMenu={[
+							"alignment",
+							"cut",
+							"copy",
+							"hidden_columns_hide",
+							"hidden_columns_show",
+						]}
 						// rowHeaders={[
 
 						// 		type: "checkbox",
@@ -248,7 +249,11 @@ const Home = () => {
 					<ArrowBackIosOutlinedIcon />
 					<ArrowForwardIosOutlinedIcon />
 				</Box> */}
-				{open ? <Tab handleClose={handleTabClose} status={status} /> : ""}
+				{open ? (
+					<Tab handleClose={handleTabClose} status={status} rowData={rowData} />
+				) : (
+					""
+				)}
 			</Box>
 
 			{/* </Layout> */}
