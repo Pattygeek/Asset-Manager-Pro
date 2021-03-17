@@ -21,14 +21,15 @@ const History = () => {
 		licenseKey: "non-commercial-and-evaluation",
 		rowHeights: 28,
 		columnHeaderHeight: 35,
-		cells: function (row: number) {
-			let cp: any = {};
-			if (row % 2 === 0) {
-				cp.className = "greyRow";
-			}
-			return cp;
-		},
-		className: "htCenter htMiddle",
+		// cells: function (row: number) {
+		// 	let cp: any = {};
+		// 	if (row % 2 === 0) {
+		// 		cp.className = "greyRow";
+		// 	}
+		// 	return cp;
+		// },
+		className: "htMiddle htCenter",
+		// stretchH: "all",
 		data: [
 			{
 				address_zip: "11/12/20",
@@ -106,7 +107,6 @@ const History = () => {
 		],
 		minRows: 3,
 		filters: true,
-
 		columnSorting: true,
 		allowInsertColumn: false,
 		allowRemoveColumn: false,

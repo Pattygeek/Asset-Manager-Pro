@@ -10,6 +10,8 @@ import Escrow from "./Escrow";
 import Owned from "./Owned";
 import React from "react";
 import useVisibleHook from "../../utils/useVisibleHook";
+import { useQuery } from "@apollo/client";
+import { LIST_CONTACT } from "../../helpers/graphql/queries";
 
 interface tabProps {
 	handleClose: () => any;
@@ -31,7 +33,7 @@ const StatusTab = ({ handleClose, status, rowData }: tabProps) => {
 			position: "absolute",
 			padding: "8px",
 			top: 65,
-			zIndex: +5,
+			zIndex: +200,
 		},
 		icon: {
 			cursor: "pointer",
@@ -155,6 +157,16 @@ const StatusTab = ({ handleClose, status, rowData }: tabProps) => {
 
 	//visible hook
 	const { visibleRef, isVisible } = useVisibleHook(true);
+
+	const { loading, error, data } = useQuery(LIST_CONTACT, {
+		variables: {
+			limit: 20,
+		},
+	});
+
+	const contactData = data ? data?.list_paginated_contacts?.edges : {};
+
+	console.log(contactData);
 
 	return (
 		<>

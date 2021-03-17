@@ -204,10 +204,16 @@ const Index = () => {
 	};
 
 	//state and change handler for date
-	const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+	const [evictionDate, setEvictionDate] = useState<any>(new Date());
 
-	const handleDateChange = (date: Date | null) => {
-		setSelectedDate(date);
+	const handleEvictionDateChange = (date: Date | null) => {
+		setEvictionDate(date);
+	};
+
+	const [soldDate, setSoldDate] = useState<any>(new Date());
+
+	const handleSoldDateChange = (date: Date | null) => {
+		setSoldDate(date);
 	};
 	//===============end of date handler===================
 	return (
@@ -449,7 +455,6 @@ const Index = () => {
 									variant="filled"
 								>
 									<FilledInput
-	
 										name="cfk_amount"
 										value={data.hold_time}
 										onChange={handleChange}
@@ -468,7 +473,6 @@ const Index = () => {
 									variant="filled"
 								>
 									<FilledInput
-	
 										value={data.occupant}
 										onChange={handleChange}
 										name="occupant"
@@ -488,7 +492,6 @@ const Index = () => {
 									variant="filled"
 								>
 									<FilledInput
-	
 										value={data.occupant_number}
 										onChange={handleChange}
 										name="occupant_number"
@@ -509,7 +512,6 @@ const Index = () => {
 									variant="filled"
 								>
 									<FilledInput
-	
 										value={data.occupant_email}
 										onChange={handleChange}
 										name="occupant_email"
@@ -536,8 +538,8 @@ const Index = () => {
 										margin="normal"
 										id="date-picker-inline"
 										// label="Date picker inline"
-										value={selectedDate}
-										onChange={handleDateChange}
+										value={evictionDate}
+										onChange={handleEvictionDateChange}
 										KeyboardButtonProps={{
 											"aria-label": "change date",
 										}}
@@ -557,7 +559,6 @@ const Index = () => {
 									variant="filled"
 								>
 									<FilledInput
-	
 										value={data.attorney_name}
 										onChange={handleChange}
 										name="attorney_name"
@@ -577,7 +578,6 @@ const Index = () => {
 									variant="filled"
 								>
 									<FilledInput
-	
 										value={data.attorney_number}
 										onChange={handleChange}
 										name="attorney_number"
@@ -598,7 +598,6 @@ const Index = () => {
 									variant="filled"
 								>
 									<FilledInput
-	
 										value={data.attorney_email}
 										onChange={handleChange}
 										name="attorney_email"
@@ -619,7 +618,6 @@ const Index = () => {
 									variant="filled"
 								>
 									<FilledInput
-	
 										value={data.eviction_cost}
 										onChange={handleChange}
 										inputComponent={NumberCurrencyFormatCustom as any}
@@ -639,7 +637,6 @@ const Index = () => {
 									variant="filled"
 								>
 									<FilledInput
-	
 										value={data.water_co}
 										onChange={handleChange}
 										name="water_co"
@@ -659,7 +656,6 @@ const Index = () => {
 									variant="filled"
 								>
 									<FilledInput
-	
 										value={data.water_co_nuumber}
 										onChange={handleChange}
 										name="water_co_number"
@@ -680,7 +676,6 @@ const Index = () => {
 									variant="filled"
 								>
 									<FilledInput
-	
 										value={data.electric_co}
 										onChange={handleChange}
 										name="electric_co"
@@ -700,7 +695,6 @@ const Index = () => {
 									variant="filled"
 								>
 									<FilledInput
-	
 										value={data.electric_co_number}
 										onChange={handleChange}
 										name="electric_co_number"
@@ -721,7 +715,6 @@ const Index = () => {
 									variant="filled"
 								>
 									<FilledInput
-	
 										value={data.gas_co}
 										onChange={handleChange}
 										name="gas_co"
@@ -741,7 +734,6 @@ const Index = () => {
 									variant="filled"
 								>
 									<FilledInput
-	
 										value={data.gas_co_number}
 										onChange={handleChange}
 										inputComponent={PhoneNumberFormat as any}
@@ -762,7 +754,6 @@ const Index = () => {
 									variant="filled"
 								>
 									<FilledInput
-	
 										value={data.taxes}
 										onChange={handleChange}
 										name="taxes"
@@ -782,7 +773,6 @@ const Index = () => {
 									variant="filled"
 								>
 									<FilledInput
-	
 										value={data.taxes_number}
 										onChange={handleChange}
 										name="taxes_number"
@@ -1001,8 +991,8 @@ const Index = () => {
 								margin="normal"
 								id="date-picker-inline"
 								// label="Date picker inline"
-								value={selectedDate}
-								onChange={handleDateChange}
+								value={soldDate}
+								onChange={handleSoldDateChange}
 								KeyboardButtonProps={{
 									"aria-label": "change date",
 								}}

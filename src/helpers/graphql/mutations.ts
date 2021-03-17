@@ -69,7 +69,7 @@ const REGISTER = gql`
 
 const ADD_CONTACT = gql`
 	mutation addcontact(
-		$contact_type: String
+		$contact_type: ContactType
 		$contact_first_name: String
 		$contact_last_name: String
 		$contact_email: String

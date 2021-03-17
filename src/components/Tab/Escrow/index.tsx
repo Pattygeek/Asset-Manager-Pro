@@ -7,7 +7,6 @@ import Select from "@material-ui/core/Select";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Button from "@material-ui/core/Button";
 
-
 //assets & components
 import { ReactComponent as FileIcon } from "../../../assets/icons/file.svg";
 import History from "../History";
@@ -98,7 +97,7 @@ const useStyles = makeStyles(() => ({
 			right: 0,
 			pointerEvents: "none", // Transparent to the hover style.
 		},
-	
+
 		underline: {
 			"&:after": {
 				borderBottom: `2px solid #2196f3`,
@@ -196,11 +195,24 @@ const Index = () => {
 	};
 
 	//state and change handler for date
-	const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+	const [estDate, setEstDate] = useState<any>(new Date());
 
-	const handleDateChange = (date: Date | null) => {
-		setSelectedDate(date);
+	const handleEstDateChange = (date: Date | null) => {
+		setEstDate(date);
 	};
+
+	const [appraisalDate, setAppraisalDate] = useState<any>(new Date());
+
+	const handleAppraisalDateChange = (date: Date | null) => {
+		setAppraisalDate(date);
+	};
+
+	const [boughtDate, setBoughtDate] = useState<any>(new Date());
+
+	const handleBoughtDateChange = (date: Date | null) => {
+		setBoughtDate(date);
+	};
+
 	//===============end of date handler===================
 
 	return (
@@ -391,9 +403,9 @@ const Index = () => {
 										format="MM/dd/yyyy"
 										margin="normal"
 										id="date-picker-inline"
-										// label="Date picker inline"
-										value={selectedDate}
-										onChange={handleDateChange}
+										
+										value={estDate}
+										onChange={handleEstDateChange}
 										KeyboardButtonProps={{
 											"aria-label": "change date",
 										}}
@@ -820,8 +832,9 @@ const Index = () => {
 								margin="normal"
 								id="date-picker-inline"
 								// label="Date picker inline"
-								value={selectedDate}
-								onChange={handleDateChange}
+								name="appraisal"
+								value={appraisalDate}
+								onChange={handleAppraisalDateChange}
 								KeyboardButtonProps={{
 									"aria-label": "change date",
 								}}
@@ -943,8 +956,9 @@ const Index = () => {
 								margin="normal"
 								id="date-picker-inline"
 								// label="Date picker inline"
-								value={selectedDate}
-								onChange={handleDateChange}
+								name="bought"
+								value={boughtDate}
+								onChange={handleBoughtDateChange}
 								KeyboardButtonProps={{
 									"aria-label": "change date",
 								}}

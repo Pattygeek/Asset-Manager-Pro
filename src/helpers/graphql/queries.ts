@@ -7,7 +7,7 @@ const LIST_ALL_PROPERTY = gql`
 				_id
 				property_id
 				auction_event_id
-				contact_id{
+				contact_id {
 					contact_type
 					contact_first_name
 					contact_last_name
@@ -61,4 +61,24 @@ const LOGIN = gql`
 		}
 	}
 `;
-export { LIST_ALL_PROPERTY, LOGIN };
+
+const LIST_CONTACT = gql`
+	query list_contacts($cursor: String, $limit: Int) {
+		list_paginated_contacts(cursor: $cursor, limit: $limit) {
+			edges {
+				contact_email
+				contact_type
+				contact_first_name
+				contact_last_name
+				contact_cell_phone
+				contact_company
+				contact_company_address_state
+			}
+			page_info {
+				has_next_page
+				end_cursor
+			}
+		}
+	}
+`;
+export { LIST_ALL_PROPERTY, LOGIN, LIST_CONTACT };

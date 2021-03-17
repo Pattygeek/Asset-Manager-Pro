@@ -8,7 +8,7 @@ import { PROPERTY_ENTRY, PROCESS_ENTRY } from "../../helpers/graphql/mutations";
 import UploadStatus from "../../components/UploadStatus/index";
 import { ReactComponent as UploadSuccess } from "../../assets/icons/uploadSuccess.svg";
 import { ReactComponent as UploadFailure } from "../../assets/icons/uploadFailure.svg";
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 const useStyles = makeStyles(() => ({
 	icon: {
@@ -70,7 +70,27 @@ const UploadData = () => {
 			return res;
 		}
 
+		// function removeNAA(obj: any) {
+		// 	const fin: any = {};
+		// 	const fina: any = {};
+		// 	for (const key in obj) {
+		// 		fin[key] = {};
+		// 		fina[key] = {};
+		// 		for (const prop in obj[key]) {
+		// 			const removeFIN = obj["credit_bid"][prop].replace(/(#N\/A)+/g, "0");
+		// 			fina["credit_bid"][prop] =
+		// 				obj["credit_bid"][prop] == "N/A"
+		// 					? removeFIN
+		// 					: obj["credit_bid"][prop];
+		// 					fin["credit_bid"][prop] = obj["credit_bid"][prop];
+		// 		}
+		// 	}
+		// 	return fin;
+		// }
+
 		var rest = convertIntObj(result);
+
+		// var rest2 = removeNAA(rest);
 
 		var arrayResult = Object.values(rest);
 		// console.log(arrayResult)
@@ -142,7 +162,7 @@ const UploadData = () => {
 		},
 	});
 
-	const [countProcessedRecords, setCountProcessedRecords] = useState<any>(null)
+	const [countProcessedRecords, setCountProcessedRecords] = useState<any>(null);
 
 	//second api call
 	const [
@@ -307,7 +327,6 @@ const UploadData = () => {
 				) : (
 					""
 				)}
-				
 			</Box>
 		</>
 	);

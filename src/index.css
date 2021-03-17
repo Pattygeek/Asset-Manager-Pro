@@ -123,16 +123,13 @@ body .handsontable td {
 	font-size: 12px;
 }
 
-body .handsontable th {
-	color: red;
-}
 
 .htCore tr:nth-child(odd) td {
 	background: #f2f2f2;
 	border-right: 1px solid #f2f2f2;
 	border-bottom: 1px solid #fff;
-	text-align: center;
-	vertical-align: middle;
+	/* text-align: center;
+	vertical-align: middle; */
 	font-size: 12px;
 }
 
@@ -170,7 +167,7 @@ body .handsontable ::-webkit-scrollbar-thumb {
 
 .handsontable table {
 	border-radius: 4px !important;
-	border: 1pz solid #fff !important;
+	border: 1px solid #fff !important;
 }
 
 .handsontable .htDimmed {

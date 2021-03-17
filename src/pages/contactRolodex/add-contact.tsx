@@ -2,11 +2,19 @@ import Box from "@material-ui/core/Box";
 import Select from "@material-ui/core/Select";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Alert from "@material-ui/lab/Alert";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import FilledInput from "@material-ui/core/FilledInput";
 import Button from "@material-ui/core/Button";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useMutation } from "@apollo/client";
+import { ADD_CONTACT } from "../../helpers/graphql/mutations";
+import { useState } from "react";
+import IconButton from "@material-ui/core/IconButton";
+import Collapse from "@material-ui/core/Collapse";
+import CloseIcon from "@material-ui/icons/Close";
 
 const useStyles = makeStyles(() => ({
 	div: {
@@ -33,20 +41,40 @@ const useStyles = makeStyles(() => ({
 }));
 
 const validationSchema = Yup.object().shape({
-	contact_email: Yup.string().email().required("This field is required"),
+	contact_email: Yup.string()
+		.email("Please enter a valid email")
+		.required("This field is required"),
 	contact_cell_phone: Yup.string().required("This field is required"),
 	contact_office_phone: Yup.string().required("This field is required"),
 	contact_fax_number: Yup.string().required("This field is required"),
 	contact_company: Yup.string().required("This field is required"),
 	contact_company_address: Yup.string().required("This field is required"),
 	contact_title: Yup.string().required("This field is required"),
-	contact_business_relation: Yup.string().required("This field is required"),
+	contact_type: Yup.string().required("This field is required"),
 	contact_first_name: Yup.string().required("This field is required"),
 	contact_last_name: Yup.string().required("This field is required"),
 });
 
 const AddContact = () => {
 	const classes = useStyles();
+
+	const [success, setSuccess] = useState("");
+
+	//this state handles the alert
+	const [open, setOpen] = useState(false);
+
+	//add_contact mutation
+	const [add_contact, { loading, error }] = useMutation(ADD_CONTACT, {
+		onCompleted({ add_contact }) {
+			setSuccess(add_contact.message);
+			setOpen(true);
+			formik.resetForm();
+		},
+		onError(err) {
+			console.log(err);
+			return null;
+		},
+	});
 
 	const formik = useFormik({
 		initialValues: {
@@ -56,26 +84,57 @@ const AddContact = () => {
 			contact_fax_number: "",
 			contact_company: "",
 			contact_title: "",
-			contact_business_relation: "",
+			contact_type: "",
 			contact_first_name: "",
 			contact_last_name: "",
 			contact_company_address: "",
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values) => {
-			alert(JSON.stringify(values, null, 2));
-			// default_user_login({
-			// 	variables: {
-			// 		email: values.email,
-			// 		password: values.password,
-			// 	},
-			// });
+			//alert(JSON.stringify(values, null, 2));
+			add_contact({
+				variables: {
+					contact_type: "AUCTION", //confirm this from Zen. What is other types need to be added like AGENT and ATTORNEY, there should be a fiels to select on the frontend.
+					contact_first_name: values.contact_first_name,
+					contact_last_name: values.contact_last_name,
+					contact_email: values.contact_email,
+					contact_cell_phone: values.contact_cell_phone,
+					contact_office_phone: values.contact_office_phone,
+					contact_fax_number: values.contact_fax_number,
+					contact_company: values.contact_company,
+					contact_company_address: values.contact_company_address,
+					contact_title: values.contact_title,
+				},
+			});
 		},
 	});
 
 	return (
 		<>
 			<form onSubmit={formik.handleSubmit} className={classes.form}>
+				<Collapse in={open}>
+					<Box mt={3}>
+						<Alert
+							severity="success"
+							variant="filled"
+							action={
+								<IconButton
+									aria-label="close"
+									color="inherit"
+									size="small"
+									onClick={() => {
+										setOpen(false);
+									}}
+								>
+									<CloseIcon fontSize="inherit" />
+								</IconButton>
+							}
+						>
+							{success}
+						</Alert>
+					</Box>
+				</Collapse>
+
 				<Box marginX="auto" marginTop={10}>
 					<div className={classes.div}>
 						<Box>
@@ -86,8 +145,8 @@ const AddContact = () => {
 							>
 								<Select
 									native
-									name="contact_business_relation"
-									value={formik.values.contact_business_relation}
+									name="contact_type"
+									value={formik.values.contact_type}
 									onChange={formik.handleChange}
 									// inputProps={{
 									// 	name: "contact_business_relation",
@@ -96,19 +155,17 @@ const AddContact = () => {
 									placeholder="Label"
 								>
 									<option aria-label="None" value="" />
-									<option value={10}>NEW ASSET</option>
-									<option value={20}>NOT REVIEWED</option>
-									<option value={30}>NEW LEAD</option>
-									<option value={30}>RE-REVIEW</option>
-									<option value={30}>NOT INTERESTED</option>
+									<option value="AUCTION">Auction Agent</option>
+									<option value="AGENT">List Agent</option>
+									<option value="ATTORNEY">Attorney</option>
 								</Select>
 								<FormHelperText
 									id="filled-weight-helper-text"
 									className={classes.helperText}
 								>
-									{formik.errors.contact_business_relation &&
-										formik.touched.contact_business_relation &&
-										formik.errors.contact_business_relation}
+									{formik.errors.contact_type &&
+										formik.touched.contact_type &&
+										formik.errors.contact_type}
 								</FormHelperText>
 							</FormControl>
 						</Box>
@@ -304,7 +361,7 @@ const AddContact = () => {
 									name="contact_email"
 									value={formik.values.contact_email}
 									onChange={formik.handleChange}
-									type="email"
+									// type="email"
 									placeholder="Label"
 									aria-describedby="filled-weight-helper-text"
 									inputProps={{
@@ -354,8 +411,9 @@ const AddContact = () => {
 							variant="contained"
 							className={classes.button}
 							type="submit"
+							disabled={loading ? true : false}
 						>
-							Add Contact
+							{loading ? <CircularProgress /> : "Add Contact"}
 						</Button>
 					</Box>
 				</Box>
