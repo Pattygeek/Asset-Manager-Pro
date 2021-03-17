@@ -11,6 +11,7 @@ import Button from "@material-ui/core/Button";
 
 //assets & components
 import { ReactComponent as FileIcon } from "../../../assets/icons/file.svg";
+import AutoComplete from "../../ContactsAutocomplete";
 import PhotoBox from "./PhotoBox";
 import pix1 from "../../../assets/images/pix1.png";
 import pix2 from "../../../assets/images/pix2.png";
@@ -78,9 +79,22 @@ const useStyles = makeStyles((theme) => ({
 		width: "18px",
 		margin: "auto 10px auto 0px",
 	},
+	box: {
+		cursor: "pointer",
+		padding: "2px 0px 2px 8px",
+		// position:"absolute",
+		// zIn
+		"&:hover": {
+			backgroundColor: "#f7f7f7",
+		},
+	},
 }));
 
-const Buy = () => {
+interface BuyProps {
+	options: any[];
+}
+
+const Buy = ({ options }: BuyProps) => {
 	const classes = useStyles();
 
 	//================pricehistory modal handler==============
@@ -156,6 +170,58 @@ const Buy = () => {
 		status: "",
 		property_type: "",
 	});
+
+	//state for contact filtering
+	const [contactState, setContactState] = useState({
+		filteredOption: [],
+		userInput: data.auction_agent,
+		showOptions: false,
+		activeOption: 0,
+	});
+
+	console.log(options);
+
+	const [optionList, setOptionList] = useState<any[]>([]);
+	let optionData;
+	let filteredOption;
+
+	const handleAuctionChange = (event: React.ChangeEvent<any>) => {
+		const { name, value } = event.target;
+		setData({
+			...data,
+			auction_agent: value,
+		});
+
+		filteredOption = options.filter((optionName: any) =>
+			optionName.contact_first_name.toLowerCase().includes(event.target.value)
+		);
+
+		setOptionList(filteredOption);
+	};
+
+	//state handler for autocomplete
+	const [openDiv, setOpenDiv] = useState(false);
+
+	if (optionList?.length > 0 && data.auction_agent != "") {
+		optionData = optionList?.map((option: any) => (
+			<Box
+				className={classes.box}
+				key={option._id}
+				onClick={() =>
+					setData({
+						...data,
+						auction_agent: option.contact_first_name,
+						auction_agent_email: option.contact_email,
+						auction_agent_number: option.contact_cell_phone,
+					})
+				}
+			>
+				{option.contact_first_name}
+			</Box>
+		));
+	} else if (optionList?.length == 0 && data.auction_agent != "") {
+		optionData = <Box className={classes.box}>No options</Box>;
+	}
 
 	//onchange handler for input fields
 	const handleChange = (event: React.ChangeEvent<any>) => {
@@ -733,9 +799,8 @@ const Buy = () => {
 								variant="filled"
 							>
 								<FilledInput
-	
 									value={data.auction_agent}
-									onChange={handleChange}
+									onChange={handleAuctionChange}
 									name="auction_agent"
 									placeholder=""
 									aria-describedby="filled-weight-helper-text"
@@ -753,7 +818,6 @@ const Buy = () => {
 								variant="filled"
 							>
 								<FilledInput
-	
 									value={data.auction_agent_number}
 									onChange={handleChange}
 									name="auction_agent_number"
@@ -774,7 +838,6 @@ const Buy = () => {
 								variant="filled"
 							>
 								<FilledInput
-	
 									value={data.auction_agent_email}
 									onChange={handleChange}
 									name="auction_agent_email"
@@ -789,6 +852,12 @@ const Buy = () => {
 							</FormControl>
 						</Box>
 					</div>
+					<AutoComplete
+						options={options}
+						input={data.auction_agent}
+						optionData={optionData}
+						optionList={optionList}
+					/>
 					<div className={classes.sectionDiv}>
 						<Box>
 							<p className={classes.label}>List Agent</p>
@@ -797,7 +866,6 @@ const Buy = () => {
 								variant="filled"
 							>
 								<FilledInput
-	
 									value={data.list_agent}
 									onChange={handleChange}
 									name="list_agent"
@@ -817,7 +885,6 @@ const Buy = () => {
 								variant="filled"
 							>
 								<FilledInput
-	
 									value={data.list_agent_number}
 									onChange={handleChange}
 									name="list_agent_number"
@@ -838,7 +905,6 @@ const Buy = () => {
 								variant="filled"
 							>
 								<FilledInput
-	
 									value={data.list_agent_email}
 									onChange={handleChange}
 									name="list_agent_email"

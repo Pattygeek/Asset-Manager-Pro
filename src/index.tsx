@@ -7,12 +7,15 @@ import "handsontable/dist/handsontable.full.css";
 import { ApolloProvider } from "@apollo/client";
 import client from "./helpers/graphql/client";
 import { ToggleProvider } from "./helpers/contexts/toggleContext";
+// import ContactsContext from "./helpers/contexts/contactsContext";
 
 ReactDOM.render(
 	<React.StrictMode>
 		<ApolloProvider client={client}>
 			<ToggleProvider>
+				{/* <ContactsContext> */}
 				<App />
+				{/* </ContactsContext> */}
 			</ToggleProvider>
 		</ApolloProvider>
 	</React.StrictMode>,

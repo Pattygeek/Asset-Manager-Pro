@@ -63,9 +63,7 @@ const Contact = () => {
 		contextMenu: true,
 		filters: true,
 		columnSorting: true,
-		stretchH: "all",
 		colHeaders: [
-			"",
 			"Name",
 			"Email",
 			"Phone Number",
@@ -75,13 +73,12 @@ const Contact = () => {
 		],
 		className: "htMiddle htCenter",
 		columns: [
-			{ data: "" },
 			{ data: "contact_first_name", readOnly: true },
 			{ data: "contact_email", readOnly: true },
 			{ data: "contact_cell_phone", readOnly: true },
 			{ data: "contact_type", readOnly: true },
 			{ data: "contact_company", readOnly: true },
-			{ data: "contact_company_address_state", readOnly: true},
+			{ data: "contact_company_address_state", readOnly: true },
 		],
 		licenseKey: "non-commercial-and-evaluation",
 	});
@@ -139,6 +136,7 @@ const Contact = () => {
 					<HotTable
 						settings={state}
 						id="hot"
+						stretchH="all"
 						data={data?.list_paginated_contacts?.edges}
 						dropdownMenu={[
 							"alignment",

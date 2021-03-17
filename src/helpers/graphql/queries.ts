@@ -26,10 +26,10 @@ const LIST_ALL_PROPERTY = gql`
 				is_judicial_state
 				buy_price
 				resale_price
-				resale_price_redbell
-				resale_price_zestimate
-				resale_price_realtor_com
-				resale_price_redfin
+				redbell
+				zestimate
+				realtor_com
+				resale_price
 				am_resale
 				resale_agent_confirmation
 				rehabilitation_cost
@@ -47,7 +47,7 @@ const LIST_ALL_PROPERTY = gql`
 				previous_listed_price
 				run_number
 				interior_access
-				red_bell
+				redbell
 				zillow
 			}
 		}
@@ -66,6 +66,7 @@ const LIST_CONTACT = gql`
 	query list_contacts($cursor: String, $limit: Int) {
 		list_paginated_contacts(cursor: $cursor, limit: $limit) {
 			edges {
+				_id
 				contact_email
 				contact_type
 				contact_first_name

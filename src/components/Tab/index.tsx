@@ -12,6 +12,7 @@ import React from "react";
 import useVisibleHook from "../../utils/useVisibleHook";
 import { useQuery } from "@apollo/client";
 import { LIST_CONTACT } from "../../helpers/graphql/queries";
+// import { useContacts } from "../../helpers/contexts/contactsContext";
 
 interface tabProps {
 	handleClose: () => any;
@@ -164,7 +165,9 @@ const StatusTab = ({ handleClose, status, rowData }: tabProps) => {
 		},
 	});
 
-	const contactData = data ? data?.list_paginated_contacts?.edges : {};
+	const contactData = data ? data?.list_paginated_contacts?.edges : [];
+
+	// const { handleSetContact } = useContacts();
 
 	console.log(contactData);
 
@@ -190,7 +193,7 @@ const StatusTab = ({ handleClose, status, rowData }: tabProps) => {
 				</Paper>
 				<Paper className={classes.tab}>
 					<TabPanel value={value} index={0}>
-						<Buy />
+						<Buy options={contactData} />
 					</TabPanel>
 					<TabPanel value={value} index={1}>
 						<Escrow />
