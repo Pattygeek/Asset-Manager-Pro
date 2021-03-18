@@ -31,13 +31,7 @@ const Utilities = () => {
 		rowHeights: 28,
 		columnHeaderHeight: 35,
 		width: 800,
-		cells: function (row: number) {
-			let cp: any = {};
-			if (row % 2 === 0) {
-				cp.className = "greyRow";
-			}
-			return cp;
-		},
+		height: "auto",
 		className: "htCenter htMiddle",
 		data: [
 			{

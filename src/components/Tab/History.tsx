@@ -97,6 +97,7 @@ const History = () => {
 			},
 		],
 		width: "100%",
+		height: "auto",
 		columns: [
 			{ data: "address_zip", readOnly: true, width: 90 },
 			{ data: "address_state", readOnly: true, width: 90 },
@@ -119,6 +120,7 @@ const History = () => {
 				boxShadow="2px 2px 4px rgba(0, 0, 0, 0.25)"
 				borderColor="#ececec"
 				height="fit-content"
+				marginBottom={6}
 			>
 				<Box className={classes.box}>History</Box>
 

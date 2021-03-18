@@ -28,8 +28,10 @@ const StatusTab = ({ handleClose, status, rowData }: tabProps) => {
 		},
 		overlay: {
 			width: "100%",
+			height: "100%",
 			margin: "0px auto",
 			overflowX: "hidden",
+			// overflowY: "scroll",
 			backgroundColor: "white",
 			position: "absolute",
 			padding: "8px",
@@ -53,6 +55,8 @@ const StatusTab = ({ handleClose, status, rowData }: tabProps) => {
 		},
 		tab: {
 			marginTop: "8px",
+			marginBottom: "8px",
+			// overflowY: "scroll",
 		},
 		text: {
 			textTransform: "capitalize",

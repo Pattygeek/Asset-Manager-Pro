@@ -32,7 +32,7 @@ const Home = () => {
 			// width: "95%",
 			margin: "24px auto",
 			overflowX: "hidden",
-			overflowY: "auto",
+			overflowY: "hidden",
 			position: "relative",
 			display: "flex",
 			flexDirection: "column",
@@ -46,7 +46,7 @@ const Home = () => {
 
 	const { loading, error, data, fetchMore } = useQuery(LIST_ALL_PROPERTY, {
 		variables: {
-			limit: 20,
+			limit: 50,
 		},
 	});
 
@@ -118,7 +118,7 @@ const Home = () => {
 		manualRowMove: true,
 		manualColumnMove: true,
 		filters: true,
-		height: "inherit",
+		height: "100%",
 		// dropdownMenu: true,
 		manualRowResize: true,
 		columnSorting: true,

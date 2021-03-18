@@ -23,9 +23,9 @@ a:-webkit-any-link {
 .MuiFormControl-root {
 	width: 100%;
 }
-.wtHolder {
+/* .wtHolder {
 	height: fit-content !important;
-}
+} */
 
 .handsontable th {
 	vertical-align: middle !important;
@@ -84,6 +84,10 @@ a:-webkit-any-link {
 	z-index: +2060 !important;
 	position: absolute !important;
 	/* display: none !important; */
+}
+
+.htFiltersConditionsMenu{
+	z-index: +2560 !important;
 }
 /* .handsontable .stripped {
 	background-color: #f2f2f2;

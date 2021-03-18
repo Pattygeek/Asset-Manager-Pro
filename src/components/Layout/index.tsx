@@ -32,7 +32,7 @@ const Layout = () => {
 			width: toggle ? "calc(100% - 256px)" : "100%",
 			// width: "100%",
 			// marginLeft: "0px",
-			// overflowX: "hidden",
+			overflowY: "hidden",
 		},
 		main: {
 			width: "100%",
