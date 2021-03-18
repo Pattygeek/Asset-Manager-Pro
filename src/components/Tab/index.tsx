@@ -197,13 +197,13 @@ const StatusTab = ({ handleClose, status, rowData }: tabProps) => {
 				</Paper>
 				<Paper className={classes.tab}>
 					<TabPanel value={value} index={0}>
-						<Buy options={contactData} />
+						<Buy options={contactData} rowData={rowData} />
 					</TabPanel>
 					<TabPanel value={value} index={1}>
-						<Escrow />
+						<Escrow rowData={rowData} />
 					</TabPanel>
 					<TabPanel value={value} index={2}>
-						<Owned />
+						<Owned rowData={rowData} />
 					</TabPanel>
 				</Paper>
 			</div>

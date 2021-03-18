@@ -7,8 +7,10 @@ import { LIST_ALL_PROPERTY } from "../../helpers/graphql/queries";
 import { useToggle } from "../../helpers/contexts/toggleContext";
 import useVisibleHook from "../../utils/useVisibleHook";
 
+
 //components
 import { Tab } from "../../components";
+import { PropertyRecord } from "../../components/Types";
 
 const Home = () => {
 	const { toggle } = useToggle();
@@ -182,7 +184,7 @@ const Home = () => {
 	const [status, setStatus] = useState("");
 
 	//state to handle row data
-	const [rowData, setRowData] = useState({});
+	const [rowData, setRowData] = useState<PropertyRecord>({});
 
 	const { handleClickInside } = useVisibleHook(true);
 

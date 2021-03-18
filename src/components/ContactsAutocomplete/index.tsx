@@ -20,35 +20,7 @@ interface AutoCompleteProps {
 
 const AutoComplete = ({ optionData, optionList, input }: AutoCompleteProps) => {
 	const classes = useStyles();
-
-	// console.log(options);
-	// let optionList: any;
-
-	// let optionData;
-
-	// console.log(input);
-
-	// if (input) {
-	// 	optionList = options.filter((optionName: any) =>
-	// 		optionName.contact_first_name.toLowerCase().includes(input)
-	// 	);
-	// }
-
-	// if (optionList?.length > 0 && input != "") {
-	// 	optionData = optionList.map((option: any) => (
-	// 		<Box
-	// 			className={classes.box}
-	// 			key={option._id}
-	// 			onClick={() => (input = option.contact_first_name)}
-	// 		>
-	// 			{option.contact_first_name}
-	// 		</Box>
-	// 	));
-	// } else if (optionList?.length == 0 && input != "") {
-	// 	optionData = <Box className={classes.box}>No options</Box>;
-	// }
-
-	// console.log(optionList);
+	
 	return (
 		<>
 			{optionList && input != "" && (

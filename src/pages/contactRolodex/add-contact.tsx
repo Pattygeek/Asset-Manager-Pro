@@ -53,6 +53,11 @@ const validationSchema = Yup.object().shape({
 	contact_type: Yup.string().required("This field is required"),
 	contact_first_name: Yup.string().required("This field is required"),
 	contact_last_name: Yup.string().required("This field is required"),
+	contact_company_address_zip: Yup.string().required("This field is required"),
+	contact_company_address_city: Yup.string().required("This field is required"),
+	contact_company_address_state: Yup.string().required(
+		"This field is required"
+	),
 });
 
 const AddContact = () => {
@@ -62,6 +67,7 @@ const AddContact = () => {
 
 	//this state handles the alert
 	const [open, setOpen] = useState(false);
+	const [errorOpen, setErrorOpen] = useState(false);
 
 	//add_contact mutation
 	const [add_contact, { loading, error }] = useMutation(ADD_CONTACT, {
@@ -71,6 +77,7 @@ const AddContact = () => {
 			formik.resetForm();
 		},
 		onError(err) {
+			setErrorOpen(true);
 			console.log(err);
 			return null;
 		},
@@ -88,13 +95,16 @@ const AddContact = () => {
 			contact_first_name: "",
 			contact_last_name: "",
 			contact_company_address: "",
+			contact_company_address_zip: "",
+			contact_company_address_city: "",
+			contact_company_address_state: "",
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values) => {
 			//alert(JSON.stringify(values, null, 2));
 			add_contact({
 				variables: {
-					contact_type: "AUCTION", //confirm this from Zen. What is other types need to be added like AGENT and ATTORNEY, there should be a fiels to select on the frontend.
+					contact_type: values.contact_type,
 					contact_first_name: values.contact_first_name,
 					contact_last_name: values.contact_last_name,
 					contact_email: values.contact_email,
@@ -104,6 +114,9 @@ const AddContact = () => {
 					contact_company: values.contact_company,
 					contact_company_address: values.contact_company_address,
 					contact_title: values.contact_title,
+					contact_company_address_city: values.contact_company_address_city,
+					contact_company_address_state: values.contact_company_address_state,
+					contact_company_address_zip: values.contact_company_address_zip,
 				},
 			});
 		},
@@ -134,6 +147,32 @@ const AddContact = () => {
 						</Alert>
 					</Box>
 				</Collapse>
+				{error ? (
+					<Collapse in={errorOpen}>
+						<Box mt={3}>
+							<Alert
+								severity="error"
+								variant="filled"
+								action={
+									<IconButton
+										aria-label="close"
+										color="inherit"
+										size="small"
+										onClick={() => {
+											setErrorOpen(false);
+										}}
+									>
+										<CloseIcon fontSize="inherit" />
+									</IconButton>
+								}
+							>
+								An error occurred, contact was not successfully added. Try again
+							</Alert>
+						</Box>
+					</Collapse>
+				) : (
+					""
+				)}
 
 				<Box marginX="auto" marginTop={10}>
 					<div className={classes.div}>
@@ -158,11 +197,11 @@ const AddContact = () => {
 									<option value="AUCTION">Auction Agent</option>
 									<option value="AGENT">List Agent</option>
 									<option value="ATTORNEY">Attorney</option>
+									<option value="CLOSING_OFFICE">Closing Office</option>
+									<option value="DESIGNER">Designer</option>
+									<option value="GC">G.C</option>
 								</Select>
-								<FormHelperText
-									id="filled-weight-helper-text"
-									className={classes.helperText}
-								>
+								<FormHelperText className={classes.helperText}>
 									{formik.errors.contact_type &&
 										formik.touched.contact_type &&
 										formik.errors.contact_type}
@@ -180,15 +219,8 @@ const AddContact = () => {
 									value={formik.values.contact_first_name}
 									onChange={formik.handleChange}
 									placeholder="Label"
-									aria-describedby="filled-weight-helper-text"
-									inputProps={{
-										"aria-label": "weight",
-									}}
 								/>
-								<FormHelperText
-									id="filled-weight-helper-text"
-									className={classes.helperText}
-								>
+								<FormHelperText className={classes.helperText}>
 									{formik.errors.contact_first_name &&
 										formik.touched.contact_first_name &&
 										formik.errors.contact_first_name}
@@ -206,15 +238,8 @@ const AddContact = () => {
 									value={formik.values.contact_last_name}
 									onChange={formik.handleChange}
 									placeholder="Label"
-									aria-describedby="filled-weight-helper-text"
-									inputProps={{
-										"aria-label": "weight",
-									}}
 								/>
-								<FormHelperText
-									id="filled-weight-helper-text"
-									className={classes.helperText}
-								>
+								<FormHelperText className={classes.helperText}>
 									{formik.errors.contact_last_name &&
 										formik.touched.contact_last_name &&
 										formik.errors.contact_last_name}
@@ -232,15 +257,8 @@ const AddContact = () => {
 									value={formik.values.contact_company}
 									onChange={formik.handleChange}
 									placeholder="Label"
-									aria-describedby="filled-weight-helper-text"
-									inputProps={{
-										"aria-label": "weight",
-									}}
 								/>
-								<FormHelperText
-									id="filled-weight-helper-text"
-									className={classes.helperText}
-								>
+								<FormHelperText className={classes.helperText}>
 									{formik.errors.contact_company &&
 										formik.touched.contact_company &&
 										formik.errors.contact_company}
@@ -258,15 +276,8 @@ const AddContact = () => {
 									value={formik.values.contact_title}
 									onChange={formik.handleChange}
 									placeholder="Label"
-									aria-describedby="filled-weight-helper-text"
-									inputProps={{
-										"aria-label": "weight",
-									}}
 								/>
-								<FormHelperText
-									id="filled-weight-helper-text"
-									className={classes.helperText}
-								>
+								<FormHelperText className={classes.helperText}>
 									{formik.errors.contact_title &&
 										formik.touched.contact_title &&
 										formik.errors.contact_title}
@@ -284,15 +295,8 @@ const AddContact = () => {
 									value={formik.values.contact_cell_phone}
 									onChange={formik.handleChange}
 									placeholder="Label"
-									aria-describedby="filled-weight-helper-text"
-									inputProps={{
-										"aria-label": "weight",
-									}}
 								/>
-								<FormHelperText
-									id="filled-weight-helper-text"
-									className={classes.helperText}
-								>
+								<FormHelperText className={classes.helperText}>
 									{formik.errors.contact_cell_phone &&
 										formik.touched.contact_cell_phone &&
 										formik.errors.contact_cell_phone}
@@ -310,15 +314,8 @@ const AddContact = () => {
 									value={formik.values.contact_office_phone}
 									onChange={formik.handleChange}
 									placeholder="Label"
-									aria-describedby="filled-weight-helper-text"
-									inputProps={{
-										"aria-label": "weight",
-									}}
 								/>
-								<FormHelperText
-									id="filled-weight-helper-text"
-									className={classes.helperText}
-								>
+								<FormHelperText className={classes.helperText}>
 									{formik.errors.contact_office_phone &&
 										formik.touched.contact_office_phone &&
 										formik.errors.contact_office_phone}
@@ -336,15 +333,8 @@ const AddContact = () => {
 									value={formik.values.contact_fax_number}
 									onChange={formik.handleChange}
 									placeholder="Label"
-									aria-describedby="filled-weight-helper-text"
-									inputProps={{
-										"aria-label": "weight",
-									}}
 								/>
-								<FormHelperText
-									id="filled-weight-helper-text"
-									className={classes.helperText}
-								>
+								<FormHelperText className={classes.helperText}>
 									{formik.errors.contact_fax_number &&
 										formik.touched.contact_fax_number &&
 										formik.errors.contact_fax_number}
@@ -363,15 +353,8 @@ const AddContact = () => {
 									onChange={formik.handleChange}
 									// type="email"
 									placeholder="Label"
-									aria-describedby="filled-weight-helper-text"
-									inputProps={{
-										"aria-label": "weight",
-									}}
 								/>
-								<FormHelperText
-									id="filled-weight-helper-text"
-									className={classes.helperText}
-								>
+								<FormHelperText className={classes.helperText}>
 									{formik.errors.contact_email &&
 										formik.touched.contact_email &&
 										formik.errors.contact_email}
@@ -389,18 +372,68 @@ const AddContact = () => {
 									value={formik.values.contact_company_address}
 									onChange={formik.handleChange}
 									placeholder="Label"
-									aria-describedby="filled-weight-helper-text"
-									inputProps={{
-										"aria-label": "weight",
-									}}
 								/>
-								<FormHelperText
-									id="filled-weight-helper-text"
-									className={classes.helperText}
-								>
+								<FormHelperText className={classes.helperText}>
 									{formik.errors.contact_company_address &&
 										formik.touched.contact_company_address &&
 										formik.errors.contact_company_address}
+								</FormHelperText>
+							</FormControl>
+						</Box>
+						<Box>
+							<p className={classes.label}>Business Address Zip</p>
+							<FormControl
+								// className={clsx(classes.margin, classes.textField)}
+								variant="filled"
+							>
+								<FilledInput
+									name="contact_company_address_zip"
+									value={formik.values.contact_company_address_zip}
+									onChange={formik.handleChange}
+									placeholder="Label"
+								/>
+								<FormHelperText className={classes.helperText}>
+									{formik.errors.contact_company_address_zip &&
+										formik.touched.contact_company_address_zip &&
+										formik.errors.contact_company_address_zip}
+								</FormHelperText>
+							</FormControl>
+						</Box>
+						<Box>
+							<p className={classes.label}>Business Address City</p>
+							<FormControl
+								// className={clsx(classes.margin, classes.textField)}
+								variant="filled"
+							>
+								<FilledInput
+									name="contact_company_address_city"
+									value={formik.values.contact_company_address_city}
+									onChange={formik.handleChange}
+									placeholder="Label"
+								/>
+								<FormHelperText className={classes.helperText}>
+									{formik.errors.contact_company_address_city &&
+										formik.touched.contact_company_address_city &&
+										formik.errors.contact_company_address_city}
+								</FormHelperText>
+							</FormControl>
+						</Box>
+						<Box>
+							<p className={classes.label}>Business Address State</p>
+							<FormControl
+								// className={clsx(classes.margin, classes.textField)}
+								variant="filled"
+							>
+								<FilledInput
+									name="contact_company_address_state"
+									value={formik.values.contact_company_address_state}
+									onChange={formik.handleChange}
+									placeholder="Label"
+								/>
+								<FormHelperText className={classes.helperText}>
+									{formik.errors.contact_company_address_state &&
+										formik.touched.contact_company_address_state &&
+										formik.errors.contact_company_address_state}
 								</FormHelperText>
 							</FormControl>
 						</Box>

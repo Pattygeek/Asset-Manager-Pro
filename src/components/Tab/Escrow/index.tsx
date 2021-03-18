@@ -24,6 +24,7 @@ import {
 	PercentageWithoutDecimalFormat,
 	PhoneNumberFormat,
 } from "../../../utils/formats";
+import { PropertyRecord } from "../../../components/Types";
 import { red } from "@material-ui/core/colors";
 import DateFnsUtils from "@date-io/date-fns";
 import {
@@ -144,13 +145,18 @@ const useStyles = makeStyles(() => ({
 	},
 }));
 
-const Index = () => {
+interface BuyProps {
+	options?: any[];
+	rowData: PropertyRecord;
+}
+
+const Index = ({ rowData }: BuyProps) => {
 	const classes = useStyles();
 
 	const images = [pix1, pix2, pix3, pix4, pix5, pix6];
 
 	const [data, setData] = useState({
-		status: "",
+		status: rowData.property_status,
 		tpp: "",
 		potential_rehab: "",
 		potential_lp: "",
@@ -237,31 +243,33 @@ const Index = () => {
 								placeholder=""
 							>
 								<option aria-label="None" value="" />
-								<option value="new_asset">NEW ASSET</option>
-								<option value="not reviewed">NOT REVIEWED</option>
-								<option value="new_lead">NEW LEAD</option>
-								<option value="re_review">RE-REVIEW</option>
-								<option value="not_interested">NOT INTERESTED</option>
-								<option value="call_agent">CALL AGENT</option>
-								<option value="pending_intel">PENDING INTEL</option>
-								<option value="follow_up">FOLLOW UP</option>
-								<option value="bid_pending">BID PENDING</option>
-								<option value="proxy">PROXY</option>
-								<option value="bid">BID</option>
-								<option value="rejected">REJECTED</option>
-								<option value="sale_cancelled">SALE CANCELLED</option>
-								<option value="lost">LOST</option>
-								<option value="won">WON</option>
-								<option value="in_closing_b">IN CLOSING (B)</option>
-								<option value="closed">CLOSED</option>
-								<option value="occupied">OCCUPIED</option>
-								<option value="pending_vacancy">PENDING VACANCY</option>
-								<option value="in_eviction">IN EVICTION</option>
-								<option value="pending_bid">PENDING BID</option>
-								<option value="being_rehabbed">BEING REHABBED</option>
-								<option value="listed">LISTED</option>
-								<option value="in_closing_s">IN CLOSING (S)</option>
-								<option value="sold">SOLD</option>
+								<option value="NEW_ASSET">NEW ASSET</option>
+								<option value="NOT_REVIEWED">NOT REVIEWED</option>
+								<option value="NEW_LEAD">NEW LEAD</option>
+								<option value="RE_REVIEW">RE-REVIEW</option>
+								<option value="NOT_INTERESTED">NOT INTERESTED</option>
+								<option value="CALL_AGENT">CALL AGENT</option>
+								<option value="PENDING_INTEL">PENDING INTEL</option>
+								<option value="FOLLOW_UP">FOLLOW UP</option>
+								<option value="BID_PENDING">BID PENDING</option>
+								<option value="PROXY">PROXY</option>
+								<option value="BID">BID</option>
+								<option value="WON">WON</option>
+								<option value="REJECTED">REJECTED</option>
+								<option value="SALE_CANCELLED">SALE CANCELLED</option>
+								<option value="LOST">LOST</option>
+								<option value="AUCTION_SOLD">AUCTION SOLD</option>
+								<option value="IN_CLOSING_B">IN CLOSING (B)</option>
+								<option value="CLOSED">CLOSED</option>
+								<option value="OCCUPIED">OCCUPIED</option>
+								<option value="PENDING_VACANCY">PENDING VACANCY</option>
+								<option value="IN_EVICTION">IN EVICTION</option>
+								<option value="PENDING_BID">PENDING BID</option>
+								<option value="BEING_REHABBED">BEING REHABBED</option>
+								<option value="LISTED">LISTED</option>
+								<option value="IN_CLOSING_S">IN CLOSING (S)</option>
+								<option value="SOLD">SOLD</option>
+								<option value="NONE">NONE</option>
 							</Select>
 							<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 						</FormControl>
@@ -403,7 +411,6 @@ const Index = () => {
 										format="MM/dd/yyyy"
 										margin="normal"
 										id="date-picker-inline"
-										
 										value={estDate}
 										onChange={handleEstDateChange}
 										KeyboardButtonProps={{

@@ -19,6 +19,7 @@ import pix3 from "../../../assets/images/pix3.png";
 import pix4 from "../../../assets/images/pix4.png";
 import pix5 from "../../../assets/images/pix5.png";
 import pix6 from "../../../assets/images/pix6.png";
+import { PropertyRecord } from "../../../components/Types";
 import History from "../History";
 import Document from "../Document";
 import PriceHistory from "./PriceHistory";
@@ -92,10 +93,13 @@ const useStyles = makeStyles((theme) => ({
 
 interface BuyProps {
 	options: any[];
+	rowData: PropertyRecord;
 }
 
-const Buy = ({ options }: BuyProps) => {
+const Buy = ({ options, rowData }: BuyProps) => {
 	const classes = useStyles();
+
+	console.log(rowData);
 
 	//================pricehistory modal handler==============
 	const [open, setOpen] = useState(false);
@@ -126,39 +130,25 @@ const Buy = ({ options }: BuyProps) => {
 	//state handler for all the input fields
 	const [data, setData] = useState({
 		stRsv: "",
-		sqft: "",
+		sqft: rowData.square_feet,
 		br: "",
 		ba: "",
-		lot: "",
+		lot: rowData.lot_size,
 		year: "",
-		resale: "",
+		resale: rowData.resale_price,
 		rehab: "",
-		buy_price: "",
+		buy_price: rowData.buy_price,
 		tpp: "",
 		annual_tax: "",
-		hud_exp: "",
-		profit: "",
-		roi: "",
+		hud_exp: rowData.hud_percent,
+		profit: rowData.profit,
+		roi: rowData.return_on_investment,
 		hold_time: "",
 		mkt: "",
-		auction_list_price: "",
+		auction_list_price: rowData.auction_list_price,
 		high_bid: "",
 		auction_agent: "",
 		list_agent: "",
-		potential_rehab: "",
-		potential_lp: "",
-		potential_profit: "",
-		potential_roi: "",
-		loan_amount: "",
-		down_payment: "",
-		cfk_amount: "",
-		attorney_name: "",
-		water_co_number: "",
-		electric_co_number: "",
-		gas_co_number: "",
-		taxes_number: "",
-		gc: "",
-		sold_price: "",
 		auction_agent_number: "",
 		auction_agent_email: "",
 		list_agent_number: "",
@@ -167,29 +157,26 @@ const Buy = ({ options }: BuyProps) => {
 		access: "",
 		occupancy: "",
 		product: "",
-		status: "",
+		status: rowData.property_status,
 		property_type: "",
+		
 	});
 
-	//state for contact filtering
-	const [contactState, setContactState] = useState({
-		filteredOption: [],
-		userInput: data.auction_agent,
-		showOptions: false,
-		activeOption: 0,
-	});
 
-	console.log(options);
 
 	const [optionList, setOptionList] = useState<any[]>([]);
 	let optionData;
 	let filteredOption;
 
+	//state handler for autocomplete
+	const [openDiv, setOpenDiv] = useState(false);
+
 	const handleAuctionChange = (event: React.ChangeEvent<any>) => {
 		const { name, value } = event.target;
+		setOpenDiv(true);
 		setData({
 			...data,
-			auction_agent: value,
+			[name]: value,
 		});
 
 		filteredOption = options.filter((optionName: any) =>
@@ -199,28 +186,40 @@ const Buy = ({ options }: BuyProps) => {
 		setOptionList(filteredOption);
 	};
 
-	//state handler for autocomplete
-	const [openDiv, setOpenDiv] = useState(false);
-
 	if (optionList?.length > 0 && data.auction_agent != "") {
 		optionData = optionList?.map((option: any) => (
 			<Box
 				className={classes.box}
 				key={option._id}
-				onClick={() =>
+				onClick={() => {
 					setData({
 						...data,
 						auction_agent: option.contact_first_name,
 						auction_agent_email: option.contact_email,
 						auction_agent_number: option.contact_cell_phone,
-					})
-				}
+					});
+					setOpenDiv(false);
+				}}
 			>
 				{option.contact_first_name}
 			</Box>
 		));
 	} else if (optionList?.length == 0 && data.auction_agent != "") {
-		optionData = <Box className={classes.box}>No options</Box>;
+		optionData = (
+			<Box display="flex" py={2}>
+				<Box className={classes.box} my="auto" mr={2}>
+					No options
+				</Box>
+				<Button
+					variant="contained"
+					disableElevation
+					color="primary"
+					style={{ color: "#fff" }}
+				>
+					Add Contact
+				</Button>
+			</Box>
+		);
 	}
 
 	//onchange handler for input fields
@@ -256,32 +255,33 @@ const Buy = ({ options }: BuyProps) => {
 							name="status"
 						>
 							<option aria-label="None" value="" />
-							<option value="new_asset">NEW ASSET</option>
-							<option value="not reviewed">NOT REVIEWED</option>
-							<option value="new_lead">NEW LEAD</option>
-							<option value="re_review">RE-REVIEW</option>
-							<option value="not_interested">NOT INTERESTED</option>
-							<option value="call_agent">CALL AGENT</option>
-							<option value="pending_intel">PENDING INTEL</option>
-							<option value="follow_up">FOLLOW UP</option>
-							<option value="bid_pending">BID PENDING</option>
-							<option value="proxy">PROXY</option>
-							<option value="bid">BID</option>
-							<option value="won">WON</option>
-							<option value="rejected">REJECTED</option>
-							<option value="sale_cancelled">SALE CANCELLED</option>
-							<option value="lost">LOST</option>
-							<option value="sold">AUCTION SOLD</option>
-							<option value="in_closing_b">IN CLOSING (B)</option>
-							<option value="closed">CLOSED</option>
-							<option value="occupied">OCCUPIED</option>
-							<option value="pending_vacancy">PENDING VACANCY</option>
-							<option value="in_eviction">IN EVICTION</option>
-							<option value="pending_bid">PENDING BID</option>
-							<option value="being_rehabbed">BEING REHABBED</option>
-							<option value="listed">LISTED</option>
-							<option value="in_closing_s">IN CLOSING (S)</option>
-							<option value="sold">SOLD</option>
+							<option value="NEW_ASSET">NEW ASSET</option>
+							<option value="NOT_REVIEWED">NOT REVIEWED</option>
+							<option value="NEW_LEAD">NEW LEAD</option>
+							<option value="RE_REVIEW">RE-REVIEW</option>
+							<option value="NOT_INTERESTED">NOT INTERESTED</option>
+							<option value="CALL_AGENT">CALL AGENT</option>
+							<option value="PENDING_INTEL">PENDING INTEL</option>
+							<option value="FOLLOW_UP">FOLLOW UP</option>
+							<option value="BID_PENDING">BID PENDING</option>
+							<option value="PROXY">PROXY</option>
+							<option value="BID">BID</option>
+							<option value="WON">WON</option>
+							<option value="REJECTED">REJECTED</option>
+							<option value="SALE_CANCELLED">SALE CANCELLED</option>
+							<option value="LOST">LOST</option>
+							<option value="AUCTION_SOLD">AUCTION SOLD</option>
+							<option value="IN_CLOSING_B">IN CLOSING (B)</option>
+							<option value="CLOSED">CLOSED</option>
+							<option value="OCCUPIED">OCCUPIED</option>
+							<option value="PENDING_VACANCY">PENDING VACANCY</option>
+							<option value="IN_EVICTION">IN EVICTION</option>
+							<option value="PENDING_BID">PENDING BID</option>
+							<option value="BEING_REHABBED">BEING REHABBED</option>
+							<option value="LISTED">LISTED</option>
+							<option value="IN_CLOSING_S">IN CLOSING (S)</option>
+							<option value="SOLD">SOLD</option>
+							<option value="NONE">NONE</option>
 						</Select>
 						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
@@ -852,12 +852,16 @@ const Buy = ({ options }: BuyProps) => {
 							</FormControl>
 						</Box>
 					</div>
-					<AutoComplete
-						options={options}
-						input={data.auction_agent}
-						optionData={optionData}
-						optionList={optionList}
-					/>
+					{openDiv ? (
+						<AutoComplete
+							options={options}
+							input={data.auction_agent}
+							optionData={optionData}
+							optionList={optionList}
+						/>
+					) : (
+						""
+					)}
 					<div className={classes.sectionDiv}>
 						<Box>
 							<p className={classes.label}>List Agent</p>
@@ -867,7 +871,7 @@ const Buy = ({ options }: BuyProps) => {
 							>
 								<FilledInput
 									value={data.list_agent}
-									onChange={handleChange}
+									onChange={handleAuctionChange}
 									name="list_agent"
 									placeholder=""
 									aria-describedby="filled-weight-helper-text"
@@ -919,6 +923,16 @@ const Buy = ({ options }: BuyProps) => {
 							</FormControl>
 						</Box>
 					</div>
+					{/* {openDiv ? (
+						<AutoComplete
+							options={options}
+							input={data.auction_agent}
+							optionData={optionData}
+							optionList={optionList}
+						/>
+					) : (
+						""
+					)} */}
 					<div className={classes.buttonStack}>
 						<div className={classes.buttonBox}>
 							<FileIcon className={classes.icon} color="red" />

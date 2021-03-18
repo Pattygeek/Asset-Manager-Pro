@@ -9,6 +9,7 @@ const LIST_ALL_PROPERTY = gql`
 				auction_event_id
 				contact_id {
 					contact_type
+					contact_title
 					contact_first_name
 					contact_last_name
 					contact_email
@@ -24,16 +25,24 @@ const LIST_ALL_PROPERTY = gql`
 				property_status
 				none_interest_reason
 				is_judicial_state
+				state_tax
+				annual_tax
 				buy_price
 				resale_price
 				redbell
+				zillow
 				zestimate
 				realtor_com
-				resale_price
+				redfin
 				am_resale
 				resale_agent_confirmation
 				rehabilitation_cost
 				profit
+				hold_time_days
+				rehab_time_days
+				total_buy_price
+				purchase_fee
+				buyers_premium
 				return_on_investment
 				auction_list_price
 				bath_rooms
@@ -44,11 +53,15 @@ const LIST_ALL_PROPERTY = gql`
 				credit_bid
 				bidding_start_time
 				bidding_end_time
+				broker_first_name
+				broker_last_name
+				broker_email
+				broker_phone
 				previous_listed_price
 				run_number
 				interior_access
-				redbell
-				zillow
+				hud_percent
+				hud_cost
 			}
 		}
 	}
