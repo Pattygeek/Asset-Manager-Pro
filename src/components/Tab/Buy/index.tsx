@@ -12,6 +12,10 @@ import Button from "@material-ui/core/Button";
 //assets & components
 import { ReactComponent as FileIcon } from "../../../assets/icons/file.svg";
 import AutoComplete from "../../ContactsAutocomplete";
+import {
+	DisplayOptions,
+	NoOptions,
+} from "../../ContactsAutocomplete/AutocompleteComponent";
 import PhotoBox from "./PhotoBox";
 import pix1 from "../../../assets/images/pix1.png";
 import pix2 from "../../../assets/images/pix2.png";
@@ -83,8 +87,6 @@ const useStyles = makeStyles((theme) => ({
 	box: {
 		cursor: "pointer",
 		padding: "2px 0px 2px 8px",
-		// position:"absolute",
-		// zIn
 		"&:hover": {
 			backgroundColor: "#f7f7f7",
 		},
@@ -159,39 +161,40 @@ const Buy = ({ options, rowData }: BuyProps) => {
 		product: "",
 		status: rowData.property_status,
 		property_type: "",
-		
 	});
-
-
 
 	const [optionList, setOptionList] = useState<any[]>([]);
 	let optionData;
 	let filteredOption;
 
-	//state handler for autocomplete
+	//state handler for auction agent autocomplete
 	const [openDiv, setOpenDiv] = useState(false);
 
+	//state handler for list agent autocomplete
+	const [openListDiv, setOpenListDiv] = useState(false);
+
+	//onchange handler for auction agent
 	const handleAuctionChange = (event: React.ChangeEvent<any>) => {
-		const { name, value } = event.target;
+		const { value } = event.target;
 		setOpenDiv(true);
 		setData({
 			...data,
-			[name]: value,
+			auction_agent: value,
 		});
 
 		filteredOption = options.filter((optionName: any) =>
 			optionName.contact_first_name.toLowerCase().includes(event.target.value)
 		);
-
 		setOptionList(filteredOption);
 	};
 
+	//autocomplete function for auction agent
 	if (optionList?.length > 0 && data.auction_agent != "") {
 		optionData = optionList?.map((option: any) => (
-			<Box
-				className={classes.box}
+			<DisplayOptions
 				key={option._id}
-				onClick={() => {
+				name={option.contact_first_name}
+				handleClick={() => {
 					setData({
 						...data,
 						auction_agent: option.contact_first_name,
@@ -200,27 +203,49 @@ const Buy = ({ options, rowData }: BuyProps) => {
 					});
 					setOpenDiv(false);
 				}}
-			>
-				{option.contact_first_name}
-			</Box>
+			/>
 		));
 	} else if (optionList?.length == 0 && data.auction_agent != "") {
-		optionData = (
-			<Box display="flex" py={2}>
-				<Box className={classes.box} my="auto" mr={2}>
-					No options
-				</Box>
-				<Button
-					variant="contained"
-					disableElevation
-					color="primary"
-					style={{ color: "#fff" }}
-				>
-					Add Contact
-				</Button>
-			</Box>
-		);
+		optionData = <NoOptions />;
 	}
+	//===========end of auction agent onchange========================
+
+	//onchange handler for list agent
+	const handleListAgentChange = (event: React.ChangeEvent<any>) => {
+		const { value } = event.target;
+		setOpenListDiv(true);
+		setData({
+			...data,
+			list_agent: value,
+		});
+
+		filteredOption = options.filter((optionName: any) =>
+			optionName.contact_first_name.toLowerCase().includes(event.target.value)
+		);
+		setOptionList(filteredOption);
+	};
+
+	//autocomplete function for list agent
+	if (optionList?.length > 0 && data.list_agent != "") {
+		optionData = optionList?.map((option: any) => (
+			<DisplayOptions
+				key={option._id}
+				name={option.contact_first_name}
+				handleClick={() => {
+					setData({
+						...data,
+						list_agent: option.contact_first_name,
+						list_agent_email: option.contact_email,
+						list_agent_number: option.contact_cell_phone,
+					});
+					setOpenListDiv(false);
+				}}
+			/>
+		));
+	} else if (optionList?.length == 0 && data.list_agent != "") {
+		optionData = <NoOptions />;
+	}
+	//===========end of list agent onchange========================
 
 	//onchange handler for input fields
 	const handleChange = (event: React.ChangeEvent<any>) => {
@@ -871,13 +896,10 @@ const Buy = ({ options, rowData }: BuyProps) => {
 							>
 								<FilledInput
 									value={data.list_agent}
-									onChange={handleAuctionChange}
+									onChange={handleListAgentChange}
 									name="list_agent"
 									placeholder=""
 									aria-describedby="filled-weight-helper-text"
-									inputProps={{
-										"aria-label": "weight",
-									}}
 								/>
 								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
@@ -923,16 +945,16 @@ const Buy = ({ options, rowData }: BuyProps) => {
 							</FormControl>
 						</Box>
 					</div>
-					{/* {openDiv ? (
+					{openListDiv ? (
 						<AutoComplete
 							options={options}
-							input={data.auction_agent}
+							input={data.list_agent}
 							optionData={optionData}
 							optionList={optionList}
 						/>
 					) : (
 						""
-					)} */}
+					)}
 					<div className={classes.buttonStack}>
 						<div className={classes.buttonBox}>
 							<FileIcon className={classes.icon} color="red" />

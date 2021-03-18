@@ -25,6 +25,11 @@ import {
 	PhoneNumberFormat,
 } from "../../../utils/formats";
 import { PropertyRecord } from "../../../components/Types";
+import {
+	DisplayOptions,
+	NoOptions,
+} from "../../ContactsAutocomplete/AutocompleteComponent";
+import AutoComplete from "../../ContactsAutocomplete";
 import { red } from "@material-ui/core/colors";
 import DateFnsUtils from "@date-io/date-fns";
 import {
@@ -146,11 +151,11 @@ const useStyles = makeStyles(() => ({
 }));
 
 interface BuyProps {
-	options?: any[];
+	options: any[];
 	rowData: PropertyRecord;
 }
 
-const Index = ({ rowData }: BuyProps) => {
+const Index = ({ options, rowData }: BuyProps) => {
 	const classes = useStyles();
 
 	const images = [pix1, pix2, pix3, pix4, pix5, pix6];
@@ -221,6 +226,89 @@ const Index = ({ rowData }: BuyProps) => {
 
 	//===============end of date handler===================
 
+	const [optionList, setOptionList] = useState<any[]>([]);
+	let optionData;
+	let filteredOption;
+
+	//state handler for auction agent autocomplete
+	const [openDiv, setOpenDiv] = useState(false);
+
+	//state handler for list agent autocomplete
+	const [openListDiv, setOpenListDiv] = useState(false);
+
+	//onchange handler for auction agent
+	const handleAuctionChange = (event: React.ChangeEvent<any>) => {
+		const { value } = event.target;
+		setOpenDiv(true);
+		setData({
+			...data,
+			auction_agent: value,
+		});
+
+		filteredOption = options.filter((optionName: any) =>
+			optionName.contact_first_name.toLowerCase().includes(event.target.value)
+		);
+		setOptionList(filteredOption);
+	};
+
+	//autocomplete function for auction agent
+	if (optionList?.length > 0 && data.auction_agent != "") {
+		optionData = optionList?.map((option: any) => (
+			<DisplayOptions
+				key={option._id}
+				name={option.contact_first_name}
+				handleClick={() => {
+					setData({
+						...data,
+						auction_agent: option.contact_first_name,
+						auction_agent_email: option.contact_email,
+						auction_agent_number: option.contact_cell_phone,
+					});
+					setOpenDiv(false);
+				}}
+			/>
+		));
+	} else if (optionList?.length == 0 && data.auction_agent != "") {
+		optionData = <NoOptions />;
+	}
+	//===========end of auction agent onchange========================
+
+	//onchange handler for list agent
+	const handleListAgentChange = (event: React.ChangeEvent<any>) => {
+		const { value } = event.target;
+		setOpenListDiv(true);
+		setData({
+			...data,
+			list_agent: value,
+		});
+
+		filteredOption = options.filter((optionName: any) =>
+			optionName.contact_first_name.toLowerCase().includes(event.target.value)
+		);
+		setOptionList(filteredOption);
+	};
+
+	//autocomplete function for list agent
+	if (optionList?.length > 0 && data.list_agent != "") {
+		optionData = optionList?.map((option: any) => (
+			<DisplayOptions
+				key={option._id}
+				name={option.contact_first_name}
+				handleClick={() => {
+					setData({
+						...data,
+						list_agent: option.contact_first_name,
+						list_agent_email: option.contact_email,
+						list_agent_number: option.contact_cell_phone,
+					});
+					setOpenListDiv(false);
+				}}
+			/>
+		));
+	} else if (optionList?.length == 0 && data.list_agent != "") {
+		optionData = <NoOptions />;
+	}
+	//===========end of list agent onchange========================
 	return (
 		<>
 			<MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -236,10 +324,6 @@ const Index = ({ rowData }: BuyProps) => {
 								value={data.status}
 								onChange={handleChange}
 								name="status"
-								// inputProps={{
-								// 	name: "age",
-								// 	id: "filled-age-native-simple",
-								// }}
 								placeholder=""
 							>
 								<option aria-label="None" value="" />
@@ -436,10 +520,6 @@ const Index = ({ rowData }: BuyProps) => {
 										value={data.occupancy}
 										onChange={handleChange}
 										name="occupancy"
-										// inputProps={{
-										// 	name: "age",
-										// 	id: "filled-age-native-simple",
-										// }}
 										placeholder=""
 									>
 										<option aria-label="None" value="" />
@@ -460,10 +540,6 @@ const Index = ({ rowData }: BuyProps) => {
 										value={data.property_access}
 										onChange={handleChange}
 										name="property_access"
-										// inputProps={{
-										// 	name: "age",
-										// 	id: "filled-age-native-simple",
-										// }}
 										placeholder=""
 									>
 										<option aria-label="None" value="" />
@@ -484,10 +560,6 @@ const Index = ({ rowData }: BuyProps) => {
 										value={data.contractor_received}
 										onChange={handleChange}
 										name="contractor_received"
-										// inputProps={{
-										// 	name: "age",
-										// 	id: "filled-age-native-simple",
-										// }}
 										placeholder=""
 									>
 										<option aria-label="None" value="" />
@@ -508,10 +580,6 @@ const Index = ({ rowData }: BuyProps) => {
 										value={data.co_needed}
 										onChange={handleChange}
 										name="co_needed"
-										// inputProps={{
-										// 	name: "age",
-										// 	id: "filled-age-native-simple",
-										// }}
 										placeholder=""
 									>
 										<option aria-label="None" value="" />
@@ -532,10 +600,6 @@ const Index = ({ rowData }: BuyProps) => {
 										value={data.co_completed}
 										onChange={handleChange}
 										name="co_completed"
-										// inputProps={{
-										// 	name: "age",
-										// 	id: "filled-age-native-simple",
-										// }}
 										placeholder=""
 									>
 										<option aria-label="None" value="" />
@@ -556,10 +620,6 @@ const Index = ({ rowData }: BuyProps) => {
 										value={data.oil_swept}
 										onChange={handleChange}
 										name="oil_swept"
-										inputProps={{
-											name: "age",
-											id: "filled-age-native-simple",
-										}}
 										placeholder=""
 									>
 										<option aria-label="None" value="" />
@@ -571,19 +631,12 @@ const Index = ({ rowData }: BuyProps) => {
 							</Box>
 							<Box>
 								<p className={classes.label}>Sewer/Septic Checked?</p>
-								<FormControl
-									// className={clsx(classes.margin, classes.textField)}
-									variant="filled"
-								>
+								<FormControl variant="filled">
 									<Select
 										native
 										value={data.sewer_checked}
 										onChange={handleChange}
 										name="sewer_checked"
-										// inputProps={{
-										// 	name: "age",
-										// 	id: "filled-age-native-simple",
-										// }}
 										placeholder=""
 									>
 										<option aria-label="None" value="" />
@@ -609,7 +662,7 @@ const Index = ({ rowData }: BuyProps) => {
 						>
 							<FilledInput
 								value={data.list_agent}
-								onChange={handleChange}
+								onChange={handleListAgentChange}
 								name="list_agent"
 								placeholder=""
 								aria-describedby="filled-weight-helper-text"
@@ -619,7 +672,18 @@ const Index = ({ rowData }: BuyProps) => {
 							/>
 							<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 						</FormControl>
+						{openListDiv ? (
+							<AutoComplete
+								options={options}
+								input={data.list_agent}
+								optionData={optionData}
+								optionList={optionList}
+							/>
+						) : (
+							""
+						)}
 					</Box>
+
 					<Box>
 						<p className={classes.label}>List Agent Number</p>
 						<FormControl
@@ -667,7 +731,7 @@ const Index = ({ rowData }: BuyProps) => {
 						>
 							<FilledInput
 								value={data.auction_agent}
-								onChange={handleChange}
+								onChange={handleAuctionChange}
 								name="auction_agent"
 								placeholder=""
 								aria-describedby="filled-weight-helper-text"
@@ -677,6 +741,16 @@ const Index = ({ rowData }: BuyProps) => {
 							/>
 							<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 						</FormControl>
+						{openDiv ? (
+							<AutoComplete
+								options={options}
+								input={data.auction_agent}
+								optionData={optionData}
+								optionList={optionList}
+							/>
+						) : (
+							""
+						)}
 					</Box>
 					<Box>
 						<p className={classes.label}>Auction Agent Number</p>
@@ -1005,5 +1079,5 @@ const Index = ({ rowData }: BuyProps) => {
 			</MuiPickersUtilsProvider>
 		</>
 	);
-};
+};;
 export default Index;

@@ -20,14 +20,15 @@ import pix4 from "../../../assets/images/pix4.png";
 import pix5 from "../../../assets/images/pix5.png";
 import pix6 from "../../../assets/images/pix6.png";
 import { PropertyRecord } from "../../Types";
-
+import {
+	DisplayOptions,
+	NoOptions,
+} from "../../ContactsAutocomplete/AutocompleteComponent";
+import AutoComplete from "../../ContactsAutocomplete";
 import { useState } from "react";
 import {
 	NumberCurrencyFormatCustom,
-	RegularNumberWithoutDecimalFormat,
 	RegularNumberWithDecimalFormat,
-	YearFormat,
-	PercentageFormat,
 	PercentageWithoutDecimalFormat,
 	PhoneNumberFormat,
 } from "../../../utils/formats";
@@ -151,11 +152,11 @@ const useStyles = makeStyles(() => ({
 }));
 
 interface BuyProps {
-	options?: any[];
+	options: any[];
 	rowData: PropertyRecord;
 }
 
-const Index = ({ rowData }: BuyProps) => {
+const Index = ({ options, rowData }: BuyProps) => {
 	const classes = useStyles();
 
 	const images = [pix1, pix2, pix3, pix4, pix5, pix6];
@@ -222,6 +223,130 @@ const Index = ({ rowData }: BuyProps) => {
 		setSoldDate(date);
 	};
 	//===============end of date handler===================
+
+	const [optionList, setOptionList] = useState<any[]>([]);
+	let optionData;
+	let filteredOption;
+
+	//state handler for attorney autocomplete
+	const [openDiv, setOpenDiv] = useState(false);
+
+	//state handler for list agent autocomplete
+	const [openListDiv, setOpenListDiv] = useState(false);
+
+	//state handler for gc autocomplete
+	const [openGcDiv, setOpenGcDiv] = useState(false);
+
+	//onchange handler for auction agent
+	const handleAttorneyChange = (event: React.ChangeEvent<any>) => {
+		const { value } = event.target;
+		setOpenDiv(true);
+		setData({
+			...data,
+			attorney_name: value,
+		});
+
+		filteredOption = options.filter((optionName: any) =>
+			optionName.contact_first_name.toLowerCase().includes(event.target.value)
+		);
+		setOptionList(filteredOption);
+	};
+
+	//autocomplete function for attorney agent
+	if (optionList?.length > 0 && data.attorney_name != "") {
+		optionData = optionList?.map((option: any) => (
+			<DisplayOptions
+				key={option._id}
+				name={option.contact_first_name}
+				handleClick={() => {
+					setData({
+						...data,
+						attorney_name: option.contact_first_name,
+						attorney_email: option.contact_email,
+						attorney_number: option.contact_cell_phone,
+					});
+					setOpenDiv(false);
+				}}
+			/>
+		));
+	} else if (optionList?.length == 0 && data.attorney_name != "") {
+		optionData = <NoOptions />;
+	}
+	//===========end of auction agent onchange========================
+
+	//onchange handler for list agent
+	const handleListAgentChange = (event: React.ChangeEvent<any>) => {
+		const { value } = event.target;
+		setOpenListDiv(true);
+		setData({
+			...data,
+			list_agent: value,
+		});
+
+		filteredOption = options.filter((optionName: any) =>
+			optionName.contact_first_name.toLowerCase().includes(event.target.value)
+		);
+		setOptionList(filteredOption);
+	};
+
+	//autocomplete function for list agent
+	if (optionList?.length > 0 && data.list_agent != "") {
+		optionData = optionList?.map((option: any) => (
+			<DisplayOptions
+				key={option._id}
+				name={option.contact_first_name}
+				handleClick={() => {
+					setData({
+						...data,
+						list_agent: option.contact_first_name,
+						list_agent_email: option.contact_email,
+						list_agent_number: option.contact_cell_phone,
+					});
+					setOpenListDiv(false);
+				}}
+			/>
+		));
+	} else if (optionList?.length == 0 && data.list_agent != "") {
+		optionData = <NoOptions />;
+	}
+	//===========end of list agent onchange========================
+
+	//onchange handler for gc
+	const handleGcChange = (event: React.ChangeEvent<any>) => {
+		const { value } = event.target;
+		setOpenGcDiv(true);
+		setData({
+			...data,
+			gc: value,
+		});
+
+		filteredOption = options.filter((optionName: any) =>
+			optionName.contact_first_name.toLowerCase().includes(event.target.value)
+		);
+		setOptionList(filteredOption);
+	};
+
+	//autocomplete function for list agent
+	if (optionList?.length > 0 && data.gc != "") {
+		optionData = optionList?.map((option: any) => (
+			<DisplayOptions
+				key={option._id}
+				name={option.contact_first_name}
+				handleClick={() => {
+					setData({
+						...data,
+						gc: option.contact_first_name,
+						gc_email: option.contact_email,
+						gc_number: option.contact_cell_phone,
+					});
+					setOpenGcDiv(false);
+				}}
+			/>
+		));
+	} else if (optionList?.length == 0 && data.gc != "") {
+		optionData = <NoOptions />;
+	}
+	//===========end of onchange handler for gc==============
 	return (
 		<>
 			<MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -568,7 +693,7 @@ const Index = ({ rowData }: BuyProps) => {
 								>
 									<FilledInput
 										value={data.attorney_name}
-										onChange={handleChange}
+										onChange={handleAttorneyChange}
 										name="attorney_name"
 										placeholder=""
 										aria-describedby="filled-weight-helper-text"
@@ -578,6 +703,16 @@ const Index = ({ rowData }: BuyProps) => {
 									/>
 									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 								</FormControl>
+								{openDiv ? (
+									<AutoComplete
+										options={options}
+										input={data.attorney_name}
+										optionData={optionData}
+										optionList={optionList}
+									/>
+								) : (
+									""
+								)}
 							</Box>
 							<Box>
 								<p className={classes.label}>Attorney Number</p>
@@ -854,7 +989,7 @@ const Index = ({ rowData }: BuyProps) => {
 						>
 							<FilledInput
 								value={data.gc}
-								onChange={handleChange}
+								onChange={handleGcChange}
 								name="gc"
 								placeholder=""
 								aria-describedby="filled-weight-helper-text"
@@ -864,6 +999,16 @@ const Index = ({ rowData }: BuyProps) => {
 							/>
 							<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 						</FormControl>
+						{openGcDiv ? (
+							<AutoComplete
+								options={options}
+								input={data.gc}
+								optionData={optionData}
+								optionList={optionList}
+							/>
+						) : (
+							""
+						)}
 					</Box>
 					<Box>
 						<p className={classes.label}>G.C. Number</p>
@@ -915,7 +1060,7 @@ const Index = ({ rowData }: BuyProps) => {
 						>
 							<FilledInput
 								value={data.list_agent}
-								onChange={handleChange}
+								onChange={handleListAgentChange}
 								name="list_agent"
 								placeholder=""
 								aria-describedby="filled-weight-helper-text"
@@ -925,6 +1070,16 @@ const Index = ({ rowData }: BuyProps) => {
 							/>
 							<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 						</FormControl>
+						{openListDiv ? (
+							<AutoComplete
+								options={options}
+								input={data.list_agent}
+								optionData={optionData}
+								optionList={optionList}
+							/>
+						) : (
+							""
+						)}
 					</Box>
 					<Box>
 						<p className={classes.label}>List Agent Number</p>
