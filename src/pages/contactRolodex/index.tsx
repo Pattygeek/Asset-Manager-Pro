@@ -6,15 +6,16 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import FilledInput from "@material-ui/core/FilledInput";
 import Button from "@material-ui/core/Button";
 import { HotTable, HotColumn } from "@handsontable/react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { CssTextField } from "../../components/Inputs";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
-import { useQuery } from "@apollo/client";
-import { LIST_CONTACT } from "../../helpers/graphql/queries";
+import { useQuery, useLazyQuery } from "@apollo/client";
+import { LIST_CONTACT, CONTACTS_BY_ZIP } from "../../helpers/graphql/queries";
+import { Contact } from "../../components/Types";
 
 const useStyles = makeStyles(() => ({
 	div: {
@@ -54,8 +55,11 @@ const useStyles = makeStyles(() => ({
 	},
 }));
 
-const Contact = () => {
+const ContactRolodex = () => {
 	const classes = useStyles();
+
+	const [contactData, setContactData] = useState<Contact[]>([]);
+	console.log(contactData);
 
 	const [state, setState] = useState({
 		width: "100%",
@@ -87,6 +91,52 @@ const Contact = () => {
 		// variables: {
 		// 	limit: 50,
 		// },
+		onCompleted() {
+			setContactData(data.list_paginated_contacts.edges);
+		},
+	});
+
+	//state for zip
+	const [zip, setZip] = useState("");
+
+	const handleChange = (e: React.ChangeEvent<any>) => {
+		setZip(e.target.value);
+	};
+
+	const handleKeyPress = useMemo(
+		() => (event: React.KeyboardEvent) => {
+			if (event.key === "Enter") {
+				get_contacts_by_zip({
+					variables: {
+						zip_code: zip,
+					},
+				});
+			}
+		},
+		[zip]
+	);
+
+	// const handleKeyPress = (event: React.KeyboardEvent) => {
+	// 	if (event.key === "Enter") {
+	// 		get_contacts_by_zip({
+	// 			variables: {
+	// 				zip_code: zip,
+	// 			},
+	// 		});
+	// 	}
+	// };
+
+	const [
+		get_contacts_by_zip,
+		{ loading: zipContactLoading, error: zipContactError, data: zipContacts },
+	] = useLazyQuery(CONTACTS_BY_ZIP, {
+		onCompleted() {
+			setContactData(zipContacts.get_contacts_by_zip.contacts);
+		},
+		onError(err) {
+			console.log(err);
+			return null;
+		},
 	});
 
 	return (
@@ -104,6 +154,10 @@ const Contact = () => {
 						variant="outlined"
 						placeholder="Search for a contact"
 						id="custom-css-outlined-input"
+						name="zipSearch"
+						value={zip}
+						onChange={handleChange}
+						onKeyPress={handleKeyPress}
 						InputProps={{
 							className: classes.search,
 							endAdornment: (
@@ -137,7 +191,8 @@ const Contact = () => {
 						settings={state}
 						id="hot"
 						stretchH="all"
-						data={data?.list_paginated_contacts?.edges}
+						// data={data?.list_paginated_contacts?.edges}
+						data={contactData}
 						dropdownMenu={[
 							"alignment",
 							"---------",
@@ -153,4 +208,4 @@ const Contact = () => {
 		</>
 	);
 };
-export default Contact;
+export default ContactRolodex;

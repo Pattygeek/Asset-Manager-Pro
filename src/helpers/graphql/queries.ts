@@ -95,4 +95,20 @@ const LIST_CONTACT = gql`
 		}
 	}
 `;
-export { LIST_ALL_PROPERTY, LOGIN, LIST_CONTACT };
+
+const CONTACTS_BY_ZIP = gql`
+	query searchByZip($zip_code: String) {
+		get_contacts_by_zip(zip_code: $zip_code) {
+			message
+			status_code
+			contacts {
+				contact_first_name
+				contact_last_name
+				contact_email
+				contact_title
+				contact_company_address_state
+			}
+		}
+	}
+`;
+export { LIST_ALL_PROPERTY, LOGIN, LIST_CONTACT, CONTACTS_BY_ZIP };

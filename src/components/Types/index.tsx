@@ -4,7 +4,12 @@ type Contact = {
 	contact_last_name?: string;
 	contact_email?: string;
 	contact_cell_phone?: string;
-}
+	contact_company_address?: string;
+	contact_company_address_zip?: string;
+	contact_company_address_state?: string;
+	contact_company_address_city?: string;
+	contact_title?: string;
+};
 
 type PropertyRecord = {
 	_id?: string;
