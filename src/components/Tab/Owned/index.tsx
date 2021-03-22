@@ -6,6 +6,8 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Button from "@material-ui/core/Button";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 
 //assets & components
 import { ReactComponent as FileIcon } from "../../../assets/icons/file.svg";
@@ -44,15 +46,24 @@ const useStyles = makeStyles(() => ({
 	label: {
 		marginBottom: "2px",
 		fontWeight: 500,
+		fontSize: "12px",
 	},
 	div: {
-		display: "grid",
-		gridTemplateColumns: "repeat(6, 1fr)",
-		gap: "12px",
+		display: "flex",
+		// gridTemplateColumns: "repeat(6, 1fr)",
+		// gap: "12px",
+	},
+	input: {
+		fontSize: "12px",
 	},
 	sectionDiv: {
 		display: "grid",
-		gridTemplateColumns: "repeat(4, 1fr)",
+		gridTemplateColumns: "repeat(7, 1fr)",
+		gap: "12px",
+	},
+	grid: {
+		display: "grid",
+		gridTemplateColumns: "repeat(8, 1fr)",
 		gap: "12px",
 	},
 	price: {
@@ -94,6 +105,7 @@ const useStyles = makeStyles(() => ({
 		padding: "4px 0px 0px 12px",
 		borderTopLeftRadius: "4px",
 		borderTopRightRadius: "4px",
+		fontSize: "12px",
 		"&:before": {
 			borderBottom: `2px solid #2196f3`,
 			left: 0,
@@ -351,166 +363,320 @@ const Index = ({ options, rowData }: BuyProps) => {
 		<>
 			<MuiPickersUtilsProvider utils={DateFnsUtils}>
 				<div className={classes.div}>
-					<Box>
-						<p className={classes.label}>Status</p>
-						<FormControl
-							// className={clsx(classes.margin, classes.textField)}
-							variant="filled"
-						>
-							<Select
-								native
-								value={data.status}
-								onChange={handleChange}
-								name="status"
-								placeholder=""
-							>
-								<option aria-label="None" value="" />
-								<option value="NEW_ASSET">NEW ASSET</option>
-								<option value="NOT_REVIEWED">NOT REVIEWED</option>
-								<option value="NEW_LEAD">NEW LEAD</option>
-								<option value="RE_REVIEW">RE-REVIEW</option>
-								<option value="NOT_INTERESTED">NOT INTERESTED</option>
-								<option value="CALL_AGENT">CALL AGENT</option>
-								<option value="PENDING_INTEL">PENDING INTEL</option>
-								<option value="FOLLOW_UP">FOLLOW UP</option>
-								<option value="BID_PENDING">BID PENDING</option>
-								<option value="PROXY">PROXY</option>
-								<option value="BID">BID</option>
-								<option value="WON">WON</option>
-								<option value="REJECTED">REJECTED</option>
-								<option value="SALE_CANCELLED">SALE CANCELLED</option>
-								<option value="LOST">LOST</option>
-								<option value="AUCTION_SOLD">AUCTION SOLD</option>
-								<option value="IN_CLOSING_B">IN CLOSING (B)</option>
-								<option value="CLOSED">CLOSED</option>
-								<option value="OCCUPIED">OCCUPIED</option>
-								<option value="PENDING_VACANCY">PENDING VACANCY</option>
-								<option value="IN_EVICTION">IN EVICTION</option>
-								<option value="PENDING_BID">PENDING BID</option>
-								<option value="BEING_REHABBED">BEING REHABBED</option>
-								<option value="LISTED">LISTED</option>
-								<option value="IN_CLOSING_S">IN CLOSING (S)</option>
-								<option value="SOLD">SOLD</option>
-								<option value="NONE">NONE</option>
-							</Select>
-							<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-						</FormControl>
-					</Box>
-					<Box>
-						<p className={classes.label}>TPP</p>
-						<FormControl
-							// className={clsx(classes.margin, classes.textField)}
-							variant="filled"
-						>
-							<FilledInput
-								name="tpp"
-								value={data.tpp}
-								onChange={handleChange}
-								inputProps={{
-									maxLength: 11,
-								}}
-								inputComponent={NumberCurrencyFormatCustom as any}
-							/>
-							<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-						</FormControl>
-					</Box>
-					<Box>
-						<p className={classes.label}>List Price ($)</p>
-						<FormControl
-							// className={clsx(classes.margin, classes.textField)}
-							variant="filled"
-						>
-							<FilledInput
-								name="list_price"
-								value={data.list_price}
-								onChange={handleChange}
-								inputProps={{
-									maxLength: 11,
-								}}
-								inputComponent={NumberCurrencyFormatCustom as any}
-							/>
-							<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-						</FormControl>
-					</Box>
-					<Box>
-						<p className={classes.label}>Profit ($)</p>
-						<FormControl
-							// className={clsx(classes.margin, classes.textField)}
-							variant="filled"
-						>
-							<FilledInput
-								name="profit"
-								value={data.profit}
-								onChange={handleChange}
-								inputProps={{
-									maxLength: 11,
-								}}
-								inputComponent={NumberCurrencyFormatCustom as any}
-							/>
-							<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-						</FormControl>
-					</Box>
-					<Box>
-						<p className={classes.label}>ROI (%)</p>
-						<FormControl
-							// className={clsx(classes.margin, classes.textField)}
-							variant="filled"
-						>
-							<FilledInput
-								name="roi"
-								value={data.roi}
-								onChange={handleChange}
-								inputProps={{
-									maxLength: 5,
-								}}
-								inputComponent={PercentageWithoutDecimalFormat as any}
-							/>
-							<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-						</FormControl>
-					</Box>
-					<Box>
-						<p className={classes.label}>Hold Time</p>
-						<FormControl
-							// className={clsx(classes.margin, classes.textField)}
-							variant="filled"
-						>
-							<FilledInput
-								name="hold_time"
-								value={data.hold_time}
-								onChange={handleChange}
-								inputProps={{
-									maxLength: 5,
-								}}
-								inputComponent={RegularNumberWithDecimalFormat as any}
-							/>
-							<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-						</FormControl>
-					</Box>
-				</div>
-				<div>
-					<Box width="60%" mb={5}>
-						<p className={classes.label}>Note</p>
-						<FormControl
-							// className={clsx(classes.margin, classes.textField)}
-							variant="filled"
-						>
-							<TextField
-								id="filled-multiline-static"
-								multiline
-								rows={3}
-								name="note"
-								value={data.note}
-								onChange={handleChange}
-								// defaultValue="Default Value"
-								variant="filled"
-							/>
-							<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-						</FormControl>
+					<div style={{ width: "69%", marginTop: "10px", marginRight: "20px" }}>
+						<div className={classes.div}>
+							<Box marginRight={1} width="200px">
+								<p className={classes.label}>Status</p>
+								<FormControl
+									// className={clsx(classes.margin, classes.textField)}
+									variant="filled"
+								>
+									<Select
+										native
+										value={data.status}
+										onChange={handleChange}
+										name="status"
+										placeholder=""
+										className={classes.input}
+									>
+										<option aria-label="None" value="" />
+										<option value="NEW_ASSET">NEW ASSET</option>
+										<option value="NOT_REVIEWED">NOT REVIEWED</option>
+										<option value="NEW_LEAD">NEW LEAD</option>
+										<option value="RE_REVIEW">RE-REVIEW</option>
+										<option value="NOT_INTERESTED">NOT INTERESTED</option>
+										<option value="CALL_AGENT">CALL AGENT</option>
+										<option value="PENDING_INTEL">PENDING INTEL</option>
+										<option value="FOLLOW_UP">FOLLOW UP</option>
+										<option value="BID_PENDING">BID PENDING</option>
+										<option value="PROXY">PROXY</option>
+										<option value="BID">BID</option>
+										<option value="WON">WON</option>
+										<option value="REJECTED">REJECTED</option>
+										<option value="SALE_CANCELLED">SALE CANCELLED</option>
+										<option value="LOST">LOST</option>
+										<option value="AUCTION_SOLD">AUCTION SOLD</option>
+										<option value="IN_CLOSING_B">IN CLOSING (B)</option>
+										<option value="CLOSED">CLOSED</option>
+										<option value="OCCUPIED">OCCUPIED</option>
+										<option value="PENDING_VACANCY">PENDING VACANCY</option>
+										<option value="IN_EVICTION">IN EVICTION</option>
+										<option value="PENDING_BID">PENDING BID</option>
+										<option value="BEING_REHABBED">BEING REHABBED</option>
+										<option value="LISTED">LISTED</option>
+										<option value="IN_CLOSING_S">IN CLOSING (S)</option>
+										<option value="SOLD">SOLD</option>
+										<option value="NONE">NONE</option>
+									</Select>
+									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								</FormControl>
+							</Box>
+							<Box marginRight={1}>
+								<p className={classes.label}>TPP</p>
+								<FormControl
+									// className={clsx(classes.margin, classes.textField)}
+									variant="filled"
+								>
+									<FilledInput
+										className={classes.input}
+										name="tpp"
+										value={data.tpp}
+										onChange={handleChange}
+										inputProps={{
+											maxLength: 11,
+										}}
+										inputComponent={NumberCurrencyFormatCustom as any}
+									/>
+									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								</FormControl>
+							</Box>
+							<Box marginRight={1}>
+								<p className={classes.label}>List Price ($)</p>
+								<FormControl
+									// className={clsx(classes.margin, classes.textField)}
+									variant="filled"
+								>
+									<FilledInput
+										className={classes.input}
+										name="list_price"
+										value={data.list_price}
+										onChange={handleChange}
+										inputProps={{
+											maxLength: 11,
+										}}
+										inputComponent={NumberCurrencyFormatCustom as any}
+									/>
+									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								</FormControl>
+							</Box>
+							<Box marginRight={1}>
+								<p className={classes.label}>Profit ($)</p>
+								<FormControl
+									// className={clsx(classes.margin, classes.textField)}
+									variant="filled"
+								>
+									<FilledInput
+										className={classes.input}
+										name="profit"
+										value={data.profit}
+										onChange={handleChange}
+										inputProps={{
+											maxLength: 11,
+										}}
+										inputComponent={NumberCurrencyFormatCustom as any}
+									/>
+									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								</FormControl>
+							</Box>
+							<Box marginRight={1}>
+								<p className={classes.label}>ROI (%)</p>
+								<FormControl
+									// className={clsx(classes.margin, classes.textField)}
+									variant="filled"
+								>
+									<FilledInput
+										name="roi"
+										value={data.roi}
+										className={classes.input}
+										onChange={handleChange}
+										inputProps={{
+											maxLength: 5,
+										}}
+										inputComponent={PercentageWithoutDecimalFormat as any}
+									/>
+									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								</FormControl>
+							</Box>
+							<Box marginRight={1}>
+								<p className={classes.label}>Hold Time</p>
+								<FormControl
+									// className={clsx(classes.margin, classes.textField)}
+									variant="filled"
+								>
+									<FilledInput
+										name="hold_time"
+										className={classes.input}
+										value={data.hold_time}
+										onChange={handleChange}
+										inputProps={{
+											maxLength: 5,
+										}}
+										inputComponent={RegularNumberWithDecimalFormat as any}
+									/>
+									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								</FormControl>
+							</Box>
+							<Box marginRight={1}>
+								<p className={classes.label}>Sold Price ($)</p>
+								<FormControl
+									// className={clsx(classes.margin, classes.textField)}
+									variant="filled"
+								>
+									<FilledInput
+										value={data.sold_price}
+										onChange={handleChange}
+										className={classes.input}
+										name="sold_price"
+										inputComponent={NumberCurrencyFormatCustom as any}
+										placeholder=""
+										aria-describedby="filled-weight-helper-text"
+										inputProps={{
+											"aria-label": "weight",
+										}}
+									/>
+									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								</FormControl>
+							</Box>
+							<Box>
+								<p className={classes.label}>Sold Date</p>
+								<FormControl
+									// className={clsx(classes.margin, classes.textField)}
+									variant="filled"
+								>
+									<KeyboardDatePicker
+										disableToolbar
+										variant="inline"
+										format="MM/dd/yyyy"
+										margin="normal"
+										id="date-picker-inline"
+										// label="Date picker inline"
+										value={soldDate}
+										onChange={handleSoldDateChange}
+										KeyboardButtonProps={{
+											"aria-label": "change date",
+										}}
+										InputProps={{
+											classes: {
+												root: classes.datePicker,
+											},
+										}}
+									/>
+									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								</FormControl>
+							</Box>
+						</div>
+
+						<div>
+							<Box width="60%" mb={5}>
+								<p className={classes.label}>Note</p>
+								<FormControl
+									// className={clsx(classes.margin, classes.textField)}
+									variant="filled"
+								>
+									<TextField
+										id="filled-multiline-static"
+										multiline
+										rows={3}
+										name="note"
+										value={data.note}
+										onChange={handleChange}
+										// defaultValue="Default Value"
+										variant="filled"
+									/>
+									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								</FormControl>
+							</Box>
+						</div>
+						<div className={classes.div}>
+							<Box marginRight={1}>
+								<p className={classes.label}>G.C.</p>
+								<FormControl
+									// className={clsx(classes.margin, classes.textField)}
+									variant="filled"
+								>
+									<FilledInput
+										value={data.gc}
+										onChange={handleGcChange}
+										name="gc"
+										placeholder=""
+										className={classes.input}
+									/>
+									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								</FormControl>
+								{openGcDiv ? (
+									<AutoComplete
+										options={options}
+										input={data.gc}
+										optionData={optionData}
+										optionList={optionList}
+									/>
+								) : (
+									""
+								)}
+							</Box>
+							<Box marginRight={1}>
+								<p className={classes.label}>G.C. Number</p>
+								<FormControl
+									// className={clsx(classes.margin, classes.textField)}
+									variant="filled"
+								>
+									<FilledInput
+										value={data.gc_number}
+										onChange={handleChange}
+										name="gc_number"
+										inputComponent={PhoneNumberFormat as any}
+										placeholder=""
+										className={classes.input}
+									/>
+									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								</FormControl>
+							</Box>
+							<Box marginRight={1} width="250px">
+								<p className={classes.label}>G.C. Email</p>
+								<FormControl
+									// className={clsx(classes.margin, classes.textField)}
+									variant="filled"
+								>
+									<FilledInput
+										value={data.gc_email}
+										onChange={handleChange}
+										name="gc_email"
+										type="email"
+										placeholder=""
+										className={classes.input}
+									/>
+									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								</FormControl>
+							</Box>
+							<Box width="200px">
+								<p className={classes.label}>Rehab ($)</p>
+								<FormControl
+									// className={clsx(classes.margin, classes.textField)}
+									variant="filled"
+								>
+									<FilledInput
+										value={data.rehab}
+										onChange={handleChange}
+										name="rehab"
+										className={classes.input}
+										inputComponent={NumberCurrencyFormatCustom as any}
+										placeholder=""
+									/>
+									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								</FormControl>
+								<FormControlLabel
+									control={
+										<Checkbox
+											// checked={state.checkedB}
+											// onChange={handleChange}
+											name="checkedB"
+											color="primary"
+											size="small"
+										/>
+									}
+									style={{ fontSize: "10px" }}
+									label="Bid Confirm"
+								/>
+							</Box>
+						</div>
+					</div>
+					<Box width="29%" mt={3} mb={2}>
+						<EscrowPhoto images={images} />
 					</Box>
 				</div>
 
 				<div className={classes.section}>
-					<div style={{ width: "69%", marginTop: "10px" }}>
+					<div style={{ width: "100%", marginTop: "10px" }}>
 						<div className={classes.sectionDiv}>
 							<Box>
 								<p className={classes.label}>Occupancy</p>
@@ -555,47 +721,6 @@ const Index = ({ options, rowData }: BuyProps) => {
 										<option value={10}>Yes</option>
 										<option value={20}>No</option>
 									</Select>
-									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-								</FormControl>
-							</Box>
-							<Box>
-								<p className={classes.label}>CFK</p>
-								<FormControl
-									// className={clsx(classes.margin, classes.textField)}
-									variant="filled"
-								>
-									<Select
-										native
-										value={data.cfk}
-										onChange={handleChange}
-										inputProps={{
-											name: "age",
-											id: "filled-age-native-simple",
-										}}
-										placeholder="Label"
-									>
-										<option aria-label="None" value="" />
-										<option value={10}>Yes</option>
-										<option value={20}>No</option>
-									</Select>
-									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-								</FormControl>
-							</Box>
-							<Box>
-								<p className={classes.label}>CFK Amount ($)</p>
-								<FormControl
-									// className={clsx(classes.margin, classes.textField)}
-									variant="filled"
-								>
-									<FilledInput
-										name="cfk_amount"
-										value={data.hold_time}
-										onChange={handleChange}
-										inputProps={{
-											maxLength: 5,
-										}}
-										inputComponent={NumberCurrencyFormatCustom as any}
-									/>
 									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 								</FormControl>
 							</Box>
@@ -686,6 +811,95 @@ const Index = ({ options, rowData }: BuyProps) => {
 								</FormControl>
 							</Box>
 							<Box>
+								<p className={classes.label}>CFK Amount ($)</p>
+								<FormControl
+									// className={clsx(classes.margin, classes.textField)}
+									variant="filled"
+								>
+									<FilledInput
+										name="cfk_amount"
+										value={data.hold_time}
+										onChange={handleChange}
+										inputProps={{
+											maxLength: 5,
+										}}
+										inputComponent={NumberCurrencyFormatCustom as any}
+									/>
+									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								</FormControl>
+							</Box>
+						</div>
+						<div className={classes.grid}>
+							<Box>
+								<p className={classes.label}>List Agent</p>
+								<FormControl
+									// className={clsx(classes.margin, classes.textField)}
+									variant="filled"
+								>
+									<FilledInput
+										value={data.list_agent}
+										onChange={handleListAgentChange}
+										name="list_agent"
+										placeholder=""
+										aria-describedby="filled-weight-helper-text"
+										inputProps={{
+											"aria-label": "weight",
+										}}
+									/>
+									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								</FormControl>
+								{openListDiv ? (
+									<AutoComplete
+										options={options}
+										input={data.list_agent}
+										optionData={optionData}
+										optionList={optionList}
+									/>
+								) : (
+									""
+								)}
+							</Box>
+							<Box>
+								<p className={classes.label}>List Agent Number</p>
+								<FormControl
+									// className={clsx(classes.margin, classes.textField)}
+									variant="filled"
+								>
+									<FilledInput
+										value={data.list_agent_number}
+										onChange={handleChange}
+										name="list_agent_number"
+										inputComponent={PhoneNumberFormat as any}
+										placeholder=""
+										aria-describedby="filled-weight-helper-text"
+										inputProps={{
+											"aria-label": "weight",
+										}}
+									/>
+									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								</FormControl>
+							</Box>
+							<Box>
+								<p className={classes.label}>List Agent Email</p>
+								<FormControl
+									// className={clsx(classes.margin, classes.textField)}
+									variant="filled"
+								>
+									<FilledInput
+										value={data.list_agent_email}
+										onChange={handleChange}
+										name="list_agent_email"
+										type="email"
+										placeholder=""
+										aria-describedby="filled-weight-helper-text"
+										inputProps={{
+											"aria-label": "weight",
+										}}
+									/>
+									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								</FormControl>
+							</Box>
+							<Box>
 								<p className={classes.label}>Attorney Name</p>
 								<FormControl
 									// className={clsx(classes.margin, classes.textField)}
@@ -770,6 +984,30 @@ const Index = ({ options, rowData }: BuyProps) => {
 											"aria-label": "weight",
 										}}
 									/>
+									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								</FormControl>
+							</Box>
+							<Box>
+								<p className={classes.label}>Contractor Bid Received</p>
+								<FormControl
+									// className={clsx(classes.margin, classes.textField)}
+									variant="filled"
+								>
+									<Select
+										native
+										value={data.contractor_bid_received}
+										onChange={handleChange}
+										name="contractor_bid_received"
+										inputProps={{
+											name: "age",
+											id: "filled-age-native-simple",
+										}}
+										placeholder=""
+									>
+										<option aria-label="None" value="" />
+										<option value={10}>Yes</option>
+										<option value={20}>No</option>
+									</Select>
 									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 								</FormControl>
 							</Box>
@@ -931,244 +1169,9 @@ const Index = ({ options, rowData }: BuyProps) => {
 							</Box>
 						</div>
 					</div>
-
-					<Box width="29%" mt={3} mb={2}>
-						<EscrowPhoto images={images} />
-					</Box>
 				</div>
-				<div className={classes.div}>
-					<Box>
-						<p className={classes.label}>Contractor Bid Received</p>
-						<FormControl
-							// className={clsx(classes.margin, classes.textField)}
-							variant="filled"
-						>
-							<Select
-								native
-								value={data.contractor_bid_received}
-								onChange={handleChange}
-								name="contractor_bid_received"
-								inputProps={{
-									name: "age",
-									id: "filled-age-native-simple",
-								}}
-								placeholder=""
-							>
-								<option aria-label="None" value="" />
-								<option value={10}>Yes</option>
-								<option value={20}>No</option>
-							</Select>
-							<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-						</FormControl>
-					</Box>
-					<Box>
-						<p className={classes.label}>Rehab ($)</p>
-						<FormControl
-							// className={clsx(classes.margin, classes.textField)}
-							variant="filled"
-						>
-							<FilledInput
-								value={data.rehab}
-								onChange={handleChange}
-								name="rehab"
-								inputComponent={NumberCurrencyFormatCustom as any}
-								placeholder=""
-								aria-describedby="filled-weight-helper-text"
-								inputProps={{
-									"aria-label": "weight",
-								}}
-							/>
-							<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-						</FormControl>
-					</Box>
-					<Box>
-						<p className={classes.label}>G.C.</p>
-						<FormControl
-							// className={clsx(classes.margin, classes.textField)}
-							variant="filled"
-						>
-							<FilledInput
-								value={data.gc}
-								onChange={handleGcChange}
-								name="gc"
-								placeholder=""
-								aria-describedby="filled-weight-helper-text"
-								inputProps={{
-									"aria-label": "weight",
-								}}
-							/>
-							<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-						</FormControl>
-						{openGcDiv ? (
-							<AutoComplete
-								options={options}
-								input={data.gc}
-								optionData={optionData}
-								optionList={optionList}
-							/>
-						) : (
-							""
-						)}
-					</Box>
-					<Box>
-						<p className={classes.label}>G.C. Number</p>
-						<FormControl
-							// className={clsx(classes.margin, classes.textField)}
-							variant="filled"
-						>
-							<FilledInput
-								value={data.gc_number}
-								onChange={handleChange}
-								name="gc_number"
-								inputComponent={PhoneNumberFormat as any}
-								placeholder=""
-								aria-describedby="filled-weight-helper-text"
-								inputProps={{
-									"aria-label": "weight",
-								}}
-							/>
-							<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-						</FormControl>
-					</Box>
-					<Box>
-						<p className={classes.label}>G.C. Email</p>
-						<FormControl
-							// className={clsx(classes.margin, classes.textField)}
-							variant="filled"
-						>
-							<FilledInput
-								value={data.gc_email}
-								onChange={handleChange}
-								name="gc_email"
-								type="email"
-								placeholder=""
-								aria-describedby="filled-weight-helper-text"
-								inputProps={{
-									"aria-label": "weight",
-								}}
-							/>
-							<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-						</FormControl>
-					</Box>
-				</div>
-				<div className={classes.div}>
-					<Box>
-						<p className={classes.label}>List Agent</p>
-						<FormControl
-							// className={clsx(classes.margin, classes.textField)}
-							variant="filled"
-						>
-							<FilledInput
-								value={data.list_agent}
-								onChange={handleListAgentChange}
-								name="list_agent"
-								placeholder=""
-								aria-describedby="filled-weight-helper-text"
-								inputProps={{
-									"aria-label": "weight",
-								}}
-							/>
-							<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-						</FormControl>
-						{openListDiv ? (
-							<AutoComplete
-								options={options}
-								input={data.list_agent}
-								optionData={optionData}
-								optionList={optionList}
-							/>
-						) : (
-							""
-						)}
-					</Box>
-					<Box>
-						<p className={classes.label}>List Agent Number</p>
-						<FormControl
-							// className={clsx(classes.margin, classes.textField)}
-							variant="filled"
-						>
-							<FilledInput
-								value={data.list_agent_number}
-								onChange={handleChange}
-								name="list_agent_number"
-								inputComponent={PhoneNumberFormat as any}
-								placeholder=""
-								aria-describedby="filled-weight-helper-text"
-								inputProps={{
-									"aria-label": "weight",
-								}}
-							/>
-							<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-						</FormControl>
-					</Box>
-					<Box>
-						<p className={classes.label}>List Agent Email</p>
-						<FormControl
-							// className={clsx(classes.margin, classes.textField)}
-							variant="filled"
-						>
-							<FilledInput
-								value={data.list_agent_email}
-								onChange={handleChange}
-								name="list_agent_email"
-								type="email"
-								placeholder=""
-								aria-describedby="filled-weight-helper-text"
-								inputProps={{
-									"aria-label": "weight",
-								}}
-							/>
-							<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-						</FormControl>
-					</Box>
-					<Box>
-						<p className={classes.label}>Sold Price ($)</p>
-						<FormControl
-							// className={clsx(classes.margin, classes.textField)}
-							variant="filled"
-						>
-							<FilledInput
-								value={data.sold_price}
-								onChange={handleChange}
-								name="sold_price"
-								inputComponent={NumberCurrencyFormatCustom as any}
-								placeholder=""
-								aria-describedby="filled-weight-helper-text"
-								inputProps={{
-									"aria-label": "weight",
-								}}
-							/>
-							<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-						</FormControl>
-					</Box>
-					<Box>
-						<p className={classes.label}>Sold Date</p>
-						<FormControl
-							// className={clsx(classes.margin, classes.textField)}
-							variant="filled"
-						>
-							<KeyboardDatePicker
-								disableToolbar
-								variant="inline"
-								format="MM/dd/yyyy"
-								margin="normal"
-								id="date-picker-inline"
-								// label="Date picker inline"
-								value={soldDate}
-								onChange={handleSoldDateChange}
-								KeyboardButtonProps={{
-									"aria-label": "change date",
-								}}
-								InputProps={{
-									classes: {
-										root: classes.datePicker,
-									},
-								}}
-							/>
-							<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-						</FormControl>
-					</Box>
-				</div>
+				<div className={classes.div}></div>
+				<div className={classes.div}></div>
 				<div className={classes.buttonStack}>
 					<Button
 						variant="outlined"
@@ -1192,7 +1195,7 @@ const Index = ({ options, rowData }: BuyProps) => {
 					justifyContent="space-between"
 					marginTop={6}
 				>
-					<History />
+					<History property_id={rowData._id} />
 					<Document />
 				</Box>
 			</MuiPickersUtilsProvider>

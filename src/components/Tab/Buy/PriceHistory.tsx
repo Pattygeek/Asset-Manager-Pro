@@ -42,13 +42,6 @@ const PriceHistory = ({ open, handleClose }: ModalProps) => {
 		columnHeaderHeight: 35,
 		width: 760,
 		filters: true,
-		cells: function (row: number) {
-			let cp: any = {};
-			if (row % 2 === 0) {
-				cp.className = "greyRow";
-			}
-			return cp;
-		},
 		columnSorting: true,
 		allowInsertColumn: false,
 		allowRemoveColumn: false,

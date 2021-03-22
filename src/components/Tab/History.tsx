@@ -2,6 +2,8 @@ import Box from "@material-ui/core/Box";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import { HotTable, HotColumn } from "@handsontable/react";
 import { useState } from "react";
+import { useQuery } from "@apollo/client";
+import { TAB_HISTORY } from "../../helpers/graphql/queries";
 
 const useStyles = makeStyles((theme) => ({
 	box: {
@@ -13,97 +15,108 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const History = () => {
+const History = (props: { property_id: string | undefined }) => {
 	const classes = useStyles();
+
+	const { property_id } = props;
 
 	const [state, setState] = useState<any>({
 		colHeaders: ["Date", "Time", "User", "Field Name", "Change", "Notes"],
 		licenseKey: "non-commercial-and-evaluation",
 		rowHeights: 28,
 		columnHeaderHeight: 35,
-		// cells: function (row: number) {
-		// 	let cp: any = {};
-		// 	if (row % 2 === 0) {
-		// 		cp.className = "greyRow";
-		// 	}
-		// 	return cp;
-		// },
 		className: "htMiddle htCenter",
-		// stretchH: "all",
-		data: [
-			{
-				address_zip: "11/12/20",
-				address_state: "11:29AM",
-				address_county: "John Masaro",
-				address_city: "Hold Time",
-				address_street: "Follow up",
-				notes: "A short note",
-			},
-			{
-				address_zip: "11/12/20",
-				address_state: "11:29AM",
-				address_county: "John Masaro",
-				address_city: "Hold Time",
-				address_street: "Follow up",
-				notes: "A short note",
-			},
-			{
-				address_zip: "11/12/20",
-				address_state: "11:29AM",
-				address_county: "John Masaro",
-				address_city: "Hold Time",
-				address_street: "Follow up",
-				notes: "A short note",
-			},
-			{
-				address_zip: "11/12/20",
-				address_state: "11:29AM",
-				address_county: "John Masaro",
-				address_city: "Hold Time",
-				address_street: "Follow up",
-				notes: "A short note",
-			},
-			{
-				address_zip: "11/12/20",
-				address_state: "11:29AM",
-				address_county: "John Masaro",
-				address_city: "Hold Time",
-				address_street: "Follow up",
-				notes: "A short note",
-			},
-			{
-				address_zip: "11/12/20",
-				address_state: "11:29AM",
-				address_county: "John Masaro",
-				address_city: "Hold Time",
-				address_street: "Follow up",
-				notes: "A short note",
-			},
-			{
-				address_zip: "11/12/20",
-				address_state: "11:29AM",
-				address_county: "John Masaro",
-				address_city: "Hold Time",
-				address_street: "Follow up",
-				notes: "A short note",
-			},
-			{
-				address_zip: "11/12/20",
-				address_state: "11:29AM",
-				address_county: "John Masaro",
-				address_city: "Hold Time",
-				address_street: "Follow up",
-				notes: "A short note",
-			},
-		],
+		stretchH: "last",
+		// data: [
+		// 	{
+		// 		updated_at: "11/12/20",
+		// 		updated_att: "11:29AM",
+		// 		updated_by: "John Masaro",
+		// 		field_name: "Hold Time",
+		// 		new_value: "Follow up",
+		// 		notes: "A short note",
+		// 	},
+		// 	{
+		// 		updated_at: "11/12/20",
+		// 		updated_att: "11:29AM",
+		// 		updated_by: "John Masaro",
+		// 		field_name: "Hold Time",
+		// 		new_value: "Follow up",
+		// 		notes: "A short note",
+		// 	},
+		// 	{
+		// 		updated_at: "11/12/20",
+		// 		updated_att: "11:29AM",
+		// 		updated_by: "John Masaro",
+		// 		field_name: "Hold Time",
+		// 		new_value: "Follow up",
+		// 		notes: "A short note",
+		// 	},
+		// 	{
+		// 		updated_at: "11/12/20",
+		// 		updated_att: "11:29AM",
+		// 		updated_by: "John Masaro",
+		// 		field_name: "Hold Time",
+		// 		new_value: "Follow up",
+		// 		notes: "A short note",
+		// 	},
+		// 	{
+		// 		updated_at: "11/12/20",
+		// 		updated_att: "11:29AM",
+		// 		updated_by: "John Masaro",
+		// 		field_name: "Hold Time",
+		// 		new_value: "Follow up",
+		// 		notes: "A short note",
+		// 	},
+		// 	{
+		// 		updated_at: "11/12/20",
+		// 		updated_att: "11:29AM",
+		// 		updated_by: "John Masaro",
+		// 		field_name: "Hold Time",
+		// 		new_value: "Follow up",
+		// 		notes: "A short note",
+		// 	},
+		// 	{
+		// 		updated_at: "11/12/20",
+		// 		updated_att: "11:29AM",
+		// 		updated_by: "John Masaro",
+		// 		field_name: "Hold Time",
+		// 		new_value: "Follow up",
+		// 		notes: "A short note",
+		// 	},
+		// 	{
+		// 		updated_at: "11/12/20",
+		// 		updated_att: "11:29AM",
+		// 		updated_by: "John Masaro",
+		// 		field_name: "Hold Time",
+		// 		new_value: "Follow up",
+		// 		notes: "A short note",
+		// 	},
+		// ],
 		width: "100%",
 		height: "auto",
 		columns: [
-			{ data: "address_zip", readOnly: true, width: 90 },
-			{ data: "address_state", readOnly: true, width: 90 },
-			{ data: "address_county", readOnly: true, width: 120 },
-			{ data: "address_city", readOnly: true, width: 120 },
-			{ data: "address_street", readOnly: true, width: 100 },
+			{
+				data: "updated_at",
+				readOnly: true,
+				width: 90,
+				type: "date",
+				dateFormat: "DD/MM/YYYY",
+				datePickerConfig: {
+					// First day of the week (0: Sunday, 1: Monday, etc)
+					firstDay: 0,
+					showWeekNumber: true,
+					numberOfMonths: 3,
+					disableDayFn: function (date: any) {
+						// Disable Sunday and Saturday
+						return date.getDay() === 0 || date.getDay() === 6;
+					},
+				},
+			},
+			{ data: "updated_at", readOnly: true, width: 90, renderer: "time" },
+			{ data: "updated_by", readOnly: true, width: 120 },
+			{ data: "field_name", readOnly: true, width: 120 },
+			{ data: "new_value", readOnly: true, width: 100 },
 			{ data: "notes", readOnly: true, width: 150 },
 		],
 		minRows: 3,
@@ -112,6 +125,22 @@ const History = () => {
 		allowInsertColumn: false,
 		allowRemoveColumn: false,
 	});
+
+	
+
+	const [historyData, setHistoryData] = useState([]);
+
+	console.log(historyData);
+
+	const { loading, error, data } = useQuery(TAB_HISTORY, {
+		variables: {
+			property_id: "603da03580cbd833053229f2", //this is more like dummy property id, just to show the data, it will be updated to pick the actual property id
+		},
+		onCompleted() {
+			setHistoryData(data.buy_stream_price_history.history);
+		},
+	});
+
 	return (
 		<>
 			<Box
@@ -123,9 +152,10 @@ const History = () => {
 				marginBottom={6}
 			>
 				<Box className={classes.box}>History</Box>
-
+				
 				<HotTable
 					settings={state}
+					data={historyData}
 					dropdownMenu={[
 						"alignment",
 						"---------",

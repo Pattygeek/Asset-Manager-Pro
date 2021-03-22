@@ -59,7 +59,6 @@ const ContactRolodex = () => {
 	const classes = useStyles();
 
 	const [contactData, setContactData] = useState<Contact[]>([]);
-	console.log(contactData);
 
 	const [state, setState] = useState({
 		width: "100%",

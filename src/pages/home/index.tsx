@@ -7,7 +7,6 @@ import { LIST_ALL_PROPERTY } from "../../helpers/graphql/queries";
 import { useToggle } from "../../helpers/contexts/toggleContext";
 import useVisibleHook from "../../utils/useVisibleHook";
 
-
 //components
 import { Tab } from "../../components";
 import { PropertyRecord } from "../../components/Types";
@@ -61,6 +60,33 @@ const Home = () => {
 		viewportRowRenderingOffset: 20,
 		viewportColumnRenderingOffset: 15,
 		colWidths: 150,
+		persistentState: true,
+		persistentStateLoad: function () {
+			//console.log(arguments[0], arguments[1])
+			console.log("load am");
+		},
+		persistentStateReset: function () {
+			//console.log(arguments[0], arguments[1])
+			console.log("reset am");
+		},
+		persistentStateSave: function () {
+			//console.log(arguments[0], arguments[1]);
+			console.log("save am");
+		},
+		afterRowMove: function (
+			movedRows: number[],
+			finalIndex: number,
+			dropIndex: number | undefined,
+			movePossible: boolean,
+			orderChanged: boolean
+		) {
+			
+			if (movePossible === true && orderChanged === true) {
+			
+				// resetValue("manualRowMove");
+			}
+		},
+
 		columns: [
 			{
 				data: "checked",

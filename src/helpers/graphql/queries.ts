@@ -111,4 +111,22 @@ const CONTACTS_BY_ZIP = gql`
 		}
 	}
 `;
-export { LIST_ALL_PROPERTY, LOGIN, LIST_CONTACT, CONTACTS_BY_ZIP };
+
+const TAB_HISTORY = gql`
+	query getHistory($property_id: String) {
+		buy_stream_price_history(property_id: $property_id) {
+			message
+			status_code
+			history {
+				property_id
+				field_name
+				updated_by
+				previous_value
+				new_value
+				notes
+				updated_at
+			}
+		}
+	}
+`;
+export { LIST_ALL_PROPERTY, LOGIN, LIST_CONTACT, CONTACTS_BY_ZIP, TAB_HISTORY };
