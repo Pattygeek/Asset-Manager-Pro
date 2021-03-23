@@ -63,6 +63,10 @@ const LIST_ALL_PROPERTY = gql`
 				hud_percent
 				hud_cost
 			}
+			page_info {
+				has_next_page
+				end_cursor
+			}
 		}
 	}
 `;
@@ -129,4 +133,26 @@ const TAB_HISTORY = gql`
 		}
 	}
 `;
-export { LIST_ALL_PROPERTY, LOGIN, LIST_CONTACT, CONTACTS_BY_ZIP, TAB_HISTORY };
+
+const USER_PROFILE = gql`
+	query userprofile($user_id: String) {
+		user_profile(user_id: $user_id) {
+			message
+			user {
+				_id
+				email
+				first_name
+				last_name
+			}
+		}
+	}
+`;
+
+export {
+	LIST_ALL_PROPERTY,
+	LOGIN,
+	LIST_CONTACT,
+	CONTACTS_BY_ZIP,
+	TAB_HISTORY,
+	USER_PROFILE,
+};

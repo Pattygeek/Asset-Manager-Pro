@@ -1,11 +1,12 @@
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import { HotTable } from "@handsontable/react";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, ReactText } from "react";
 import { useQuery } from "@apollo/client";
 import { LIST_ALL_PROPERTY } from "../../helpers/graphql/queries";
 import { useToggle } from "../../helpers/contexts/toggleContext";
 import useVisibleHook from "../../utils/useVisibleHook";
+import Handsontable from "handsontable";
 
 //components
 import { Tab } from "../../components";
@@ -45,14 +46,60 @@ const Home = () => {
 	}));
 	const classes = useStyles();
 
+	const limit = 30;
+
+	const [property, setProperty] = useState<any[]>([]);
+
+	console.log(property)
+
 	const { loading, error, data, fetchMore } = useQuery(LIST_ALL_PROPERTY, {
+		notifyOnNetworkStatusChange: true,
 		variables: {
-			limit: 50,
+			limit,
+		},
+		onCompleted() {
+			const { has_next_page } = data.list_all_property_reports.page_info;
+			setHasMore(has_next_page)
+			const { edges } = data.list_all_property_reports;
+			setProperty((prevState) => [...prevState, ...edges]);
 		},
 	});
 
+	const [hasMore, setHasMore] = useState(false);
+
+	const scrollRef = React.createRef<HTMLDivElement>();
+	const hotTableComponentRef = React.createRef<HotTable>();
+
+	const handleScroll = () => {
+			if (!hasMore) return;
+			FetchMoreRecords();
+			return;
+	};
+
+	const FetchMoreRecords = async () => {
+		fetchMore({
+			variables: {
+				limit,
+				cursor: data.list_all_property_reports.page_info.end_cursor,
+			},
+		});
+		const {
+			has_next_page,
+		} = data.list_all_property_reports.page_info;
+		const {
+			edges
+		} = data.list_all_property_reports;
+		setHasMore(has_next_page);
+		// setProperty(prevState => [...prevState, ...edges]);
+	};
+
 	// if (loading) return <p>Loading...</p>;
 	// if (error) return <p>Error :(</p>;
+
+	
+
+	// const hotTableComponentRef = useRef<HotTable>(null);
+	
 
 	const [state, setState] = useState({
 		rowHeights: 28,
@@ -60,6 +107,21 @@ const Home = () => {
 		viewportRowRenderingOffset: 20,
 		viewportColumnRenderingOffset: 15,
 		colWidths: 150,
+		// renderer: function (
+		// 	instance: any,
+		// 	td: HTMLTableCellElement,
+		// 	row: number,
+		// 	col: number,
+		// 	prop: ReactText,
+		// 	value: any,
+		// 	cellProperties: any
+		// ) {
+		// 	Handsontable.renderers.TextRenderer.apply(
+		// 		this,
+		// 		arguments
+		// 	);
+		// 	td.innerHTML = `<div class="truncated">${value}</div>`;
+		// },
 		persistentState: true,
 		persistentStateLoad: function () {
 			//console.log(arguments[0], arguments[1])
@@ -68,24 +130,30 @@ const Home = () => {
 		persistentStateReset: function () {
 			//console.log(arguments[0], arguments[1])
 			console.log("reset am");
+			const persistentStatePlugin = hotTableComponentRef.current?.hotInstance.getPlugin(
+				"persistentState"
+			);
+			persistentStatePlugin?.resetValue("manualColumnMove");
 		},
 		persistentStateSave: function () {
 			//console.log(arguments[0], arguments[1]);
 			console.log("save am");
 		},
-		afterRowMove: function (
-			movedRows: number[],
-			finalIndex: number,
-			dropIndex: number | undefined,
-			movePossible: boolean,
-			orderChanged: boolean
-		) {
-			
-			if (movePossible === true && orderChanged === true) {
-			
-				// resetValue("manualRowMove");
-			}
-		},
+		// afterColumnMove: function (
+		// 	movedRows: number[],
+		// 	finalIndex: number,
+		// 	dropIndex: number | undefined,
+		// 	movePossible: boolean,
+		// 	orderChanged: boolean
+		// ) {
+		// 	const persistentStatePlugin = hotTableComponentRef.current?.hotInstance.getPlugin(
+		// 		"persistentState"
+		// 	);
+		// 	if (movePossible === true && orderChanged === true) {
+		// 		// resetValue("manualRowMove");
+		// 		persistentStatePlugin?.resetValue("manualColumnMove");
+		// 	}
+		// },
 
 		columns: [
 			{
@@ -204,8 +272,6 @@ const Home = () => {
 		licenseKey: "non-commercial-and-evaluation",
 	});
 
-	const hotTableComponentRef = useRef<HotTable>(null);
-
 	//state to handle propertyStatus
 	const [status, setStatus] = useState("");
 
@@ -237,13 +303,19 @@ const Home = () => {
 	return (
 		<>
 			{/* <Layout> */}
-			<Box className={classes.mainBox} onDoubleClick={handleDoubleClick}>
+			<div
+				className={classes.mainBox}
+				onDoubleClick={handleDoubleClick}
+				ref={scrollRef}
+				onScroll={handleScroll}
+			>
 				{data?.list_all_property_reports?.edges && (
 					<HotTable
 						ref={hotTableComponentRef}
 						settings={state}
 						id="hot"
-						data={data?.list_all_property_reports?.edges}
+						afterScrollVertically={handleScroll}
+						data={property}
 						dropdownMenu={[
 							"alignment",
 							"---------",
@@ -282,7 +354,10 @@ const Home = () => {
 				) : (
 					""
 				)}
-			</Box>
+			</div>
+			{/* <button onClick={FetchMoreRecords}>
+				load more
+			</button> */}
 
 			{/* </Layout> */}
 		</>

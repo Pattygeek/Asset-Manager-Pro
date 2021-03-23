@@ -70,24 +70,6 @@ const UploadData = () => {
 			return res;
 		}
 
-		// function removeNAA(obj: any) {
-		// 	const fin: any = {};
-		// 	const fina: any = {};
-		// 	for (const key in obj) {
-		// 		fin[key] = {};
-		// 		fina[key] = {};
-		// 		for (const prop in obj[key]) {
-		// 			const removeFIN = obj["credit_bid"][prop].replace(/(#N\/A)+/g, "0");
-		// 			fina["credit_bid"][prop] =
-		// 				obj["credit_bid"][prop] == "N/A"
-		// 					? removeFIN
-		// 					: obj["credit_bid"][prop];
-		// 					fin["credit_bid"][prop] = obj["credit_bid"][prop];
-		// 		}
-		// 	}
-		// 	return fin;
-		// }
-
 		var rest = convertIntObj(result);
 
 		// var rest2 = removeNAA(rest);
@@ -127,6 +109,12 @@ const UploadData = () => {
 				red_bell: item._redbell_,
 				zillow: item._zillow_,
 			};
+		});
+
+		newArray.forEach((element) => {
+			if (element.credit_bid === "#N/A") {
+				element.credit_bid = 0;
+			}
 		});
 
 		finalData = newArray;
@@ -182,7 +170,9 @@ const UploadData = () => {
 		// e.preventDefault();
 		import_property_report_batch({
 			variables: {
-				batch_data: finalData,
+				input: {
+					batch_data: finalData,
+				},
 			},
 		});
 	};
@@ -244,7 +234,7 @@ const UploadData = () => {
 
 				<Box
 					width="50%"
-					height="50%"
+					height="350px"
 					bgcolor="background.default"
 					mx="auto"
 					border={1}

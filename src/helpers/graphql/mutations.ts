@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 const PROPERTY_ENTRY = gql`
-	mutation importReport($batch_data: [JSON]) {
-		import_property_report_batch(input: { batch_data: $batch_data }) {
+	mutation importReport($input: BatchImport) {
+		import_property_report_batch(input: $input) {
 			message
 			status_code
 			queued_imports

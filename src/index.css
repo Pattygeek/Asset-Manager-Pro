@@ -54,6 +54,11 @@ a:-webkit-any-link {
 /* .handsontable tr:nth-child(odd) {
 	background-color: #f2f2f2 !important;
 } */
+.handsontable .truncated {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 .handsontable tr:nth-child(even) {
 	background: #fff !important;
