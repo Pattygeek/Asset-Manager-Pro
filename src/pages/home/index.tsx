@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import { HotTable } from "@handsontable/react";
-import React, { useState, useRef, ReactText } from "react";
+import React, { useState, useRef, ReactText, useMemo, useCallback } from "react";
 import { useQuery } from "@apollo/client";
 import { LIST_ALL_PROPERTY } from "../../helpers/graphql/queries";
 import { useToggle } from "../../helpers/contexts/toggleContext";
@@ -46,11 +46,11 @@ const Home = () => {
 	}));
 	const classes = useStyles();
 
-	const limit = 30;
+	const limit = 20;
 
 	const [property, setProperty] = useState<any[]>([]);
 
-	console.log(property)
+	console.log(property);
 
 	const { loading, error, data, fetchMore } = useQuery(LIST_ALL_PROPERTY, {
 		notifyOnNetworkStatusChange: true,
@@ -59,9 +59,10 @@ const Home = () => {
 		},
 		onCompleted() {
 			const { has_next_page } = data.list_all_property_reports.page_info;
-			setHasMore(has_next_page)
+			setHasMore(has_next_page);
 			const { edges } = data.list_all_property_reports;
-			setProperty((prevState) => [...prevState, ...edges]);
+			// setProperty((prevState) => [...prevState, ...edges]);
+			setProperty(edges);
 		},
 	});
 
@@ -71,32 +72,34 @@ const Home = () => {
 	const hotTableComponentRef = React.createRef<HotTable>();
 
 	const handleScroll = () => {
-			if (!hasMore) return;
+		// if (!hasMore) return;
+		// FetchMoreRecords();
+		// return;
+		if (hasMore) {
 			FetchMoreRecords();
-			return;
+		}
 	};
 
-	const FetchMoreRecords = async () => {
+	const FetchMoreRecords = useCallback(() => {
 		fetchMore({
 			variables: {
 				limit,
 				cursor: data.list_all_property_reports.page_info.end_cursor,
 			},
 		});
-		const {
-			has_next_page,
-		} = data.list_all_property_reports.page_info;
+		const { has_next_page } = data.list_all_property_reports.page_info;
 		setHasMore(has_next_page);
+		const { edges } = data.list_all_property_reports;
+		//setProperty(edges)
+		setProperty((prevState) => [...prevState, ...edges]);
+		//
 		// setProperty(prevState => [...prevState, ...edges]);
-	};
+	}, [hasMore]);
 
 	// if (loading) return <p>Loading...</p>;
 	// if (error) return <p>Error :(</p>;
 
-	
-
 	// const hotTableComponentRef = useRef<HotTable>(null);
-	
 
 	const [state, setState] = useState({
 		rowHeights: 28,
@@ -319,7 +322,7 @@ const Home = () => {
 						ref={hotTableComponentRef}
 						settings={state}
 						id="hot"
-						afterScrollVertically={handleScroll}
+						//afterScrollVertically={handleScroll}
 						data={property}
 						dropdownMenu={[
 							"alignment",
