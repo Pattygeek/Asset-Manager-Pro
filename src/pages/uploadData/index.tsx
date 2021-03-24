@@ -142,7 +142,7 @@ const UploadData = () => {
 		onCompleted({ import_property_report_batch }) {
 			console.log(import_property_report_batch.message);
 			vip = import_property_report_batch.import_id;
-			handleSecondImport(vip);
+			// handleSecondImport(vip);
 		},
 		onError(err) {
 			console.log(err);

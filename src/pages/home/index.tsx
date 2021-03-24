@@ -86,9 +86,6 @@ const Home = () => {
 		const {
 			has_next_page,
 		} = data.list_all_property_reports.page_info;
-		const {
-			edges
-		} = data.list_all_property_reports;
 		setHasMore(has_next_page);
 		// setProperty(prevState => [...prevState, ...edges]);
 	};
@@ -107,21 +104,30 @@ const Home = () => {
 		viewportRowRenderingOffset: 20,
 		viewportColumnRenderingOffset: 15,
 		colWidths: 150,
-		// renderer: function (
-		// 	instance: any,
-		// 	td: HTMLTableCellElement,
-		// 	row: number,
-		// 	col: number,
-		// 	prop: ReactText,
-		// 	value: any,
-		// 	cellProperties: any
-		// ) {
-		// 	Handsontable.renderers.TextRenderer.apply(
-		// 		this,
-		// 		arguments
-		// 	);
-		// 	td.innerHTML = `<div class="truncated">${value}</div>`;
-		// },
+		renderer: function (
+			instance: Handsontable,
+			td: HTMLTableCellElement,
+			row: number,
+			col: number,
+			prop: ReactText,
+			value: Handsontable.CellValue,
+			cellProperties: Handsontable.CellProperties
+		) {
+			Handsontable.renderers.TextRenderer.apply(
+				this,
+				(arguments as unknown) as [
+					Handsontable,
+					HTMLTableCellElement,
+					number,
+					number,
+					string | number,
+					Handsontable.CellValue,
+					Handsontable.CellProperties
+				]
+			);
+			td.innerHTML =
+				value === null ? "" : `<div class="truncated">${value}</div>`;
+		},
 		persistentState: true,
 		persistentStateLoad: function () {
 			//console.log(arguments[0], arguments[1])
@@ -307,7 +313,6 @@ const Home = () => {
 				className={classes.mainBox}
 				onDoubleClick={handleDoubleClick}
 				ref={scrollRef}
-				onScroll={handleScroll}
 			>
 				{data?.list_all_property_reports?.edges && (
 					<HotTable
