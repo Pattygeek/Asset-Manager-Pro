@@ -1,7 +1,13 @@
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import { HotTable } from "@handsontable/react";
-import React, { useState, useRef, ReactText, useMemo, useCallback } from "react";
+import React, {
+	useState,
+	useRef,
+	ReactText,
+	useMemo,
+	useCallback,
+} from "react";
 import { useQuery } from "@apollo/client";
 import { LIST_ALL_PROPERTY } from "../../helpers/graphql/queries";
 import { useToggle } from "../../helpers/contexts/toggleContext";
@@ -107,6 +113,10 @@ const Home = () => {
 		viewportRowRenderingOffset: 20,
 		viewportColumnRenderingOffset: 15,
 		colWidths: 150,
+		afterChange: function (change: any[], source: string) {
+			console.log(change)
+			console.log(source)
+		},
 		renderer: function (
 			instance: Handsontable,
 			td: HTMLTableCellElement,

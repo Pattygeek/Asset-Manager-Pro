@@ -9,8 +9,9 @@ import FilledInput from "@material-ui/core/FilledInput";
 import Button from "@material-ui/core/Button";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { ADD_CONTACT } from "../../helpers/graphql/mutations";
+import { LIST_CONTACT } from "../../helpers/graphql/queries";
 import { useState } from "react";
 import IconButton from "@material-ui/core/IconButton";
 import Collapse from "@material-ui/core/Collapse";
@@ -69,11 +70,15 @@ const AddContact = () => {
 	const [open, setOpen] = useState(false);
 	const [errorOpen, setErrorOpen] = useState(false);
 
+	//query to updated contact
+	const { refetch } = useQuery(LIST_CONTACT);
+
 	//add_contact mutation
 	const [add_contact, { loading, error }] = useMutation(ADD_CONTACT, {
 		onCompleted({ add_contact }) {
 			setSuccess(add_contact.message);
 			setOpen(true);
+			refetch();
 			formik.resetForm();
 		},
 		onError(err) {

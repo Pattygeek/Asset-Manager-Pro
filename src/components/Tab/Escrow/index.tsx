@@ -8,6 +8,7 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import Button from "@material-ui/core/Button";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import DoneOutlinedIcon from "@material-ui/icons/DoneOutlined";
 
 //assets & components
 import { ReactComponent as FileIcon } from "../../../assets/icons/file.svg";
@@ -521,7 +522,7 @@ const Index = ({ options, rowData }: BuyProps) => {
 							</FormControl>
 						</Box>
 						<div className={classes.div} style={{ width: "100%" }}>
-							<Box width="100px" marginRight={1}>
+							<Box width="90px" marginRight={1}>
 								<p className={classes.label}>CO Needed</p>
 								<FormControl
 									// className={clsx(classes.margin, classes.textField)}
@@ -543,8 +544,9 @@ const Index = ({ options, rowData }: BuyProps) => {
 									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 								</FormControl>
 							</Box>
-							<Box marginRight={1}>
-								<p className={classes.label}>Oil Swept?</p>
+							<Box marginRight={1} width="50px">
+								<p className={classes.label}>Oil ✓</p>
+
 								<FormControl
 									// className={clsx(classes.margin, classes.textField)}
 									variant="filled"
@@ -564,8 +566,8 @@ const Index = ({ options, rowData }: BuyProps) => {
 									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 								</FormControl>
 							</Box>
-							<Box marginRight={1}>
-								<p className={classes.label}>Sewer Checked?</p>
+							<Box marginRight={1} width="90px">
+								<p className={classes.label}>Sewer ✓</p>
 								<FormControl variant="filled">
 									<Select
 										native
@@ -576,8 +578,9 @@ const Index = ({ options, rowData }: BuyProps) => {
 										placeholder=""
 									>
 										<option aria-label="None" value="" />
-										<option value={10}>Yes</option>
-										<option value={20}>No</option>
+										<option value="N/A">N/A</option>
+										<option value="needed">Needed</option>
+										<option value="completed">Completed</option>
 									</Select>
 									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 								</FormControl>
@@ -657,7 +660,7 @@ const Index = ({ options, rowData }: BuyProps) => {
 									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 								</FormControl>
 							</Box>
-							<Box marginRight={1}>
+							<Box marginRight={1} width="70px">
 								<p className={classes.label}>Appraisal</p>
 								<FormControl
 									// className={clsx(classes.margin, classes.textField)}
@@ -672,13 +675,13 @@ const Index = ({ options, rowData }: BuyProps) => {
 										placeholder=""
 									>
 										<option aria-label="None" value="" />
-										<option value={10}>Yes</option>
-										<option value={20}>No</option>
+										<option value="N/A">N/A</option>
+										<option value="ordered">Ordered</option>
 									</Select>
 									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 								</FormControl>
 							</Box>
-							<Box marginRight={1}>
+							<Box marginRight={1} width="80px">
 								<p className={classes.label}>Occupancy</p>
 								<FormControl
 									// className={clsx(classes.margin, classes.textField)}

@@ -26,7 +26,11 @@ const DisplayOptions = ({ key, name, handleClick }: OptionsProp) => {
 	);
 };
 
-const NoOptions = () => {
+interface NoOptionsProps {
+	openModal?: () => void;
+}
+
+const NoOptions = ({ openModal }: NoOptionsProps) => {
 	const classes = useStyles();
 	return (
 		<Box display="flex" py={2}>
@@ -38,6 +42,7 @@ const NoOptions = () => {
 				disableElevation
 				color="primary"
 				style={{ color: "#fff" }}
+				onClick={openModal}
 			>
 				Add Contact
 			</Button>

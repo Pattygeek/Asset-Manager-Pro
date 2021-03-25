@@ -29,6 +29,8 @@ import Document from "../Document";
 import PriceHistory from "./PriceHistory";
 import BidHistory from "./BidHistory";
 import { useState } from "react";
+import { useQuery } from "@apollo/client";
+import { LIST_CONTACT } from "../../../helpers/graphql/queries";
 import {
 	NumberCurrencyFormatCustom,
 	RegularNumberWithoutDecimalFormat,
@@ -38,6 +40,7 @@ import {
 	PercentageWithoutDecimalFormat,
 	PhoneNumberFormat,
 } from "../../../utils/formats";
+import ContactModal from "../../ContactsAutocomplete/addContactModal";
 
 const useStyles = makeStyles((theme) => ({
 	label: {
@@ -99,14 +102,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface BuyProps {
-	options: any[];
+	//options: any[];
 	rowData: PropertyRecord;
 }
 
-const Buy = ({ options, rowData }: BuyProps) => {
+const Buy = ({ rowData }: BuyProps) => {
 	const classes = useStyles();
 
 	console.log(rowData);
+
+	const [options, setOptions] = useState<any[]>([]);
+
+	const { loading, error, data: contactData } = useQuery(LIST_CONTACT, {
+		// variables: {
+		// 	limit: 20,
+		// },
+		onCompleted() {
+			setOptions(contactData.list_paginated_contacts.edges);
+		},
+	});
 
 	//================pricehistory modal handler==============
 	const [open, setOpen] = useState(false);
@@ -137,7 +151,7 @@ const Buy = ({ options, rowData }: BuyProps) => {
 	//state handler for all the input fields
 	const [data, setData] = useState({
 		stRsv: "",
-		sqft: rowData.square_feet,
+		sqft: rowData.square_feet ? rowData.square_feet : null,
 		br: "",
 		ba: "",
 		lot: rowData.lot_size,
@@ -178,6 +192,13 @@ const Buy = ({ options, rowData }: BuyProps) => {
 	//state handler for list agent autocomplete
 	const [openListDiv, setOpenListDiv] = useState(false);
 
+	//handle modal open
+	const [openModal, setOpenModal] = useState(false);
+
+	const ModalOpen = () => {
+		setOpenModal(true);
+	};
+
 	//onchange handler for auction agent
 	const handleAuctionChange = (event: React.ChangeEvent<any>) => {
 		const { value } = event.target;
@@ -198,7 +219,11 @@ const Buy = ({ options, rowData }: BuyProps) => {
 		optionData = optionList?.map((option: any) => (
 			<DisplayOptions
 				key={option._id}
-				name={option.contact_first_name}
+				name={
+					option.contact_first_name +
+					" " +
+					(option.contact_last_name != null ? option.contact_last_name : "")
+				}
 				handleClick={() => {
 					setData({
 						...data,
@@ -211,7 +236,7 @@ const Buy = ({ options, rowData }: BuyProps) => {
 			/>
 		));
 	} else if (optionList?.length == 0 && data.auction_agent != "") {
-		optionData = <NoOptions />;
+		optionData = <NoOptions openModal={ModalOpen} />;
 	}
 	//===========end of auction agent onchange========================
 
@@ -235,7 +260,11 @@ const Buy = ({ options, rowData }: BuyProps) => {
 		optionData = optionList?.map((option: any) => (
 			<DisplayOptions
 				key={option._id}
-				name={option.contact_first_name}
+				name={
+					option.contact_first_name +
+					" " +
+					(option.contact_last_name != null ? option.contact_last_name : "")
+				}
 				handleClick={() => {
 					setData({
 						...data,
@@ -248,7 +277,7 @@ const Buy = ({ options, rowData }: BuyProps) => {
 			/>
 		));
 	} else if (optionList?.length == 0 && data.list_agent != "") {
-		optionData = <NoOptions />;
+		optionData = <NoOptions openModal={ModalOpen} />;
 	}
 	//===========end of list agent onchange========================
 
@@ -271,12 +300,15 @@ const Buy = ({ options, rowData }: BuyProps) => {
 	//input validations that needs to be reviewed *BA, LOT, Year, HUDExp, INTEREST
 	return (
 		<>
+			<ContactModal
+				open={openModal}
+				handleClose={() => setOpenModal(false)}
+				propertyID={rowData?.property_id}
+			/>
 			<div className={classes.div}>
 				<Box width="320px" marginRight={1}>
 					<p className={classes.label}>Status</p>
-					<FormControl
-						variant="filled"
-					>
+					<FormControl variant="filled">
 						<Select
 							native
 							value={data.status}
@@ -318,17 +350,13 @@ const Buy = ({ options, rowData }: BuyProps) => {
 				</Box>
 				<Box width="280px" marginRight={1}>
 					<p className={classes.label}>Reason</p>
-					<FormControl
-						
-						variant="filled"
-					>
+					<FormControl variant="filled">
 						<Select
 							native
 							value={data.reason}
 							onChange={handleChange}
 							name="reason"
 							className={classes.input}
-							
 							placeholder=""
 						>
 							<option aria-label="None" value="" />
@@ -346,17 +374,13 @@ const Buy = ({ options, rowData }: BuyProps) => {
 				</Box>
 				<Box marginRight={1}>
 					<p className={classes.label}>Access?</p>
-					<FormControl
-					
-						variant="filled"
-					>
+					<FormControl variant="filled">
 						<Select
 							native
 							value={data.access}
 							onChange={handleChange}
 							name="access"
 							className={classes.input}
-						
 							placeholder=""
 						>
 							<option aria-label="None" value="" />
@@ -377,7 +401,6 @@ const Buy = ({ options, rowData }: BuyProps) => {
 							onChange={handleChange}
 							name="product"
 							placeholder=""
-							
 							className={classes.input}
 						/>
 						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
@@ -435,9 +458,9 @@ const Buy = ({ options, rowData }: BuyProps) => {
 							value={data.sqft}
 							onChange={handleChange}
 							inputProps={{
-								maxLength: 7,
+								maxLength: 6,
 							}}
-							inputComponent={NumberCurrencyFormatCustom as any}
+							inputComponent={RegularNumberWithoutDecimalFormat as any}
 						/>
 						<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 					</FormControl>
@@ -465,10 +488,7 @@ const Buy = ({ options, rowData }: BuyProps) => {
 				</Box>
 				<Box width="80px" marginRight={1}>
 					<p className={classes.label}>BA</p>
-					<FormControl
-					
-						variant="filled"
-					>
+					<FormControl variant="filled">
 						<FilledInput
 							placeholder=""
 							className={classes.input}
@@ -503,10 +523,7 @@ const Buy = ({ options, rowData }: BuyProps) => {
 				</Box>
 				<Box marginRight={1} width="120px">
 					<p className={classes.label}>Year</p>
-					<FormControl
-					
-						variant="filled"
-					>
+					<FormControl variant="filled">
 						<FilledInput
 							placeholder=""
 							name="year"
@@ -578,10 +595,7 @@ const Buy = ({ options, rowData }: BuyProps) => {
 				</Box>
 				<Box marginRight={1}>
 					<p className={classes.label}>Profit ($)</p>
-					<FormControl
-					
-						variant="filled"
-					>
+					<FormControl variant="filled">
 						<FilledInput
 							placeholder=""
 							className={classes.input}
@@ -640,10 +654,7 @@ const Buy = ({ options, rowData }: BuyProps) => {
 						</Box>
 						<Box>
 							<p className={classes.label}>High Bid</p>
-							<FormControl
-								
-								variant="filled"
-							>
+							<FormControl variant="filled">
 								<FilledInput
 									value={data.high_bid}
 									onChange={handleChange}
@@ -663,10 +674,7 @@ const Buy = ({ options, rowData }: BuyProps) => {
 						</Box>
 						<Box marginX={1}>
 							<p className={classes.label}>Annual Taxes</p>
-							<FormControl
-								
-								variant="filled"
-							>
+							<FormControl variant="filled">
 								<FilledInput
 									placeholder=""
 									className={classes.input}
@@ -700,10 +708,7 @@ const Buy = ({ options, rowData }: BuyProps) => {
 						</Box>
 						<Box marginRight={1}>
 							<p className={classes.label}>Buy Price</p>
-							<FormControl
-								
-								variant="filled"
-							>
+							<FormControl variant="filled">
 								<FilledInput
 									placeholder=""
 									className={classes.input}
@@ -720,10 +725,7 @@ const Buy = ({ options, rowData }: BuyProps) => {
 						</Box>
 						<Box marginRight={1}>
 							<p className={classes.label}>TPP</p>
-							<FormControl
-								
-								variant="filled"
-							>
+							<FormControl variant="filled">
 								<FilledInput
 									placeholder=""
 									className={classes.input}
@@ -740,10 +742,7 @@ const Buy = ({ options, rowData }: BuyProps) => {
 						</Box>
 						<Box marginRight={1} width="240px">
 							<p className={classes.label}>Rehab</p>
-							<FormControl
-							
-								variant="filled"
-							>
+							<FormControl variant="filled">
 								<FilledInput
 									placeholder=""
 									className={classes.input}
@@ -773,10 +772,7 @@ const Buy = ({ options, rowData }: BuyProps) => {
 						</Box>
 						<Box width="240px">
 							<p className={classes.label}>Resale</p>
-							<FormControl
-							
-								variant="filled"
-							>
+							<FormControl variant="filled">
 								<FilledInput
 									placeholder=""
 									className={classes.input}

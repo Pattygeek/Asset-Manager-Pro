@@ -9,6 +9,7 @@ import Button from "@material-ui/core/Button";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
+
 //assets & components
 import { ReactComponent as FileIcon } from "../../../assets/icons/file.svg";
 import History from "../History";
@@ -718,8 +719,10 @@ const Index = ({ options, rowData }: BuyProps) => {
 										placeholder=""
 									>
 										<option aria-label="None" value="" />
-										<option value={10}>Yes</option>
-										<option value={20}>No</option>
+										<option value="vacant">Vacant</option>
+										<option value="occupied">Occupied</option>
+										<option value="in_eviction">In Eviction</option>
+										<option value="CFK">CFK</option>
 									</Select>
 									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 								</FormControl>
@@ -818,7 +821,7 @@ const Index = ({ options, rowData }: BuyProps) => {
 								>
 									<FilledInput
 										name="cfk_amount"
-										value={data.hold_time}
+										value={data.cfk_amount}
 										onChange={handleChange}
 										inputProps={{
 											maxLength: 5,
@@ -969,7 +972,7 @@ const Index = ({ options, rowData }: BuyProps) => {
 								</FormControl>
 							</Box>
 							<Box>
-								<p className={classes.label}>Eviction Cost ($)</p>
+								<p className={classes.label}>Eviction $</p>
 								<FormControl
 									// className={clsx(classes.margin, classes.textField)}
 									variant="filled"

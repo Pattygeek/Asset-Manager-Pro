@@ -8,7 +8,7 @@ import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
 import Buy from "./Buy";
 import Escrow from "./Escrow";
 import Owned from "./Owned";
-import React from "react";
+import React, { useState } from "react";
 import useVisibleHook from "../../utils/useVisibleHook";
 import { useQuery } from "@apollo/client";
 import { LIST_CONTACT } from "../../helpers/graphql/queries";
@@ -163,13 +163,18 @@ const StatusTab = ({ handleClose, status, rowData }: tabProps) => {
 	//visible hook
 	const { visibleRef, isVisible } = useVisibleHook(true);
 
+	const [contactData, setContactData] = useState<any[]>([])
+
 	const { loading, error, data } = useQuery(LIST_CONTACT, {
-		variables: {
-			limit: 20,
+		// variables: {
+		// 	limit: 20,
+		// },
+		onCompleted() {
+			setContactData(data.list_paginated_contacts.edges);
 		},
 	});
 
-	const contactData = data ? data?.list_paginated_contacts?.edges : [];
+	//const contactData = data ? data?.list_paginated_contacts?.edges : [];
 
 	// const { handleSetContact } = useContacts();
 
@@ -197,7 +202,7 @@ const StatusTab = ({ handleClose, status, rowData }: tabProps) => {
 				</Paper>
 				<Paper className={classes.tab}>
 					<TabPanel value={value} index={0}>
-						<Buy options={contactData} rowData={rowData} />
+						<Buy rowData={rowData} />
 					</TabPanel>
 					<TabPanel value={value} index={1}>
 						<Escrow options={contactData} rowData={rowData} />
