@@ -165,6 +165,18 @@ const BUY_UPDATE_PROPERTY_STATUS = gql`
 	}
 `;
 
+const BUY_UPDATE_REASON = gql`
+	mutation buyReason($property_id: String, $input_value: NoneInterestValue){
+		buy_update_none_interest_reason(property_id: $property_id, input_value: $input_value){
+			message
+			status_code
+			property_entry{
+				none_interest_reason
+			}
+		}
+	}
+`;
+
 export {
 	PROPERTY_ENTRY,
 	PROCESS_ENTRY,
@@ -174,4 +186,5 @@ export {
 	ADD_CONTACT,
 	EDIT_CONTACT,
 	BUY_UPDATE_PROPERTY_STATUS,
+	BUY_UPDATE_REASON,
 };

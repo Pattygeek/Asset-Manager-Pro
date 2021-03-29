@@ -1,6 +1,9 @@
 import React, { ReactNode, FC, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { BUY_UPDATE_PROPERTY_STATUS } from "../../../helpers/graphql/mutations";
+import {
+	BUY_UPDATE_PROPERTY_STATUS,
+	BUY_UPDATE_REASON,
+} from "../../../helpers/graphql/mutations";
 import {
 	LIST_ALL_PROPERTY,
 	LIST_CONTACT,
@@ -16,9 +19,13 @@ type ChildrenProps = {
 	statusError: any;
 	statusData: any;
 	statusUpdate: string;
+    reasonUpdate: string;
 	errorText: string;
 	statusLoading: boolean;
 	onStatusChange: (event: React.ChangeEvent<any>) => void;
+	onReasonChange: (event: React.ChangeEvent<any>) => void;
+    reasonError: any;
+    reasonData: any;
 	data: BuyRecord;
 	handleChange: (event: React.ChangeEvent<any>) => void;
 	handleAuctionChange: (event: React.ChangeEvent<any>) => void;
@@ -31,12 +38,12 @@ type ChildrenProps = {
 	optionList: any[];
 	handleListAgentChange: (event: React.ChangeEvent<any>) => void;
 	handleModalClose: () => void;
-    open: boolean;
-    handleOpen: () => void;
-    handleClose: () => void;
-    show: boolean;
-    handleShow: () => void;
-    handleCloseShow: () => void;
+	open: boolean;
+	handleOpen: () => void;
+	handleClose: () => void;
+	show: boolean;
+	handleShow: () => void;
+	handleCloseShow: () => void;
 };
 
 type Props = {
@@ -45,6 +52,7 @@ type Props = {
 };
 const BuyProvider: FC<Props> = ({ children, rowData }) => {
 	const [statusUpdate, setStatusUpdate] = useState("");
+    const [reasonUpdate, setReasonUpdate] = useState("");
 	const [errorText, setErrorText] = useState("Error saving changes");
 
 	//================pricehistory modal handler==============
@@ -97,7 +105,7 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 		auction_agent_email: "",
 		list_agent_number: "",
 		list_agent_email: "",
-		reason: "",
+		reason: rowData.none_interest_reason,
 		access: "",
 		occupancy: "",
 		product: "",
@@ -129,6 +137,24 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 			},
 		});
 	};
+	//=========end of status onchange=========================
+
+	//onchange function for reason
+	const onReasonChange = (event: React.ChangeEvent<any>) => {
+		const { value } = event.target;
+		setData({
+			...data,
+			reason: value,
+		});
+
+		buy_update_none_interest_reason({
+			variables: {
+				property_id: rowData._id,
+				input_value: value,
+			},
+		});
+	};
+	//=========end of status onchange=========================
 
 	const { refetch } = useQuery(LIST_ALL_PROPERTY);
 
@@ -151,12 +177,30 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 			console.log(err);
 			return null;
 		},
-		// refetchQueries: [
-		// 	{
-		// 		query: LIST_ALL_PROPERTY,
-		// 	},
-		// ],
 	});
+	//==========end of update status mutation======================
+
+	//mutation to update not interested reason=====================
+	const [
+		buy_update_none_interest_reason,
+		{ loading: reasonLoading, error: reasonError, data: reasonData },
+	] = useMutation(BUY_UPDATE_REASON, {
+		onCompleted() {
+			refetch();
+			setReasonUpdate("Changes saved");
+			setTimeout(() => {
+				setReasonUpdate("");
+			}, 3000);
+		},
+		onError(err) {
+			setTimeout(() => {
+				setErrorText("");
+			}, 8000);
+			console.log(err);
+			return null;
+		},
+	});
+	//============end of mutation for not interested reason========
 
 	//query to get contact data
 	const { loading, error, data: contactData } = useQuery(LIST_CONTACT, {
@@ -165,7 +209,7 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 		},
 	});
 
-	//this code has to do with contact filters!!!!!!!!!!!!
+	//!!!!!!!!!!!!!!!this block of code below has to do with contact filters!!!!!!!!!!!!
 
 	//state handler for auction agent autocomplete
 	const [openDiv, setOpenDiv] = useState(false);
@@ -272,7 +316,7 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 		optionData = <NoOptions openModal={ModalOpen} />;
 	}
 	//===========end of list agent onchange========================
-	//========================================
+	//!!!!!!!!!!!!!!!!end of contact filters code!!!!!!!!!!!!!!!!!!!!!!!
 	return (
 		<>
 			{children({
@@ -295,12 +339,16 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 				openModal,
 				optionData,
 				handleModalClose,
-                open,
-                handleOpen,
-                handleClose,
-                show,
-                handleShow,
-                handleCloseShow
+				open,
+				handleOpen,
+				handleClose,
+				show,
+				handleShow,
+				handleCloseShow,
+				onReasonChange,
+				reasonData,
+				reasonError,
+				reasonUpdate,
 			})}
 		</>
 	);

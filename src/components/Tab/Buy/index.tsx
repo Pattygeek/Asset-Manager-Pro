@@ -154,6 +154,10 @@ const Buy = ({ rowData }: BuyProps) => {
 				show,
 				handleShow,
 				handleCloseShow,
+				onReasonChange,
+				reasonData,
+				reasonError,
+				reasonUpdate,
 			}) => (
 				<>
 					<ContactModal
@@ -216,22 +220,27 @@ const Buy = ({ rowData }: BuyProps) => {
 								<Select
 									native
 									value={data.reason}
-									onChange={handleChange}
+									onChange={onReasonChange}
 									name="reason"
 									className={classes.input}
 									placeholder=""
 								>
 									<option aria-label="None" value="" />
-									<option value="no_spread">No Spread</option>
-									<option value="too_rural">Too Rural</option>
-									<option value="too_much_work">Too Much Work</option>
-									<option value="land_only">Land Only</option>
-									<option value="hard_eviction">Hard Eviction</option>
-									<option value="teardown">Teardown</option>
-									<option value="55+">55+</option>
-									<option value="raised_home">Raised Home</option>
+									<option value="NO_SPREAD">No Spread</option>
+									<option value="TOO_RURAL">Too Rural</option>
+									<option value="TOO_MUCH_WORK">Too Much Work</option>
+									<option value="LAND_ONLY">Land Only</option>
+									<option value="HARD_EVEICTION">Hard Eviction</option>
+									<option value="TEAR_DOWN">Teardown</option>
+									<option value="PLUS_55">55+</option>
+									<option value="RHOME_NEEDS_TO_BE_RAISED">Raised Home</option>
 								</Select>
-								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								<FormHelperText
+									id="filled-weight-helper-text"
+									className={reasonError ? classes.update : ""}
+								>
+									{reasonError ? `${errorText}` : `${reasonUpdate}`}
+								</FormHelperText>
 							</FormControl>
 						</Box>
 						<Box marginRight={1}>
