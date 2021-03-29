@@ -158,6 +158,14 @@ const Buy = ({ rowData }: BuyProps) => {
 				reasonData,
 				reasonError,
 				reasonUpdate,
+				onAccessChange,
+				accessData,
+				accessError,
+				accessUpdate,
+				occupancyUpdate,
+				onOccupancyChange,
+				occupancyData,
+				occupancyError,
 			}) => (
 				<>
 					<ContactModal
@@ -248,17 +256,22 @@ const Buy = ({ rowData }: BuyProps) => {
 							<FormControl variant="filled">
 								<Select
 									native
-									value={data.access}
-									onChange={handleChange}
+									//value={data.access == true ? "Yes" : "No"}
+									onChange={onAccessChange}
 									name="access"
 									className={classes.input}
 									placeholder=""
 								>
 									<option aria-label="None" value="" />
-									<option value={10}>Yes</option>
-									<option value={20}>No</option>
+									<option value={`Yes`}>Yes</option>
+									<option value={`No`}>No</option>
 								</Select>
-								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								<FormHelperText
+									id="filled-weight-helper-text"
+									className={accessError ? classes.update : ""}
+								>
+									{accessError ? `${errorText}` : `${accessUpdate}`}
+								</FormHelperText>
 							</FormControl>
 						</Box>
 						<Box marginRight={1}>
@@ -286,16 +299,21 @@ const Buy = ({ rowData }: BuyProps) => {
 								<Select
 									native
 									value={data.occupancy}
-									onChange={handleChange}
+									onChange={onOccupancyChange}
 									name="occupancy"
 									className={classes.input}
 									placeholder=""
 								>
 									<option aria-label="None" value="" />
-									<option value={10}>Occupied</option>
-									<option value={20}>Vacant</option>
+									<option value="OCCUPIED">Occupied</option>
+									<option value="VACANT">Vacant</option>
 								</Select>
-								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								<FormHelperText
+									id="filled-weight-helper-text"
+									className={occupancyError ? classes.update : ""}
+								>
+									{occupancyError ? `${errorText}` : `${occupancyUpdate}`}
+								</FormHelperText>
 							</FormControl>
 						</Box>
 
@@ -305,13 +323,27 @@ const Buy = ({ rowData }: BuyProps) => {
 								// className={clsx(classes.margin, classes.textField)}
 								variant="filled"
 							>
-								<FilledInput
+								<Select
+									native
 									value={data.property_type}
 									onChange={handleChange}
 									name="property_type"
 									placeholder=""
 									className={classes.input}
-								/>
+								>
+									<option aria-label="None" value="" />
+									<option value="ManufMobile">ManufMobile</option>
+									<option value="SFR">SFR</option>
+									<option value="Townhouse">Townhouse</option>
+									<option value="Condo">Condo</option>
+									<option value="PUD">PUD</option>
+									<option value="CoOp">CoOp</option>
+									<option value="Loft">Loft</option>
+									<option value="MultiFamily">MultiFamily</option>
+									<option value="Duplex">Duplex</option>
+									<option value="Unknown">Unknown</option>
+								</Select>
+
 								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 							</FormControl>
 						</Box>

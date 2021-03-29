@@ -91,7 +91,7 @@ type BuyRecord = {
 	list_agent_number: string;
 	list_agent_email: string;
 	reason: string;
-	access: string;
+	access: string | boolean;
 	occupancy: string;
 	product: string;
 	status: string;

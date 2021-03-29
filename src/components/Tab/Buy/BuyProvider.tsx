@@ -3,6 +3,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import {
 	BUY_UPDATE_PROPERTY_STATUS,
 	BUY_UPDATE_REASON,
+	BUY_UPDATE_ACCESS,
 } from "../../../helpers/graphql/mutations";
 import {
 	LIST_ALL_PROPERTY,
@@ -19,13 +20,17 @@ type ChildrenProps = {
 	statusError: any;
 	statusData: any;
 	statusUpdate: string;
-    reasonUpdate: string;
+	reasonUpdate: string;
+	accessUpdate: string;
+	accessError: any;
+	accessData: any;
 	errorText: string;
 	statusLoading: boolean;
 	onStatusChange: (event: React.ChangeEvent<any>) => void;
 	onReasonChange: (event: React.ChangeEvent<any>) => void;
-    reasonError: any;
-    reasonData: any;
+	onAccessChange: (event: React.ChangeEvent<any>) => void;
+	reasonError: any;
+	reasonData: any;
 	data: BuyRecord;
 	handleChange: (event: React.ChangeEvent<any>) => void;
 	handleAuctionChange: (event: React.ChangeEvent<any>) => void;
@@ -44,6 +49,10 @@ type ChildrenProps = {
 	show: boolean;
 	handleShow: () => void;
 	handleCloseShow: () => void;
+	occupancyUpdate: string;
+	onOccupancyChange: (event: React.ChangeEvent<any>) => void;
+	occupancyError: any;
+	occupancyData: any;
 };
 
 type Props = {
@@ -52,7 +61,9 @@ type Props = {
 };
 const BuyProvider: FC<Props> = ({ children, rowData }) => {
 	const [statusUpdate, setStatusUpdate] = useState("");
-    const [reasonUpdate, setReasonUpdate] = useState("");
+	const [reasonUpdate, setReasonUpdate] = useState("");
+	const [accessUpdate, setAccessUpdate] = useState("");
+	const [occupancyUpdate, setOccupancyUpdate] = useState("");
 	const [errorText, setErrorText] = useState("Error saving changes");
 
 	//================pricehistory modal handler==============
@@ -106,11 +117,11 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 		list_agent_number: "",
 		list_agent_email: "",
 		reason: rowData.none_interest_reason,
-		access: "",
-		occupancy: "",
+		access: rowData.interior_access,
+		occupancy: rowData.occupancy_status,
 		product: "",
 		status: rowData.property_status,
-		property_type: "",
+		property_type: rowData.property_type,
 	});
 
 	//general onchange handler for input fields
@@ -155,6 +166,40 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 		});
 	};
 	//=========end of status onchange=========================
+
+	//onchange function for access
+	const onAccessChange = (event: React.ChangeEvent<any>) => {
+		const { value } = event.target;
+		setData({
+			...data,
+			access: value,
+		});
+
+		buy_update_access({
+			variables: {
+				property_id: rowData._id,
+				input_value: value == "Yes" ? true : false,
+			},
+		});
+	};
+	//=========end of access onchange=========================
+
+	//onchange function for occupancy
+	const onOccupancyChange = (event: React.ChangeEvent<any>) => {
+		const { value } = event.target;
+		setData({
+			...data,
+			occupancy: value,
+		});
+
+		buy_update_occupancy_status({
+			variables: {
+				property_id: rowData._id,
+				input_value: value.replace(/['"]+/g, ""),
+			},
+		});
+	};
+	//=========end of access onchange=========================
 
 	const { refetch } = useQuery(LIST_ALL_PROPERTY);
 
@@ -201,6 +246,50 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 		},
 	});
 	//============end of mutation for not interested reason========
+
+	//mutation to update access====================================
+	const [
+		buy_update_access,
+		{ loading: accessLoading, error: accessError, data: accessData },
+	] = useMutation(BUY_UPDATE_ACCESS, {
+		onCompleted() {
+			refetch();
+			setAccessUpdate("Changes saved");
+			setTimeout(() => {
+				setAccessUpdate("");
+			}, 3000);
+		},
+		onError(err) {
+			setTimeout(() => {
+				setErrorText("");
+			}, 8000);
+			console.log(err);
+			return null;
+		},
+	});
+	//============end of mutation to update access==================
+
+	//mutation to update occupancy====================================
+	const [
+		buy_update_occupancy_status,
+		{ loading: occupancyLoading, error: occupancyError, data: occupancyData },
+	] = useMutation(BUY_UPDATE_ACCESS, {
+		onCompleted() {
+			refetch();
+			setOccupancyUpdate("Changes saved");
+			setTimeout(() => {
+				setOccupancyUpdate("");
+			}, 3000);
+		},
+		onError(err) {
+			setTimeout(() => {
+				setErrorText("");
+			}, 8000);
+			console.log(err);
+			return null;
+		},
+	});
+	//============end of mutation to update occupancy==================
 
 	//query to get contact data
 	const { loading, error, data: contactData } = useQuery(LIST_CONTACT, {
@@ -349,6 +438,14 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 				reasonData,
 				reasonError,
 				reasonUpdate,
+				onAccessChange,
+				accessData,
+				accessError,
+				accessUpdate,
+				occupancyUpdate,
+				onOccupancyChange,
+				occupancyData,
+				occupancyError,
 			})}
 		</>
 	);

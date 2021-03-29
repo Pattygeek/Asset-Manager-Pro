@@ -88,6 +88,8 @@ const LIST_ALL_PROPERTY = gql`
 				interior_access
 				hud_percent
 				hud_cost
+				occupancy_status
+				property_type
 			}
 			page_info {
 				has_next_page

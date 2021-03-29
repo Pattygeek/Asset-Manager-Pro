@@ -154,11 +154,14 @@ const EDIT_CONTACT = gql`
 `;
 
 const BUY_UPDATE_PROPERTY_STATUS = gql`
-	mutation buyStatus($property_id: String, $status_value: PropertyStatusValue){
-		buy_update_property_status(property_id:$property_id, status_value: $status_value){
+	mutation buyStatus($property_id: String, $status_value: PropertyStatusValue) {
+		buy_update_property_status(
+			property_id: $property_id
+			status_value: $status_value
+		) {
 			message
 			status_code
-			property_entry{
+			property_entry {
 				property_status
 			}
 		}
@@ -166,18 +169,60 @@ const BUY_UPDATE_PROPERTY_STATUS = gql`
 `;
 
 const BUY_UPDATE_REASON = gql`
-	mutation buyReason($property_id: String, $input_value: NoneInterestValue){
-		buy_update_none_interest_reason(property_id: $property_id, input_value: $input_value){
+	mutation buyReason($property_id: String, $input_value: NoneInterestValue) {
+		buy_update_none_interest_reason(
+			property_id: $property_id
+			input_value: $input_value
+		) {
 			message
 			status_code
-			property_entry{
+			property_entry {
 				none_interest_reason
 			}
 		}
 	}
 `;
 
+const BUY_UPDATE_ACCESS = gql`
+	mutation buyAccess($property_id: String, $input_value: Boolean) {
+		buy_update_access(property_id: $property_id, input_value: $input_value) {
+			message
+			status_code
+			property_entry {
+				interior_access
+			}
+		}
+	}
+`;
+
+const BUY_UPDATE_OCCUPANCY = gql`
+	mutation buyOccupancy($property_id: String, $input_value: OccupancyStatus){
+		buy_update_occupancy_status(property_id: $property_id, input_value:$input_value){
+			message
+			status_code
+			property_entry{
+				occupancy_status
+			}
+		}
+	}
+`;
+
+const BUY_UPDATE_PROPERTY_TYPE = gql`
+	mutation buyProperty($property_id: String, $input_value: String){
+		buy_update_property_type(property_id:$property_id, input_value: $input_value){
+			message
+			status_code
+			property_entry{
+				property_type
+			}
+		}
+	}
+`;
+
 export {
+	BUY_UPDATE_PROPERTY_TYPE,
+	BUY_UPDATE_OCCUPANCY,
+	BUY_UPDATE_ACCESS,
 	PROPERTY_ENTRY,
 	PROCESS_ENTRY,
 	FORGOT_PASSWORD,
