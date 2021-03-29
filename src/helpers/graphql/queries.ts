@@ -25,12 +25,25 @@ const LIST_ALL_PROPERTY = gql`
 				property_status
 				none_interest_reason
 				is_judicial_state
+				is_hidden
 				state_tax
 				annual_tax
+				sourced_annual_taxes {
+					source
+					tax_year
+					annual_tax
+					date_collected
+				}
 				buy_price
+				date_bought
+				date_sold
+				loan_amount
+				down_payment
 				resale_price
 				redbell
+				redbell_annual_taxes
 				zillow
+				zillow_annual_taxes
 				zestimate
 				realtor_com
 				redfin
@@ -40,9 +53,22 @@ const LIST_ALL_PROPERTY = gql`
 				profit
 				hold_time_days
 				rehab_time_days
+				estimated_rehab_time
 				total_buy_price
 				purchase_fee
 				buyers_premium
+				eviction_date
+				deed_received
+				apraisal_ordered
+				apraisal_ordered_on
+				c_of_o_completed
+				c_of_o_needed
+				gas_co
+				gas_co_number
+				electric_co
+				electric_co_number
+				cash_for_keys
+				cash_for_key_amount
 				return_on_investment
 				auction_list_price
 				bath_rooms

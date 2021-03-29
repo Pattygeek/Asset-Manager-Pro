@@ -199,12 +199,12 @@ const AddContact = () => {
 									placeholder="Label"
 								>
 									<option aria-label="None" value="" />
-									<option value="AUCTION">Auction Agent</option>
-									<option value="AGENT">List Agent</option>
-									<option value="ATTORNEY">Attorney</option>
+									<option value="AGENT">Agent</option>
+									<option value="G.C">G.C</option>
 									<option value="CLOSING_OFFICE">Closing Office</option>
+									<option value="ATTORNEY">Attorney</option>
+									<option value="AUCTION">Auction Contact</option>
 									<option value="DESIGNER">Designer</option>
-									<option value="GC">G.C</option>
 								</Select>
 								<FormHelperText className={classes.helperText}>
 									{formik.errors.contact_type &&

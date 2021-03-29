@@ -153,6 +153,18 @@ const EDIT_CONTACT = gql`
 	}
 `;
 
+const BUY_UPDATE_PROPERTY_STATUS = gql`
+	mutation buyStatus($property_id: String, $status_value: PropertyStatusValue){
+		buy_update_property_status(property_id:$property_id, status_value: $status_value){
+			message
+			status_code
+			property_entry{
+				property_status
+			}
+		}
+	}
+`;
+
 export {
 	PROPERTY_ENTRY,
 	PROCESS_ENTRY,
@@ -160,5 +172,6 @@ export {
 	RESET_PASSWORD,
 	REGISTER,
 	ADD_CONTACT,
-	EDIT_CONTACT
+	EDIT_CONTACT,
+	BUY_UPDATE_PROPERTY_STATUS,
 };

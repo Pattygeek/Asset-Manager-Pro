@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
 import { HotTable } from "@handsontable/react";
 import React, {
 	useState,
@@ -86,7 +85,7 @@ const Home = () => {
 		}
 	};
 
-	const FetchMoreRecords = useCallback(() => {
+	const FetchMoreRecords = () => {
 		fetchMore({
 			variables: {
 				limit,
@@ -100,7 +99,7 @@ const Home = () => {
 		setProperty((prevState) => [...prevState, ...edges]);
 		//
 		// setProperty(prevState => [...prevState, ...edges]);
-	}, [hasMore]);
+	};
 
 	// if (loading) return <p>Loading...</p>;
 	// if (error) return <p>Error :(</p>;
@@ -112,11 +111,54 @@ const Home = () => {
 		columnHeaderHeight: 35,
 		viewportRowRenderingOffset: 20,
 		viewportColumnRenderingOffset: 15,
-		colWidths: 150,
-		afterChange: function (change: any[], source: string) {
-			console.log(change)
-			console.log(source)
-		},
+		colWidths: [
+			50,
+			150,
+			70,
+			150,
+			150,
+			150,
+			150,
+			200,
+			150,
+			70,
+			80,
+			150,
+			150,
+			165,
+			70,
+			150,
+			150,
+			150,
+			150,
+			150,
+			100,
+			150,
+			175,
+			175,
+			150,
+			150,
+			150,
+			200,
+			150,
+			150,
+			150,
+			150,
+			100,
+			70,
+			70,
+			100,
+			100,
+			150,
+			150,
+			150,
+			150,
+			150
+		],
+		// afterChange: function (change: any[], source: string) {
+		// 	console.log(change);
+		// 	console.log(source);
+		// },
 		renderer: function (
 			instance: Handsontable,
 			td: HTMLTableCellElement,
@@ -141,23 +183,23 @@ const Home = () => {
 			td.innerHTML =
 				value === null ? "" : `<div class="truncated">${value}</div>`;
 		},
-		persistentState: true,
-		persistentStateLoad: function () {
-			//console.log(arguments[0], arguments[1])
-			console.log("load am");
-		},
-		persistentStateReset: function () {
-			//console.log(arguments[0], arguments[1])
-			console.log("reset am");
-			const persistentStatePlugin = hotTableComponentRef.current?.hotInstance.getPlugin(
-				"persistentState"
-			);
-			persistentStatePlugin?.resetValue("manualColumnMove");
-		},
-		persistentStateSave: function () {
-			//console.log(arguments[0], arguments[1]);
-			console.log("save am");
-		},
+		// persistentState: true,
+		// persistentStateLoad: function () {
+		// 	//console.log(arguments[0], arguments[1])
+		// 	console.log("load am");
+		// },
+		// persistentStateReset: function () {
+		// 	//console.log(arguments[0], arguments[1])
+		// 	console.log("reset am");
+		// 	const persistentStatePlugin = hotTableComponentRef.current?.hotInstance.getPlugin(
+		// 		"persistentState"
+		// 	);
+		// 	persistentStatePlugin?.resetValue("manualColumnMove");
+		// },
+		// persistentStateSave: function () {
+		// 	//console.log(arguments[0], arguments[1]);
+		// 	console.log("save am");
+		// },
 		// afterColumnMove: function (
 		// 	movedRows: number[],
 		// 	finalIndex: number,
@@ -186,23 +228,84 @@ const Home = () => {
 			{ data: "r", readOnly: true },
 			{ data: "auction_event_id", readOnly: true },
 			{ data: "seller_code", readOnly: true },
-			{ data: "auction_start_date" },
-			{ data: "auction_end_date" },
+			{
+				data: "auction_start_date",
+				type: "date",
+				dateFormat: "DD.MM.YYYY",
+				correctFormat: true,
+			},
+			{
+				data: "auction_end_date",
+				type: "date",
+				dateFormat: "DD.MM.YYYY",
+				correctFormat: true,
+			},
 			{ data: "address_street" },
 			{ data: "address_city" },
 			{ data: "address_state" },
 			{ data: "address_zip" },
 			{ data: "address_county" },
 			{ data: "credit_bid", readOnly: true },
-			{ data: "auction_list_price" },
+			{
+				data: "auction_list_price",
+				type: "numeric",
+				numericFormat: {
+					pattern: "$0,0",
+					culture: "en-US", // this is the default culture, set up for USD
+				},
+			},
 			{ data: "rsrv" },
-			{ data: "st_rsrv" },
-			{ data: "buy_price" },
-			{ data: "rehabilitation_cost" },
-			{ data: "resale_price" },
-			{ data: "profit", readOnly: true },
-			{ data: "return_on_investment", readOnly: true },
-			{ data: "contact_first_name" + "contact_last_name" },
+			{
+				data: "st_rsv",
+				type: "numeric",
+				numericFormat: {
+					pattern: "$0,0",
+					culture: "en-US", // this is the default culture, set up for USD
+				},
+			},
+			{
+				data: "buy_price",
+				type: "numeric",
+				numericFormat: {
+					pattern: "$0,0",
+					culture: "en-US", // this is the default culture, set up for USD
+				},
+			},
+			{
+				data: "rehabilitation_cost",
+				type: "numeric",
+				numericFormat: {
+					pattern: "$0,0",
+					culture: "en-US", // this is the default culture, set up for USD
+				},
+			},
+			{
+				data: "resale_price",
+				type: "numeric",
+				numericFormat: {
+					pattern: "$0,0",
+					culture: "en-US", // this is the default culture, set up for USD
+				},
+			},
+			{
+				data: "profit",
+				readOnly: true,
+				type: "numeric",
+				numericFormat: {
+					pattern: "$0,0",
+					culture: "en-US", // this is the default culture, set up for USD
+				},
+			},
+			{
+				data: "return_on_investment",
+				readOnly: true,
+				type: "numeric",
+				numericFormat: {
+					pattern: "0,0%",
+					culture: "en-US",
+				},
+			},
+			{ data: "contact_first_name" + " " + "contact_last_name" },
 			{ data: "contact_cell_phone" },
 			{ data: "contact_email" },
 			{ data: "user" },
@@ -213,15 +316,45 @@ const Home = () => {
 			{ data: "occupancy" },
 			{ data: "product", readOnly: true },
 			{ data: "prop_type" },
-			{ data: "square_feet" },
+			{
+				data: "square_feet",
+				type: "numeric",
+				numericFormat: {
+					pattern: "0,0",
+					culture: "en-US",
+				},
+			},
 			{ data: "bed_rooms" },
 			{ data: "bath_rooms" },
-			{ data: "lot_size" },
+			{
+				data: "lot_size",
+				type: "numeric",
+				numericFormat: {
+					pattern: "0,0.00",
+					culture: "en-US",
+				},
+			},
 			{ data: "sb" },
 			{ data: "bid_history", readOnly: true },
-			{ data: "bought_date" },
-			{ data: "sold_date" },
-			{ data: "sold_price" },
+			{
+				data: "bought_date",
+				type: "date",
+				dateFormat: "DD.MM.YYYY",
+				correctFormat: true,
+			},
+			{
+				data: "sold_date",
+				type: "date",
+				dateFormat: "DD.MM.YYYY",
+				correctFormat: true,
+			},
+			{
+				data: "sold_price",
+				numericFormat: {
+					pattern: "$0,0",
+					culture: "en-US",
+				},
+			},
 			{ data: "auction_status" },
 		],
 		autoWrapRow: true,

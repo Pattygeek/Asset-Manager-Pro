@@ -65,4 +65,37 @@ type PropertyRecord = {
 	hud_cost?: number;
 };
 
-export type { PropertyRecord, Contact };
+type BuyRecord = {
+	stRsv: string | number;
+	sqft: number | string;
+	br: string;
+	ba: string;
+	lot: string | number;
+	year: number | string;
+	resale: number | string;
+	rehab: string;
+	buy_price: number | string;
+	tpp: string;
+	annual_tax: string;
+	hud_exp: string;
+	profit: string | number;
+	roi: number | string;
+	hold_time: string;
+	mkt: string;
+	auction_list_price: string | number;
+	high_bid: string | number;
+	auction_agent: string;
+	list_agent: string;
+	auction_agent_number: string;
+	auction_agent_email: string;
+	list_agent_number: string;
+	list_agent_email: string;
+	reason: string;
+	access: string;
+	occupancy: string;
+	product: string;
+	status: string;
+	property_type: string;
+};
+
+export type { PropertyRecord, Contact, BuyRecord };

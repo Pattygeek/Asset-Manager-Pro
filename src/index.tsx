@@ -10,15 +10,15 @@ import { ToggleProvider } from "./helpers/contexts/toggleContext";
 // import ContactsContext from "./helpers/contexts/contactsContext";
 
 ReactDOM.render(
-	<React.StrictMode>
+	// <React.StrictMode>
 		<ApolloProvider client={client}>
 			<ToggleProvider>
 				{/* <ContactsContext> */}
 				<App />
 				{/* </ContactsContext> */}
 			</ToggleProvider>
-		</ApolloProvider>
-	</React.StrictMode>,
+		</ApolloProvider>,
+	// </React.StrictMode>,
 	document.getElementById("root")
 );
 
