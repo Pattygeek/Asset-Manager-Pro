@@ -84,7 +84,7 @@ const History = (props: { property_id: string | undefined }) => {
 
 	const { loading, error, data } = useQuery(TAB_HISTORY, {
 		variables: {
-			property_id: "605b8a90f241ad9d9510bbe0", //this is more like dummy property id, just to show the data, it will be updated to pick the actual property id
+			property_id: property_id, //this is more like dummy property id, just to show the data, it will be updated to pick the actual property id
 		},
 		onCompleted() {
 			setHistoryData(data.buy_stream_price_history.history);
@@ -102,36 +102,39 @@ const History = (props: { property_id: string | undefined }) => {
 				marginBottom={6}
 			>
 				<Box className={classes.box}>History</Box>
+				{historyData.length < 1 ? (
+					<Box textAlign="center" py={3}>There is no history yet for this property</Box>
+				) : (
+					<HotTable
+						settings={state}
+						data={historyData}
+						dropdownMenu={[
+							"alignment",
+							"---------",
+							"filter_by_condition",
+							"---------",
+							"filter_by_value",
+							"---------",
+							"filter_action_bar",
+						]}
+					>
+						<HotColumn data={state.columns[0].data}>
+							<DateRenderer hot-renderer />
+						</HotColumn>
+						<HotColumn data={state.columns[1].data}>
+							<TimeRenderer hot-renderer />
+						</HotColumn>
+						<HotColumn data={state.columns[2].data}>
+							<UserNameRenderer hot-renderer />
+						</HotColumn>
 
-				<HotTable
-					settings={state}
-					data={historyData}
-					dropdownMenu={[
-						"alignment",
-						"---------",
-						"filter_by_condition",
-						"---------",
-						"filter_by_value",
-						"---------",
-						"filter_action_bar",
-					]}
-				>
-					<HotColumn data={state.columns[0].data}>
-						<DateRenderer hot-renderer />
-					</HotColumn>
-					<HotColumn data={state.columns[1].data}>
-						<TimeRenderer hot-renderer />
-					</HotColumn>
-					<HotColumn data={state.columns[2].data}>
-						<UserNameRenderer hot-renderer />
-					</HotColumn>
-
-					<HotColumn data={state.columns[3].data}>
-						<FieldNameRenderer hot-renderer />
-					</HotColumn>
-					<HotColumn data={state.columns[4].data} />
-					<HotColumn data={state.columns[5].data} />
-				</HotTable>
+						<HotColumn data={state.columns[3].data}>
+							<FieldNameRenderer hot-renderer />
+						</HotColumn>
+						<HotColumn data={state.columns[4].data} />
+						<HotColumn data={state.columns[5].data} />
+					</HotTable>
+				)}
 			</Box>
 		</>
 	);

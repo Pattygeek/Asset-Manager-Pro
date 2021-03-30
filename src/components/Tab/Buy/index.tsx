@@ -166,6 +166,14 @@ const Buy = ({ rowData }: BuyProps) => {
 				onOccupancyChange,
 				occupancyData,
 				occupancyError,
+				onOccupancyClick,
+				propTypeUpdate,
+				propertyData,
+				propertyError,
+				onPropTypeChange,
+				sqftData,
+				sqftError,
+				sqftUpdate,
 			}) => (
 				<>
 					<ContactModal
@@ -326,7 +334,7 @@ const Buy = ({ rowData }: BuyProps) => {
 								<Select
 									native
 									value={data.property_type}
-									onChange={handleChange}
+									onChange={onPropTypeChange}
 									name="property_type"
 									placeholder=""
 									className={classes.input}
@@ -334,7 +342,7 @@ const Buy = ({ rowData }: BuyProps) => {
 									<option aria-label="None" value="" />
 									<option value="ManufMobile">ManufMobile</option>
 									<option value="SFR">SFR</option>
-									<option value="Townhouse">Townhouse</option>
+									<option value="Townhouse">Town House</option>
 									<option value="Condo">Condo</option>
 									<option value="PUD">PUD</option>
 									<option value="CoOp">CoOp</option>
@@ -344,7 +352,12 @@ const Buy = ({ rowData }: BuyProps) => {
 									<option value="Unknown">Unknown</option>
 								</Select>
 
-								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								<FormHelperText
+									id="filled-weight-helper-text"
+									className={propertyError ? classes.update : ""}
+								>
+									{propertyError ? `${errorText}` : `${propTypeUpdate}`}
+								</FormHelperText>
 							</FormControl>
 						</Box>
 						<Box marginRight={1}>

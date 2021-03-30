@@ -3,7 +3,9 @@ import { useMutation, useQuery } from "@apollo/client";
 import {
 	BUY_UPDATE_PROPERTY_STATUS,
 	BUY_UPDATE_REASON,
+	BUY_UPDATE_PROPERTY_TYPE,
 	BUY_UPDATE_ACCESS,
+	BUY_UPDATE_SQFT,
 } from "../../../helpers/graphql/mutations";
 import {
 	LIST_ALL_PROPERTY,
@@ -53,6 +55,14 @@ type ChildrenProps = {
 	onOccupancyChange: (event: React.ChangeEvent<any>) => void;
 	occupancyError: any;
 	occupancyData: any;
+	onOccupancyClick: () => void | undefined;
+	onPropTypeChange: (event: React.ChangeEvent<any>) => void;
+	propTypeUpdate: string;
+	propertyError: any;
+	propertyData: any;
+	sqftUpdate: string;
+	sqftError: any;
+	sqftData: any;
 };
 
 type Props = {
@@ -64,6 +74,8 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 	const [reasonUpdate, setReasonUpdate] = useState("");
 	const [accessUpdate, setAccessUpdate] = useState("");
 	const [occupancyUpdate, setOccupancyUpdate] = useState("");
+	const [propTypeUpdate, setPropTypeUpdate] = useState("");
+	const [sqftUpdate, setSqftUpdate] = useState("");
 	const [errorText, setErrorText] = useState("Error saving changes");
 
 	//================pricehistory modal handler==============
@@ -191,15 +203,34 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 			...data,
 			occupancy: value,
 		});
+	};
 
+	const onOccupancyClick = () => {
 		buy_update_occupancy_status({
 			variables: {
 				property_id: rowData._id,
-				input_value: value.replace(/['"]+/g, ""),
+				input_value: data.occupancy,
 			},
 		});
 	};
-	//=========end of access onchange=========================
+	//=========end of occupancy onchange=========================
+
+	//onchange function for property type
+	const onPropTypeChange = (event: React.ChangeEvent<any>) => {
+		const { value } = event.target;
+		setData({
+			...data,
+			property_type: value,
+		});
+
+		buy_update_property_type({
+			variables: {
+				property_id: rowData._id,
+				input_value: value,
+			},
+		});
+	};
+	//=========end of property type=========================
 
 	const { refetch } = useQuery(LIST_ALL_PROPERTY);
 
@@ -290,6 +321,50 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 		},
 	});
 	//============end of mutation to update occupancy==================
+
+	//mutation to update property type====================================
+	const [
+		buy_update_property_type,
+		{ loading: propertyLoading, error: propertyError, data: propertyData },
+	] = useMutation(BUY_UPDATE_PROPERTY_TYPE, {
+		onCompleted() {
+			refetch();
+			setPropTypeUpdate("Changes saved");
+			setTimeout(() => {
+				setPropTypeUpdate("");
+			}, 3000);
+		},
+		onError(err) {
+			setTimeout(() => {
+				setErrorText("");
+			}, 8000);
+			console.log(err);
+			return null;
+		},
+	});
+	//============end of mutation to update property type==================
+
+	//mutation to update sqft====================================
+	const [
+		buy_update_square_feet,
+		{ loading: sqftLoading, error: sqftError, data: sqftData },
+	] = useMutation(BUY_UPDATE_SQFT, {
+		onCompleted() {
+			refetch();
+			setSqftUpdate("Changes saved");
+			setTimeout(() => {
+				setSqftUpdate("");
+			}, 3000);
+		},
+		onError(err) {
+			setTimeout(() => {
+				setErrorText("");
+			}, 8000);
+			console.log(err);
+			return null;
+		},
+	});
+	//============end of mutation to update sqft==================
 
 	//query to get contact data
 	const { loading, error, data: contactData } = useQuery(LIST_CONTACT, {
@@ -446,6 +521,14 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 				onOccupancyChange,
 				occupancyData,
 				occupancyError,
+				onOccupancyClick,
+				propTypeUpdate,
+				propertyData,
+				propertyError,
+				onPropTypeChange,
+				sqftData,
+				sqftError,
+				sqftUpdate,
 			})}
 		</>
 	);

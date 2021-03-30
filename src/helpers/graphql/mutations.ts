@@ -161,9 +161,6 @@ const BUY_UPDATE_PROPERTY_STATUS = gql`
 		) {
 			message
 			status_code
-			property_entry {
-				property_status
-			}
 		}
 	}
 `;
@@ -176,9 +173,6 @@ const BUY_UPDATE_REASON = gql`
 		) {
 			message
 			status_code
-			property_entry {
-				none_interest_reason
-			}
 		}
 	}
 `;
@@ -188,38 +182,189 @@ const BUY_UPDATE_ACCESS = gql`
 		buy_update_access(property_id: $property_id, input_value: $input_value) {
 			message
 			status_code
-			property_entry {
-				interior_access
-			}
 		}
 	}
 `;
 
 const BUY_UPDATE_OCCUPANCY = gql`
-	mutation buyOccupancy($property_id: String, $input_value: OccupancyStatus){
-		buy_update_occupancy_status(property_id: $property_id, input_value:$input_value){
+	mutation buyOccupancy($property_id: String, $input_value: OccupancyStatus) {
+		buy_update_occupancy_status(
+			property_id: $property_id
+			input_value: $input_value
+		) {
 			message
 			status_code
-			property_entry{
-				occupancy_status
-			}
 		}
 	}
 `;
 
 const BUY_UPDATE_PROPERTY_TYPE = gql`
-	mutation buyProperty($property_id: String, $input_value: String){
-		buy_update_property_type(property_id:$property_id, input_value: $input_value){
+	mutation buyProperty($property_id: String, $input_value: PropertyTypeValues) {
+		buy_update_property_type(
+			property_id: $property_id
+			input_value: $input_value
+		) {
 			message
 			status_code
-			property_entry{
-				property_type
-			}
+		}
+	}
+`;
+
+const BUY_UPDATE_SQFT = gql`
+	mutation buySqft(
+		$property_id: String
+		$input_value: Int
+		$input_note: String
+	) {
+		buy_update_square_feet(
+			property_id: $property_id
+			input_value: $input_value
+			input_note: $input_note
+		) {
+			message
+			status_code
+		}
+	}
+`;
+
+const BUY_UPDATE_BR = gql`
+	mutation buyBr($property_id: String, $input_value: Int, $input_note: String) {
+		buy_update_bed_room(
+			property_id: $property_id
+			input_value: $input_value
+			input_note: $input_note
+		) {
+			message
+			status_code
+		}
+	}
+`;
+
+const BUY_UPDATE_BA = gql`
+	mutation buyBa($property_id: String, $input_value: Int, $input_note: String) {
+		buy_update_bath_room(
+			property_id: $property_id
+			input_value: $input_value
+			input_note: $input_note
+		) {
+			message
+			status_code
+		}
+	}
+`;
+
+const BUY_UPDATE_LOT = gql`
+	mutation buyLot(
+		$property_id: String
+		$input_value: Int
+		$input_note: String
+	) {
+		buy_update_lot(
+			property_id: $property_id
+			input_value: $input_value
+			input_note: $input_note
+		) {
+			message
+			status_code
+		}
+	}
+`;
+
+const BUY_UPDATE_AUCTION_LP = gql`
+	mutation buyAuction(
+		$property_id: String
+		$input_value: Int
+		$input_note: String
+	) {
+		buy_update_auction_list_price(
+			property_id: $property_id
+			input_value: $input_value
+			input_note: $input_note
+		) {
+			message
+			status_code
+		}
+	}
+`;
+
+const BUY_UPDATE_HOLD_TIME = gql`
+	mutation buyHoldTime(
+		$property_id: String
+		$input_value: Int!
+		$input_note: String
+	) {
+		buy_update_hold_time(
+			property_id: $property_id
+			input_value: $input_value
+			input_note: $input_note
+		) {
+			message
+			status_code
+		}
+	}
+`;
+
+const BUY_UPDATE_REHAB_COST = gql`
+	mutation buyRehabCost(
+		$property_id: String
+		$input_value: Int!
+		$input_note: String
+	) {
+		buy_update_rehab_cost(
+			property_id: $property_id
+			input_value: $input_value
+			input_note: $input_note
+		) {
+			message
+			status_code
+		}
+	}
+`;
+
+const BUY_UPDATE_REHAB_TIME = gql`
+	mutation buyRehabTime(
+		$property_id: String
+		$input_value: Float!
+		$input_note: String
+	) {
+		buy_update_rehab_time(
+			property_id: $property_id
+			input_value: $input_value
+			input_note: $input_note
+		) {
+			message
+			status_code
+		}
+	}
+`;
+
+const BUY_UPDATE_HUD = gql`
+	mutation buyRehabTime(
+		$property_id: String
+		$input_value: Float!
+		$input_note: String
+	) {
+		buy_update_hud(
+			property_id: $property_id
+			input_value: $input_value
+			input_note: $input_note
+		) {
+			message
+			status_code
 		}
 	}
 `;
 
 export {
+	BUY_UPDATE_HUD,
+	BUY_UPDATE_REHAB_TIME,
+	BUY_UPDATE_REHAB_COST,
+	BUY_UPDATE_HOLD_TIME,
+	BUY_UPDATE_AUCTION_LP,
+	BUY_UPDATE_LOT,
+	BUY_UPDATE_BA,
+	BUY_UPDATE_BR,
+	BUY_UPDATE_SQFT,
 	BUY_UPDATE_PROPERTY_TYPE,
 	BUY_UPDATE_OCCUPANCY,
 	BUY_UPDATE_ACCESS,

@@ -231,13 +231,13 @@ const Home = () => {
 			{
 				data: "auction_start_date",
 				type: "date",
-				dateFormat: "DD.MM.YYYY",
+				dateFormat: "DD/MM/YYYY",
 				correctFormat: true,
 			},
 			{
 				data: "auction_end_date",
 				type: "date",
-				dateFormat: "DD.MM.YYYY",
+				dateFormat: "DD/MM/YYYY",
 				correctFormat: true,
 			},
 			{ data: "address_street" },
@@ -339,13 +339,13 @@ const Home = () => {
 			{
 				data: "bought_date",
 				type: "date",
-				dateFormat: "DD.MM.YYYY",
+				dateFormat: "DD/MM/YYYY",
 				correctFormat: true,
 			},
 			{
 				data: "sold_date",
 				type: "date",
-				dateFormat: "DD.MM.YYYY",
+				dateFormat: "DD/MM/YYYY",
 				correctFormat: true,
 			},
 			{
