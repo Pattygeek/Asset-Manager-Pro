@@ -681,6 +681,34 @@ const Index = ({ options, rowData }: BuyProps) => {
 									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 								</FormControl>
 							</Box>
+							<Box width="150px" marginRight={2}>
+								<p className={classes.label}>Appraisal Date Ordered</p>
+								<FormControl
+									// className={clsx(classes.margin, classes.textField)}
+									variant="filled"
+								>
+									<KeyboardDatePicker
+										disableToolbar
+										variant="inline"
+										format="MM/dd/yyyy"
+										margin="normal"
+										id="date-picker-inline"
+										// label="Date picker inline"
+										name="appraisal"
+										value={appraisalDate}
+										onChange={handleAppraisalDateChange}
+										KeyboardButtonProps={{
+											"aria-label": "change date",
+										}}
+										InputProps={{
+											classes: {
+												root: classes.datePicker,
+											},
+										}}
+									/>
+									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								</FormControl>
+							</Box>
 							<Box marginRight={1} width="80px">
 								<p className={classes.label}>Occupancy</p>
 								<FormControl
@@ -698,24 +726,6 @@ const Index = ({ options, rowData }: BuyProps) => {
 										<option aria-label="None" value="" />
 										<option value={10}>Occupied</option>
 										<option value={20}>Vacant</option>
-									</Select>
-									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-								</FormControl>
-							</Box>
-							<Box>
-								<p className={classes.label}>Accessed</p>
-								<FormControl variant="filled">
-									<Select
-										native
-										value={data.property_access}
-										onChange={handleChange}
-										name="property_access"
-										placeholder=""
-										className={classes.input}
-									>
-										<option aria-label="None" value="" />
-										<option value={10}>Yes</option>
-										<option value={20}>No</option>
 									</Select>
 									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 								</FormControl>
@@ -912,34 +922,24 @@ const Index = ({ options, rowData }: BuyProps) => {
 					</Box>
 				</div>
 				<div className={classes.div} style={{ marginTop: "20px" }}>
-					{/* <Box>
-						<p className={classes.label}>Appraisal Date Ordered</p>
-						<FormControl
-							// className={clsx(classes.margin, classes.textField)}
-							variant="filled"
-						>
-							<KeyboardDatePicker
-								disableToolbar
-								variant="inline"
-								format="MM/dd/yyyy"
-								margin="normal"
-								id="date-picker-inline"
-								// label="Date picker inline"
-								name="appraisal"
-								value={appraisalDate}
-								onChange={handleAppraisalDateChange}
-								KeyboardButtonProps={{
-									"aria-label": "change date",
-								}}
-								InputProps={{
-									classes: {
-										root: classes.datePicker,
-									},
-								}}
-							/>
+					<Box marginRight={2}>
+						<p className={classes.label}>Accessed</p>
+						<FormControl variant="filled">
+							<Select
+								native
+								value={data.property_access}
+								onChange={handleChange}
+								name="property_access"
+								placeholder=""
+								className={classes.input}
+							>
+								<option aria-label="None" value="" />
+								<option value={10}>Yes</option>
+								<option value={20}>No</option>
+							</Select>
 							<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 						</FormControl>
-					</Box> */}
+					</Box>
 					<Box marginRight={2}>
 						<p className={classes.label}>Title Received?</p>
 						<FormControl

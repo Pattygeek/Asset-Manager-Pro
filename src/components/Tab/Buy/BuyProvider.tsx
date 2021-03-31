@@ -55,7 +55,6 @@ type ChildrenProps = {
 	onOccupancyChange: (event: React.ChangeEvent<any>) => void;
 	occupancyError: any;
 	occupancyData: any;
-	onOccupancyClick: () => void | undefined;
 	onPropTypeChange: (event: React.ChangeEvent<any>) => void;
 	propTypeUpdate: string;
 	propertyError: any;
@@ -105,7 +104,7 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 	//state handler for all the input fields
 	const [data, setData] = useState<BuyRecord>({
 		stRsv: "",
-		sqft: rowData.square_feet ? rowData.square_feet : null,
+		sqft: rowData.square_feet ? rowData.square_feet : 0,
 		br: "",
 		ba: "",
 		lot: rowData.lot_size,
@@ -203,16 +202,15 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 			...data,
 			occupancy: value,
 		});
-	};
 
-	const onOccupancyClick = () => {
 		buy_update_occupancy_status({
 			variables: {
 				property_id: rowData._id,
-				input_value: data.occupancy,
+				input_value: value,
 			},
 		});
 	};
+
 	//=========end of occupancy onchange=========================
 
 	//onchange function for property type
@@ -521,7 +519,6 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 				onOccupancyChange,
 				occupancyData,
 				occupancyError,
-				onOccupancyClick,
 				propTypeUpdate,
 				propertyData,
 				propertyError,

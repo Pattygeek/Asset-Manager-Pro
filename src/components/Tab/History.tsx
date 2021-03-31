@@ -34,7 +34,7 @@ const History = (props: { property_id: string | undefined }) => {
 		licenseKey: "non-commercial-and-evaluation",
 		rowHeights: 28,
 		columnHeaderHeight: 35,
-		className: "htMiddle htCenter",
+		className: "htMiddle htLeft",
 		stretchH: "last",
 		width: "100%",
 		height: "auto",

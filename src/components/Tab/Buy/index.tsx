@@ -116,8 +116,6 @@ interface BuyProps {
 const Buy = ({ rowData }: BuyProps) => {
 	const classes = useStyles();
 
-
-
 	const images = [pix1, pix2, pix3, pix4, pix5, pix6];
 
 	//function to get current year
@@ -166,7 +164,6 @@ const Buy = ({ rowData }: BuyProps) => {
 				onOccupancyChange,
 				occupancyData,
 				occupancyError,
-				onOccupancyClick,
 				propTypeUpdate,
 				propertyData,
 				propertyError,
@@ -313,8 +310,8 @@ const Buy = ({ rowData }: BuyProps) => {
 									placeholder=""
 								>
 									<option aria-label="None" value="" />
-									<option value="OCCUPIED">Occupied</option>
-									<option value="VACANT">Vacant</option>
+									<option value={`OCCUPIED`}>Occupied</option>
+									<option value={`VACANT`}>Vacant</option>
 								</Select>
 								<FormHelperText
 									id="filled-weight-helper-text"
@@ -464,6 +461,7 @@ const Buy = ({ rowData }: BuyProps) => {
 									value={data.hold_time}
 									onChange={handleChange}
 									placeholder=""
+									name="hold_time"
 									className={classes.input}
 									inputProps={{
 										maxLength: 5,
@@ -480,6 +478,7 @@ const Buy = ({ rowData }: BuyProps) => {
 									placeholder=""
 									className={classes.input}
 									value={data.mkt}
+									name="mkt"
 									onChange={handleChange}
 									inputProps={{
 										maxLength: 5,
@@ -558,6 +557,7 @@ const Buy = ({ rowData }: BuyProps) => {
 											className={classes.input}
 											value={data.auction_list_price}
 											onChange={handleChange}
+											name="auction_list_price"
 											inputProps={{
 												maxLength: 11,
 											}}
@@ -577,6 +577,7 @@ const Buy = ({ rowData }: BuyProps) => {
 											value={data.high_bid}
 											onChange={handleChange}
 											placeholder=""
+											name="high_bid"
 											className={classes.input}
 											inputProps={{
 												maxLength: 11,

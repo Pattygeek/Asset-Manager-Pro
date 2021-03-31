@@ -153,7 +153,7 @@ const Home = () => {
 			150,
 			150,
 			150,
-			150
+			150,
 		],
 		// afterChange: function (change: any[], source: string) {
 		// 	console.log(change);
@@ -370,6 +370,7 @@ const Home = () => {
 		// dropdownMenu: true,
 		manualRowResize: true,
 		columnSorting: true,
+		sortIndicator: true,
 		manualColumnResize: true,
 		allowInsertColumn: false,
 		allowRemoveColumn: false,
