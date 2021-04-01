@@ -65,8 +65,6 @@ const StatusTab = ({ handleClose, status, rowData }: tabProps) => {
 
 	const classes = useStyles();
 
-	console.log(rowData);
-
 	//switch statement to handle active tab according to the property status value
 	let statusValue: number;
 	switch (status) {
@@ -163,7 +161,7 @@ const StatusTab = ({ handleClose, status, rowData }: tabProps) => {
 	//visible hook
 	const { visibleRef, isVisible } = useVisibleHook(true);
 
-	const [contactData, setContactData] = useState<any[]>([])
+	const [contactData, setContactData] = useState<any[]>([]);
 
 	const { loading, error, data } = useQuery(LIST_CONTACT, {
 		// variables: {
@@ -178,12 +176,16 @@ const StatusTab = ({ handleClose, status, rowData }: tabProps) => {
 
 	// const { handleSetContact } = useContacts();
 
-	console.log(contactData);
+	console.log(rowData);
 
 	return (
 		<>
 			{/* {isVisible && ( */}
-			<div className={classes.overlay} ref={visibleRef}>
+			<div
+				className={classes.overlay}
+				ref={visibleRef}
+				onDoubleClick={(e: any) => e.preventDefault}
+			>
 				<Box className={classes.iconBox} onClick={handleClose}>
 					<CancelOutlinedIcon className={classes.icon} />
 				</Box>

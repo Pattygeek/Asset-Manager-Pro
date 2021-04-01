@@ -55,8 +55,6 @@ const Home = () => {
 
 	const [property, setProperty] = useState<any[]>([]);
 
-	console.log(property);
-
 	const { loading, error, data, fetchMore } = useQuery(LIST_ALL_PROPERTY, {
 		notifyOnNetworkStatusChange: true,
 		variables: {
@@ -319,10 +317,10 @@ const Home = () => {
 			{
 				data: "square_feet",
 				type: "numeric",
-				numericFormat: {
-					pattern: "0,0",
-					culture: "en-US",
-				},
+				// numericFormat: {
+				// 	pattern: "0,0",
+				// 	culture: "en-US",
+				// },
 			},
 			{ data: "bed_rooms" },
 			{ data: "bath_rooms" },
@@ -377,6 +375,18 @@ const Home = () => {
 		hiddenColumns: {
 			indicators: true,
 		},
+		rowHeader: true,
+		afterGetRowHeader: function (row: any, TH: any) {
+			console.log(row)
+			// if (row === 2) {
+			// 	TH.innerHTML = '<input type="checkbox">' + TH.innerHTML;
+			// }
+		},
+		// afterSelectionEnd: function () {
+		// 	handleDoubleClick();
+		// },
+		currentRowClassName: "currentRow",
+		currentColClassName: "currentCol",
 		colHeaders: [
 			"",
 			"Property ID",
@@ -434,11 +444,11 @@ const Home = () => {
 	const { handleClickInside } = useVisibleHook(true);
 
 	const handleDoubleClick = () => {
-		handleTabOpen();
 		// handleClickInside();
 		if (hotTableComponentRef.current) {
 			var currentHandsonTable = hotTableComponentRef.current.hotInstance;
 			var currentCell = currentHandsonTable.getSelected();
+
 			if (typeof currentCell != "undefined") {
 				var currentCellNumber = currentCell[0];
 				var currentRowNumber = currentCellNumber[0];
@@ -446,11 +456,14 @@ const Home = () => {
 				currentRowData = currentHandsonTable.getSourceDataAtRow(
 					currentRowNumber
 				);
+				console.log(currentRowData);
 				var currentRowPropertyStatus = currentRowData["property_status"];
 				setStatus(currentRowPropertyStatus);
+				console.log(currentRowPropertyStatus);
 			}
 			setRowData(currentRowData);
 		}
+		handleTabOpen();
 	};
 
 	return (
@@ -458,7 +471,7 @@ const Home = () => {
 			{/* <Layout> */}
 			<div
 				className={classes.mainBox}
-				onDoubleClick={handleDoubleClick}
+			onDoubleClick={handleDoubleClick}
 				ref={scrollRef}
 			>
 				{data?.list_all_property_reports?.edges && (

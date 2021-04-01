@@ -178,7 +178,10 @@ const Buy = ({ rowData }: BuyProps) => {
 						handleClose={handleModalClose}
 						propertyID={rowData?.property_id}
 					/>
-					<div className={classes.div}>
+					<div
+						className={classes.div}
+						onDoubleClick={(e: any) => e.preventDefault}
+					>
 						<Box width="320px" marginRight={1}>
 							<p className={classes.label}>Status</p>
 							<FormControl variant="filled">

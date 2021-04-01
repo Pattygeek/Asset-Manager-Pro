@@ -9,6 +9,7 @@ import UploadStatus from "../../components/UploadStatus/index";
 import { ReactComponent as UploadSuccess } from "../../assets/icons/uploadSuccess.svg";
 import { ReactComponent as UploadFailure } from "../../assets/icons/uploadFailure.svg";
 import React, { useState } from "react";
+import { truncate } from "fs/promises";
 
 const useStyles = makeStyles(() => ({
 	icon: {
@@ -142,7 +143,7 @@ const UploadData = () => {
 		onCompleted({ import_property_report_batch }) {
 			console.log(import_property_report_batch.message);
 			vip = import_property_report_batch.import_id;
-			// handleSecondImport(vip);
+			 handleSecondImport(vip);
 		},
 		onError(err) {
 			console.log(err);
@@ -150,7 +151,7 @@ const UploadData = () => {
 		},
 	});
 
-	const [countProcessedRecords, setCountProcessedRecords] = useState<any>(null);
+	const [processedRecords, setProcessedRecords] = useState<any>(null);
 
 	//second api call
 	const [
@@ -158,10 +159,12 @@ const UploadData = () => {
 		{ loading: processLoading, data: processData, error: processError },
 	] = useMutation(PROCESS_ENTRY, {
 		onCompleted({ process_batch_report_record }) {
-			console.log(process_batch_report_record.message);
+			setOpen(true);
+			setProcessedRecords(process_batch_report_record.message);
 		},
 		onError(err) {
 			console.log(err);
+			setOpenError(true);
 			return null;
 		},
 	});
@@ -192,6 +195,19 @@ const UploadData = () => {
 	// 	}
 	// };
 
+	//handler for closing alerts
+	const [open, setOpen] = useState(false);
+
+	const handleClick = () => {
+		setOpen(false);
+	};
+
+	const [openError, setOpenError] = useState(false);
+
+	const handleErrorClose = () => {
+		setOpenError(false);
+	};
+
 	return (
 		<>
 			<Box
@@ -207,9 +223,12 @@ const UploadData = () => {
 					<UploadStatus
 						borderColor="#00B07B"
 						icon={<UploadSuccess className={classes.icon} />}
+						handleClick={handleClick}
+						open={open}
 						children={
 							<Box color="#00B07B" fontWeight={500} fontSize={16}>
-								AMP has finished processing the uploaded file
+								<Box>AMP has finished processing the uploaded file</Box>
+								<Box mt={2}>{processedRecords} was imported successfully</Box>
 							</Box>
 						}
 					/>
@@ -219,6 +238,8 @@ const UploadData = () => {
 
 				{importError || processError ? (
 					<UploadStatus
+						open={openError}
+						handleClick={handleErrorClose}
 						borderColor="#B00020"
 						icon={<UploadFailure className={classes.icon} />}
 						children={
