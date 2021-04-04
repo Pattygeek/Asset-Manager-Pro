@@ -24,17 +24,11 @@ import pix4 from "../../../assets/images/pix4.png";
 import pix5 from "../../../assets/images/pix5.png";
 import pix6 from "../../../assets/images/pix6.png";
 import { PropertyRecord } from "../../../components/Types";
+import EscrowPhoto from "../Escrow/EscrowPhoto";
 import History from "../History";
 import Document from "../Document";
 import PriceHistory from "./PriceHistory";
 import BidHistory from "./BidHistory";
-import { useState, useEffect } from "react";
-import { useQuery, useMutation } from "@apollo/client";
-import {
-	LIST_CONTACT,
-	LIST_ALL_PROPERTY,
-} from "../../../helpers/graphql/queries";
-import { BUY_UPDATE_PROPERTY_STATUS } from "../../../helpers/graphql/mutations";
 import {
 	NumberCurrencyFormatCustom,
 	RegularNumberWithoutDecimalFormat,
@@ -171,6 +165,35 @@ const Buy = ({ rowData }: BuyProps) => {
 				sqftData,
 				sqftError,
 				sqftUpdate,
+				onSqftBlur,
+				brUpdate,
+				brData,
+				brError,
+				onBrBlur,
+				baUpdate,
+				baData,
+				baError,
+				onBaBlur,
+				lotUpdate,
+				lotData,
+				lotError,
+				onLotBlur,
+				auctionLpUpdate,
+				auctionLpData,
+				auctionLpError,
+				onAuctionLpBlur,
+				mktUpdate,
+				mktData,
+				mktError,
+				onMktBlur,
+				rehabUpdate,
+				rehabData,
+				rehabError,
+				onRehabBlur,
+				holdTimeData,
+				holdTimeError,
+				holdTimeUpdate,
+				onHoldTimeBlur,
 			}) => (
 				<>
 					<ContactModal
@@ -178,10 +201,7 @@ const Buy = ({ rowData }: BuyProps) => {
 						handleClose={handleModalClose}
 						propertyID={rowData?.property_id}
 					/>
-					<div
-						className={classes.div}
-						onDoubleClick={(e: any) => e.preventDefault}
-					>
+					<div className={classes.div}>
 						<Box width="320px" marginRight={1}>
 							<p className={classes.label}>Status</p>
 							<FormControl variant="filled">
@@ -376,9 +396,15 @@ const Buy = ({ rowData }: BuyProps) => {
 									inputProps={{
 										maxLength: 6,
 									}}
+									onBlur={onSqftBlur}
 									inputComponent={RegularNumberWithoutDecimalFormat as any}
 								/>
-								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								<FormHelperText
+									id="filled-weight-helper-text"
+									className={sqftError ? classes.update : ""}
+								>
+									{sqftError ? `${errorText}` : `${sqftUpdate}`}
+								</FormHelperText>
 							</FormControl>
 						</Box>
 						<Box width="60px" marginRight={1}>
@@ -397,9 +423,15 @@ const Buy = ({ rowData }: BuyProps) => {
 									inputProps={{
 										maxLength: 2,
 									}}
+									onBlur={onBrBlur}
 									inputComponent={RegularNumberWithoutDecimalFormat as any}
 								/>
-								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								<FormHelperText
+									id="filled-weight-helper-text"
+									className={brError ? classes.update : ""}
+								>
+									{brError ? `${errorText}` : `${brUpdate}`}
+								</FormHelperText>
 							</FormControl>
 						</Box>
 						<Box width="80px" marginRight={1}>
@@ -414,9 +446,15 @@ const Buy = ({ rowData }: BuyProps) => {
 									inputProps={{
 										maxLength: 5,
 									}}
+									onBlur={onBaBlur}
 									inputComponent={RegularNumberWithDecimalFormat as any}
 								/>
-								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								<FormHelperText
+									id="filled-weight-helper-text"
+									className={baError ? classes.update : ""}
+								>
+									{baError ? `${errorText}` : `${baUpdate}`}
+								</FormHelperText>
 							</FormControl>
 						</Box>
 						<Box marginRight={1} width="100px">
@@ -428,13 +466,19 @@ const Buy = ({ rowData }: BuyProps) => {
 									name="lot"
 									value={data.lot}
 									onChange={handleChange}
+									onBlur={onLotBlur}
 									inputProps={{
 										maxLength: 6,
 									}}
 									className={classes.input}
 									inputComponent={RegularNumberWithDecimalFormat as any}
 								/>
-								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								<FormHelperText
+									id="filled-weight-helper-text"
+									className={lotError ? classes.update : ""}
+								>
+									{lotError ? `${errorText}` : `${lotUpdate}`}
+								</FormHelperText>
 							</FormControl>
 						</Box>
 						<Box marginRight={1} width="120px">
@@ -465,13 +509,19 @@ const Buy = ({ rowData }: BuyProps) => {
 									onChange={handleChange}
 									placeholder=""
 									name="hold_time"
+									onBlur={onHoldTimeBlur}
 									className={classes.input}
 									inputProps={{
 										maxLength: 5,
 									}}
 									inputComponent={RegularNumberWithDecimalFormat as any}
 								/>
-								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								<FormHelperText
+									id="filled-weight-helper-text"
+									className={holdTimeError ? classes.update : ""}
+								>
+									{holdTimeError ? `${errorText}` : `${holdTimeUpdate}`}
+								</FormHelperText>
 							</FormControl>
 						</Box>
 						<Box marginRight={1}>
@@ -483,12 +533,18 @@ const Buy = ({ rowData }: BuyProps) => {
 									value={data.mkt}
 									name="mkt"
 									onChange={handleChange}
+									onBlur={onMktBlur}
 									inputProps={{
 										maxLength: 5,
 									}}
 									inputComponent={RegularNumberWithDecimalFormat as any}
 								/>
-								<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+								<FormHelperText
+									id="filled-weight-helper-text"
+									className={mktError ? classes.update : ""}
+								>
+									{mktError ? `${errorText}` : `${mktUpdate}`}
+								</FormHelperText>
 							</FormControl>
 						</Box>
 						<Box marginRight={1} width="120px">
@@ -561,12 +617,18 @@ const Buy = ({ rowData }: BuyProps) => {
 											value={data.auction_list_price}
 											onChange={handleChange}
 											name="auction_list_price"
+											onBlur={onAuctionLpBlur}
 											inputProps={{
 												maxLength: 11,
 											}}
 											inputComponent={NumberCurrencyFormatCustom as any}
 										/>
-										<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+										<FormHelperText
+											id="filled-weight-helper-text"
+											className={auctionLpError ? classes.update : ""}
+										>
+											{auctionLpError ? `${errorText}` : `${auctionLpUpdate}`}
+										</FormHelperText>
 									</FormControl>
 									<p className={classes.price} onClick={handleOpen}>
 										Price History
@@ -671,12 +733,18 @@ const Buy = ({ rowData }: BuyProps) => {
 											name="rehab"
 											value={data.rehab}
 											onChange={handleChange}
+											onBlur={onRehabBlur}
 											inputProps={{
 												maxLength: 11,
 											}}
 											inputComponent={NumberCurrencyFormatCustom as any}
 										/>
-										<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+										<FormHelperText
+											id="filled-weight-helper-text"
+											className={rehabError ? classes.update : ""}
+										>
+											{rehabError ? `${errorText}` : `${rehabUpdate}`}
+										</FormHelperText>
 									</FormControl>
 									<FormControlLabel
 										control={
@@ -911,7 +979,7 @@ const Buy = ({ rowData }: BuyProps) => {
 						</div>
 
 						<Box width="33%" mt={5}>
-							<PhotoBox images={images} />
+							<EscrowPhoto images={images} />
 						</Box>
 					</div>
 

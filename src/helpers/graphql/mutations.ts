@@ -211,15 +211,10 @@ const BUY_UPDATE_PROPERTY_TYPE = gql`
 `;
 
 const BUY_UPDATE_SQFT = gql`
-	mutation buySqft(
-		$property_id: String
-		$input_value: Int
-		$input_note: String
-	) {
+	mutation buySqft($property_id: String, $input_value: Int) {
 		buy_update_square_feet(
 			property_id: $property_id
 			input_value: $input_value
-			input_note: $input_note
 		) {
 			message
 			status_code
@@ -228,12 +223,8 @@ const BUY_UPDATE_SQFT = gql`
 `;
 
 const BUY_UPDATE_BR = gql`
-	mutation buyBr($property_id: String, $input_value: Int, $input_note: String) {
-		buy_update_bed_room(
-			property_id: $property_id
-			input_value: $input_value
-			input_note: $input_note
-		) {
+	mutation buyBr($property_id: String, $input_value: Int) {
+		buy_update_bed_room(property_id: $property_id, input_value: $input_value) {
 			message
 			status_code
 		}
@@ -241,12 +232,8 @@ const BUY_UPDATE_BR = gql`
 `;
 
 const BUY_UPDATE_BA = gql`
-	mutation buyBa($property_id: String, $input_value: Int, $input_note: String) {
-		buy_update_bath_room(
-			property_id: $property_id
-			input_value: $input_value
-			input_note: $input_note
-		) {
+	mutation buyBa($property_id: String, $input_value: Int) {
+		buy_update_bath_room(property_id: $property_id, input_value: $input_value) {
 			message
 			status_code
 		}
@@ -254,16 +241,8 @@ const BUY_UPDATE_BA = gql`
 `;
 
 const BUY_UPDATE_LOT = gql`
-	mutation buyLot(
-		$property_id: String
-		$input_value: Int
-		$input_note: String
-	) {
-		buy_update_lot(
-			property_id: $property_id
-			input_value: $input_value
-			input_note: $input_note
-		) {
+	mutation buyLot($property_id: String, $input_value: Int) {
+		buy_update_lot(property_id: $property_id, input_value: $input_value) {
 			message
 			status_code
 		}
@@ -271,15 +250,10 @@ const BUY_UPDATE_LOT = gql`
 `;
 
 const BUY_UPDATE_AUCTION_LP = gql`
-	mutation buyAuction(
-		$property_id: String
-		$input_value: Int
-		$input_note: String
-	) {
+	mutation buyAuction($property_id: String, $input_value: Int) {
 		buy_update_auction_list_price(
 			property_id: $property_id
 			input_value: $input_value
-			input_note: $input_note
 		) {
 			message
 			status_code
@@ -288,16 +262,8 @@ const BUY_UPDATE_AUCTION_LP = gql`
 `;
 
 const BUY_UPDATE_HOLD_TIME = gql`
-	mutation buyHoldTime(
-		$property_id: String
-		$input_value: Int!
-		$input_note: String
-	) {
-		buy_update_hold_time(
-			property_id: $property_id
-			input_value: $input_value
-			input_note: $input_note
-		) {
+	mutation buyHoldTime($property_id: String, $input_value: Int!) {
+		buy_update_hold_time(property_id: $property_id, input_value: $input_value) {
 			message
 			status_code
 		}
@@ -305,15 +271,10 @@ const BUY_UPDATE_HOLD_TIME = gql`
 `;
 
 const BUY_UPDATE_REHAB_COST = gql`
-	mutation buyRehabCost(
-		$property_id: String
-		$input_value: Int!
-		$input_note: String
-	) {
+	mutation buyRehabCost($property_id: String, $input_value: Int!) {
 		buy_update_rehab_cost(
 			property_id: $property_id
 			input_value: $input_value
-			input_note: $input_note
 		) {
 			message
 			status_code
@@ -322,15 +283,10 @@ const BUY_UPDATE_REHAB_COST = gql`
 `;
 
 const BUY_UPDATE_REHAB_TIME = gql`
-	mutation buyRehabTime(
-		$property_id: String
-		$input_value: Float!
-		$input_note: String
-	) {
+	mutation buyRehabTime($property_id: String, $input_value: Float!) {
 		buy_update_rehab_time(
 			property_id: $property_id
 			input_value: $input_value
-			input_note: $input_note
 		) {
 			message
 			status_code
@@ -339,16 +295,17 @@ const BUY_UPDATE_REHAB_TIME = gql`
 `;
 
 const BUY_UPDATE_HUD = gql`
-	mutation buyRehabTime(
-		$property_id: String
-		$input_value: Float!
-		$input_note: String
-	) {
-		buy_update_hud(
-			property_id: $property_id
-			input_value: $input_value
-			input_note: $input_note
-		) {
+	mutation buyRehabTime($property_id: String, $input_value: Float!) {
+		buy_update_hud(property_id: $property_id, input_value: $input_value) {
+			message
+			status_code
+		}
+	}
+`;
+
+const BUY_UPDATE_MKT = gql`
+	mutation buyMkt($property_id: String, $input_value: Int!) {
+		buy_update_hud(property_id: $property_id, input_value: $input_value) {
 			message
 			status_code
 		}
@@ -357,6 +314,7 @@ const BUY_UPDATE_HUD = gql`
 
 export {
 	BUY_UPDATE_HUD,
+	BUY_UPDATE_MKT,
 	BUY_UPDATE_REHAB_TIME,
 	BUY_UPDATE_REHAB_COST,
 	BUY_UPDATE_HOLD_TIME,

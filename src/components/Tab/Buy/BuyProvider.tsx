@@ -6,6 +6,14 @@ import {
 	BUY_UPDATE_PROPERTY_TYPE,
 	BUY_UPDATE_ACCESS,
 	BUY_UPDATE_SQFT,
+	BUY_UPDATE_OCCUPANCY,
+	BUY_UPDATE_BR,
+	BUY_UPDATE_BA,
+	BUY_UPDATE_LOT,
+	BUY_UPDATE_AUCTION_LP,
+	BUY_UPDATE_MKT,
+	BUY_UPDATE_REHAB_COST,
+	BUY_UPDATE_HOLD_TIME,
 } from "../../../helpers/graphql/mutations";
 import {
 	LIST_ALL_PROPERTY,
@@ -62,6 +70,35 @@ type ChildrenProps = {
 	sqftUpdate: string;
 	sqftError: any;
 	sqftData: any;
+	onSqftBlur: () => void;
+	brUpdate: string;
+	brError: any;
+	brData: any;
+	onBrBlur: () => void;
+	baUpdate: string;
+	baError: any;
+	baData: any;
+	onBaBlur: () => void;
+	lotUpdate: string;
+	lotError: any;
+	lotData: any;
+	onLotBlur: () => void;
+	auctionLpUpdate: string;
+	auctionLpError: any;
+	auctionLpData: any;
+	onAuctionLpBlur: () => void;
+	mktUpdate: string;
+	mktError: any;
+	mktData: any;
+	onMktBlur: () => void;
+	rehabUpdate: string;
+	rehabError: any;
+	rehabData: any;
+	onRehabBlur: () => void;
+	holdTimeUpdate: string;
+	holdTimeError: any;
+	holdTimeData: any;
+	onHoldTimeBlur: () => void;
 };
 
 type Props = {
@@ -75,6 +112,13 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 	const [occupancyUpdate, setOccupancyUpdate] = useState("");
 	const [propTypeUpdate, setPropTypeUpdate] = useState("");
 	const [sqftUpdate, setSqftUpdate] = useState("");
+	const [brUpdate, setBrUpdate] = useState("");
+	const [baUpdate, setBaUpdate] = useState("");
+	const [lotUpdate, setLotUpdate] = useState("");
+	const [mktUpdate, setMktUpdate] = useState("");
+	const [rehabUpdate, setRehabUpdate] = useState("");
+	const [auctionLpUpdate, setAuctionLpUpdate] = useState("");
+	const [holdTimeUpdate, setHoldTimeUpdate] = useState("");
 	const [errorText, setErrorText] = useState("Error saving changes");
 
 	//================pricehistory modal handler==============
@@ -105,20 +149,20 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 	const [data, setData] = useState<BuyRecord>({
 		stRsv: "",
 		sqft: rowData.square_feet ? rowData.square_feet : 0,
-		br: "",
-		ba: "",
+		br: rowData.bed_rooms,
+		ba: rowData.bath_rooms,
 		lot: rowData.lot_size,
 		year: "",
 		resale: rowData.resale_price,
-		rehab: "",
+		rehab: rowData.rehabilitation_cost,
 		buy_price: rowData.buy_price,
-		tpp: "",
+		tpp: rowData.total_buy_price,
 		annual_tax: "",
 		hud_exp: rowData.hud_percent,
 		profit: rowData.profit,
 		roi: rowData.return_on_investment,
-		hold_time: "",
-		mkt: "",
+		hold_time: rowData.hold_time_days,
+		mkt: rowData.marketing_time,
 		auction_list_price: rowData.auction_list_price,
 		high_bid: "",
 		auction_agent: "",
@@ -230,6 +274,94 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 	};
 	//=========end of property type=========================
 
+	//onblur function for square feet
+	const onSqftBlur = () => {
+		buy_update_square_feet({
+			variables: {
+				property_id: rowData._id,
+				input_value: Number(data.sqft),
+			},
+		});
+	};
+	//=========end of square feet=========================
+
+	//onblur function for bed room
+	const onBrBlur = () => {
+		buy_update_bed_room({
+			variables: {
+				property_id: rowData._id,
+				input_value: Number(data.br),
+			},
+		});
+	};
+	//=========end of bed room=========================
+
+	//onblur function for lot size
+	const onLotBlur = () => {
+		buy_update_lot({
+			variables: {
+				property_id: rowData._id,
+				input_value: Number(data.lot),
+			},
+		});
+	};
+	//=========end of lot size=========================
+
+	//onblur function for bath room
+	const onBaBlur = () => {
+		buy_update_bath_room({
+			variables: {
+				property_id: rowData._id,
+				input_value: Number(data.ba),
+			},
+		});
+	};
+	//=========end of bath room=========================
+
+	//auction list price function for onBlur
+	const onAuctionLpBlur = () => {
+		buy_update_auction_list_price({
+			variables: {
+				property_id: rowData._id,
+				input_value: Number(data.auction_list_price),
+			},
+		});
+	};
+	//=========end of auction list price=========================
+
+	//mkt function for onBlur
+	const onMktBlur = () => {
+		buy_update_marketing_time({
+			variables: {
+				property_id: rowData._id,
+				input_value: Number(data.mkt),
+			},
+		});
+	};
+	//=========end of mkt=========================
+
+	//rehab function for onBlur
+	const onRehabBlur = () => {
+		buy_update_rehab_cost({
+			variables: {
+				property_id: rowData._id,
+				input_value: Number(data.rehab),
+			},
+		});
+	};
+	//=========end of rehab=========================
+
+	//holdtime function for onBlur
+	const onHoldTimeBlur = () => {
+		buy_update_hold_time({
+			variables: {
+				property_id: rowData._id,
+				input_value: Number(data.hold_time),
+			},
+		});
+	};
+	//=========end of holdtime=========================
+
 	const { refetch } = useQuery(LIST_ALL_PROPERTY);
 
 	//mutation to update property status
@@ -302,7 +434,7 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 	const [
 		buy_update_occupancy_status,
 		{ loading: occupancyLoading, error: occupancyError, data: occupancyData },
-	] = useMutation(BUY_UPDATE_ACCESS, {
+	] = useMutation(BUY_UPDATE_OCCUPANCY, {
 		onCompleted() {
 			refetch();
 			setOccupancyUpdate("Changes saved");
@@ -363,6 +495,160 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 		},
 	});
 	//============end of mutation to update sqft==================
+
+	//mutation to update bedroom====================================
+	const [
+		buy_update_bed_room,
+		{ loading: brLoading, error: brError, data: brData },
+	] = useMutation(BUY_UPDATE_BR, {
+		onCompleted() {
+			refetch();
+			setBrUpdate("Changes saved");
+			setTimeout(() => {
+				setBrUpdate("");
+			}, 3000);
+		},
+		onError(err) {
+			setTimeout(() => {
+				setErrorText("");
+			}, 8000);
+			console.log(err);
+			return null;
+		},
+	});
+	//============end of mutation to update bedroom==================
+
+	//mutation to update bathroom====================================
+	const [
+		buy_update_bath_room,
+		{ loading: baLoading, error: baError, data: baData },
+	] = useMutation(BUY_UPDATE_BA, {
+		onCompleted() {
+			refetch();
+			setBaUpdate("Changes saved");
+			setTimeout(() => {
+				setBaUpdate("");
+			}, 3000);
+		},
+		onError(err) {
+			setTimeout(() => {
+				setErrorText("");
+			}, 8000);
+			console.log(err);
+			return null;
+		},
+	});
+	//============end of mutation to update bathroom==================
+
+	//mutation to update lot====================================
+	const [
+		buy_update_lot,
+		{ loading: lotLoading, error: lotError, data: lotData },
+	] = useMutation(BUY_UPDATE_LOT, {
+		onCompleted() {
+			refetch();
+			setLotUpdate("Changes saved");
+			setTimeout(() => {
+				setLotUpdate("");
+			}, 3000);
+		},
+		onError(err) {
+			setTimeout(() => {
+				setErrorText("");
+			}, 8000);
+			console.log(err);
+			return null;
+		},
+	});
+	//============end of mutation to update lot==================
+
+	//mutation to update auction list price====================================
+	const [
+		buy_update_auction_list_price,
+		{ loading: auctionLpLoading, error: auctionLpError, data: auctionLpData },
+	] = useMutation(BUY_UPDATE_AUCTION_LP, {
+		onCompleted() {
+			refetch();
+			setAuctionLpUpdate("Changes saved");
+			setTimeout(() => {
+				setAuctionLpUpdate("");
+			}, 3000);
+		},
+		onError(err) {
+			setTimeout(() => {
+				setErrorText("");
+			}, 8000);
+			console.log(err);
+			return null;
+		},
+	});
+	//============end of mutation to update auction list price==================
+
+	//mutation to update marketing time====================================
+	const [
+		buy_update_marketing_time,
+		{ loading: mktLoading, error: mktError, data: mktData },
+	] = useMutation(BUY_UPDATE_MKT, {
+		onCompleted() {
+			refetch();
+			setMktUpdate("Changes saved");
+			setTimeout(() => {
+				setMktUpdate("");
+			}, 3000);
+		},
+		onError(err) {
+			setTimeout(() => {
+				setErrorText("");
+			}, 8000);
+			console.log(err);
+			return null;
+		},
+	});
+	//============end of mutation to update marketing time==================
+
+	//mutation to update rehab cost====================================
+	const [
+		buy_update_rehab_cost,
+		{ loading: rehabLoading, error: rehabError, data: rehabData },
+	] = useMutation(BUY_UPDATE_REHAB_COST, {
+		onCompleted() {
+			refetch();
+			setRehabUpdate("Changes saved");
+			setTimeout(() => {
+				setRehabUpdate("");
+			}, 3000);
+		},
+		onError(err) {
+			setTimeout(() => {
+				setErrorText("");
+			}, 8000);
+			console.log(err);
+			return null;
+		},
+	});
+	//============end of mutation to update rehab==================
+
+	//mutation to update hold time====================================
+	const [
+		buy_update_hold_time,
+		{ loading: holdTimeLoading, error: holdTimeError, data: holdTimeData },
+	] = useMutation(BUY_UPDATE_HOLD_TIME, {
+		onCompleted() {
+			refetch();
+			setHoldTimeUpdate("Changes saved");
+			setTimeout(() => {
+				setHoldTimeUpdate("");
+			}, 3000);
+		},
+		onError(err) {
+			setTimeout(() => {
+				setErrorText("");
+			}, 8000);
+			console.log(err);
+			return null;
+		},
+	});
+	//============end of mutation to update hold time==================
 
 	//query to get contact data
 	const { loading, error, data: contactData } = useQuery(LIST_CONTACT, {
@@ -526,6 +812,35 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 				sqftData,
 				sqftError,
 				sqftUpdate,
+				onSqftBlur,
+				brUpdate,
+				brData,
+				brError,
+				onBrBlur,
+				baUpdate,
+				baData,
+				baError,
+				onBaBlur,
+				lotUpdate,
+				lotData,
+				lotError,
+				onLotBlur,
+				auctionLpUpdate,
+				auctionLpData,
+				auctionLpError,
+				onAuctionLpBlur,
+				mktUpdate,
+				mktData,
+				mktError,
+				onMktBlur,
+				rehabUpdate,
+				rehabData,
+				rehabError,
+				onRehabBlur,
+				holdTimeData,
+				holdTimeError,
+				holdTimeUpdate,
+				onHoldTimeBlur,
 			})}
 		</>
 	);

@@ -375,16 +375,6 @@ const Home = () => {
 		hiddenColumns: {
 			indicators: true,
 		},
-		rowHeader: true,
-		afterGetRowHeader: function (row: any, TH: any) {
-			console.log(row)
-			// if (row === 2) {
-			// 	TH.innerHTML = '<input type="checkbox">' + TH.innerHTML;
-			// }
-		},
-		// afterSelectionEnd: function () {
-		// 	handleDoubleClick();
-		// },
 		currentRowClassName: "currentRow",
 		currentColClassName: "currentCol",
 		colHeaders: [
@@ -443,27 +433,31 @@ const Home = () => {
 
 	const { handleClickInside } = useVisibleHook(true);
 
-	const handleDoubleClick = () => {
+	const handleClick = () => {
 		// handleClickInside();
 		if (hotTableComponentRef.current) {
 			var currentHandsonTable = hotTableComponentRef.current.hotInstance;
 			var currentCell = currentHandsonTable.getSelected();
-
+			var colHeader = currentHandsonTable.hasColHeaders();
+			// if (!colHeader) {
 			if (typeof currentCell != "undefined") {
 				var currentCellNumber = currentCell[0];
 				var currentRowNumber = currentCellNumber[0];
 				var currentRowData: any = {};
-				currentRowData = currentHandsonTable.getSourceDataAtRow(
-					currentRowNumber
-				);
-				console.log(currentRowData);
-				var currentRowPropertyStatus = currentRowData["property_status"];
-				setStatus(currentRowPropertyStatus);
-				console.log(currentRowPropertyStatus);
+				if (currentRowNumber > -1) {
+					currentRowData = currentHandsonTable.getSourceDataAtRow(
+						currentRowNumber
+					);
+					var currentRowPropertyStatus = currentRowData["property_status"];
+					setStatus(currentRowPropertyStatus);
+					setRowData(currentRowData);
+					if (!open) {
+						handleTabOpen();
+					}
+				}
 			}
-			setRowData(currentRowData);
+			// }
 		}
-		handleTabOpen();
 	};
 
 	return (
@@ -471,7 +465,7 @@ const Home = () => {
 			{/* <Layout> */}
 			<div
 				className={classes.mainBox}
-			onDoubleClick={handleDoubleClick}
+				// onDoubleClick={handleDoubleClick}
 				ref={scrollRef}
 			>
 				{data?.list_all_property_reports?.edges && (
@@ -479,6 +473,7 @@ const Home = () => {
 						ref={hotTableComponentRef}
 						settings={state}
 						id="hot"
+						afterSelection={handleClick}
 						//afterScrollVertically={handleScroll}
 						data={property}
 						dropdownMenu={[

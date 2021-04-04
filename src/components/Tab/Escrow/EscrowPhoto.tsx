@@ -17,14 +17,17 @@ const useStyles = makeStyles((theme) => ({
 		cursor: "pointer",
 	},
 	imgBox: {
-		display: "grid",
-		gridTemplateColumns: "repeat(5, 1fr)",
-		width: "100%",
-		// gap: "0px",
+		display: "flex",
+		width: "inherit",
+		justifyContent: "space-between",
+		// display: "grid",
+		// gridTemplateColumns: "repeat(5, 1fr)",
+		// width: "100%",
+		// // gap: "0px",
 	},
 	box: {
 		width: "100%",
-		height: "137px",
+		height: "125px",
 		borderRadius: "0px 0px 4px 4px",
 		backgroundColor: "#EDF7FF",
 		boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.25)",
@@ -143,7 +146,7 @@ const PhotoBox = ({ images }: PhotoProps) => {
 							onClick={() => setIndex(4)}
 						/>
 					</Box>
-					<Box display="flex">
+					<Box display="flex" width="inherit" justifyContent="center">
 						<Button
 							variant="contained"
 							color="primary"

@@ -30,7 +30,7 @@ const History = (props: { property_id: string | undefined }) => {
 	const [historyData, setHistoryData] = useState([]);
 
 	const [state, setState] = useState<any>({
-		colHeaders: ["Date", "Time", "User", "Field Name", "Change", "Notes"],
+		colHeaders: ["Date", "Time", "User", "Field Name", "Change"],
 		licenseKey: "non-commercial-and-evaluation",
 		rowHeights: 28,
 		columnHeaderHeight: 35,
@@ -44,11 +44,11 @@ const History = (props: { property_id: string | undefined }) => {
 				readOnly: true,
 				width: 90,
 			},
-			{ data: "updated_at", readOnly: true, width: 90 },
+			{ data: "updated_at", readOnly: true, width: 100 },
 			{ data: "updated_by", readOnly: true, width: 120 },
 			{ data: "field_name", readOnly: true, width: 120 },
 			{ data: "new_value", readOnly: true, width: 100 },
-			{ data: "notes", readOnly: true, width: 150 },
+			//{ data: "notes", readOnly: true, width: 150 },
 		],
 		renderer: function (
 			instance: Handsontable,
@@ -71,15 +71,13 @@ const History = (props: { property_id: string | undefined }) => {
 					Handsontable.CellProperties
 				]
 			);
-			td.innerHTML =
-				value === null ? "" : `<div class="truncated">${value}</div>`;
+			td.innerHTML = `<div class="truncated">${value}</div>`;
 		},
-		minRows: 3,
+		minRows: 1,
 		filters: true,
 		columnSorting: true,
 		allowInsertColumn: false,
 		allowRemoveColumn: false,
-		dataSchema: "history",
 	});
 
 	const { loading, error, data } = useQuery(TAB_HISTORY, {
@@ -87,7 +85,7 @@ const History = (props: { property_id: string | undefined }) => {
 			property_id: property_id, //this is more like dummy property id, just to show the data, it will be updated to pick the actual property id
 		},
 		onCompleted() {
-			setHistoryData(data.buy_stream_price_history.history);
+			setHistoryData(data?.buy_stream_price_history?.history);
 		},
 	});
 
@@ -102,8 +100,10 @@ const History = (props: { property_id: string | undefined }) => {
 				marginBottom={6}
 			>
 				<Box className={classes.box}>History</Box>
-				{historyData.length < 1 ? (
-					<Box textAlign="center" py={3}>There is no history yet for this property</Box>
+				{historyData?.length < 1 && !loading ? (
+					<Box textAlign="center" py={3}>
+						There is no history yet for this property
+					</Box>
 				) : (
 					<HotTable
 						settings={state}
@@ -132,7 +132,6 @@ const History = (props: { property_id: string | undefined }) => {
 							<FieldNameRenderer hot-renderer />
 						</HotColumn>
 						<HotColumn data={state.columns[4].data} />
-						<HotColumn data={state.columns[5].data} />
 					</HotTable>
 				)}
 			</Box>

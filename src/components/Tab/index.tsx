@@ -31,7 +31,7 @@ const StatusTab = ({ handleClose, status, rowData }: tabProps) => {
 			height: "100%",
 			margin: "0px auto",
 			overflowX: "hidden",
-			// overflowY: "scroll",
+			//overflowY: "scroll",
 			backgroundColor: "white",
 			position: "absolute",
 			padding: "8px",
@@ -56,7 +56,8 @@ const StatusTab = ({ handleClose, status, rowData }: tabProps) => {
 		tab: {
 			marginTop: "8px",
 			marginBottom: "8px",
-			// overflowY: "scroll",
+			//overflowY: "scroll",
+			height: "fit-content",
 		},
 		text: {
 			textTransform: "capitalize",
@@ -176,7 +177,7 @@ const StatusTab = ({ handleClose, status, rowData }: tabProps) => {
 
 	// const { handleSetContact } = useContacts();
 
-	console.log(rowData);
+	
 
 	return (
 		<>
