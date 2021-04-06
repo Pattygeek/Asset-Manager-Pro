@@ -12,12 +12,13 @@ import React, { useState } from "react";
 import useVisibleHook from "../../utils/useVisibleHook";
 import { useQuery } from "@apollo/client";
 import { LIST_CONTACT } from "../../helpers/graphql/queries";
+import { PropertyRecord } from "../Types";
 // import { useContacts } from "../../helpers/contexts/contactsContext";
 
 interface tabProps {
 	handleClose: () => any;
 	status: string;
-	rowData: object;
+	rowData: PropertyRecord;
 }
 
 const StatusTab = ({ handleClose, status, rowData }: tabProps) => {
@@ -177,8 +178,6 @@ const StatusTab = ({ handleClose, status, rowData }: tabProps) => {
 
 	// const { handleSetContact } = useContacts();
 
-	
-
 	return (
 		<>
 			{/* {isVisible && ( */}
@@ -205,7 +204,7 @@ const StatusTab = ({ handleClose, status, rowData }: tabProps) => {
 				</Paper>
 				<Paper className={classes.tab}>
 					<TabPanel value={value} index={0}>
-						<Buy rowData={rowData} />
+						<Buy />
 					</TabPanel>
 					<TabPanel value={value} index={1}>
 						<Escrow options={contactData} rowData={rowData} />

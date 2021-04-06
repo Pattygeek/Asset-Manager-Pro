@@ -7,17 +7,20 @@ import "handsontable/dist/handsontable.full.css";
 import { ApolloProvider } from "@apollo/client";
 import client from "./helpers/graphql/client";
 import { ToggleProvider } from "./helpers/contexts/toggleContext";
+import RowDataProvider  from "./helpers/contexts/rowDataContext";
 // import ContactsContext from "./helpers/contexts/contactsContext";
 
 ReactDOM.render(
 	// <React.StrictMode>
-		<ApolloProvider client={client}>
-			<ToggleProvider>
+	<ApolloProvider client={client}>
+		<ToggleProvider>
+			<RowDataProvider>
 				{/* <ContactsContext> */}
 				<App />
 				{/* </ContactsContext> */}
-			</ToggleProvider>
-		</ApolloProvider>,
+			</RowDataProvider>
+		</ToggleProvider>
+	</ApolloProvider>,
 	// </React.StrictMode>,
 	document.getElementById("root")
 );

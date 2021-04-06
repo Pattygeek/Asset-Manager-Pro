@@ -40,6 +40,7 @@ import {
 } from "../../../utils/formats";
 import ContactModal from "../../ContactsAutocomplete/addContactModal";
 import BuyProvider from "./BuyProvider";
+import { useRowData } from "../../../helpers/contexts/rowDataContext";
 
 const useStyles = makeStyles((theme) => ({
 	label: {
@@ -107,7 +108,7 @@ interface BuyProps {
 	rowData: PropertyRecord;
 }
 
-const Buy = ({ rowData }: BuyProps) => {
+const Buy = () => {
 	const classes = useStyles();
 
 	const images = [pix1, pix2, pix3, pix4, pix5, pix6];
@@ -118,8 +119,10 @@ const Buy = ({ rowData }: BuyProps) => {
 		let presentYear = date.getFullYear();
 		return presentYear;
 	};
+
+	const { rowData, handleRowData } = useRowData();
 	return (
-		<BuyProvider rowData={rowData}>
+		<BuyProvider>
 			{({
 				statusData,
 				statusError,
@@ -284,7 +287,7 @@ const Buy = ({ rowData }: BuyProps) => {
 							<FormControl variant="filled">
 								<Select
 									native
-									//value={data.access == true ? "Yes" : "No"}
+									value={data.access == true ? "Yes" : "No"}
 									onChange={onAccessChange}
 									name="access"
 									className={classes.input}

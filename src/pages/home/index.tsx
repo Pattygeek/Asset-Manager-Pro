@@ -12,6 +12,7 @@ import { LIST_ALL_PROPERTY } from "../../helpers/graphql/queries";
 import { useToggle } from "../../helpers/contexts/toggleContext";
 import useVisibleHook from "../../utils/useVisibleHook";
 import Handsontable from "handsontable";
+import { useRowData } from "../../helpers/contexts/rowDataContext";
 
 //components
 import { Tab } from "../../components";
@@ -19,6 +20,8 @@ import { PropertyRecord } from "../../components/Types";
 
 const Home = () => {
 	const { toggle } = useToggle();
+
+	const { rowData, handleRowData } = useRowData();
 
 	//tab handler
 	const [open, setOpen] = useState<boolean>(false);
@@ -303,24 +306,29 @@ const Home = () => {
 					culture: "en-US",
 				},
 			},
-			{ data: "contact_first_name" + " " + "contact_last_name" },
+			{
+				data:
+					"contact_first_name" +
+					" " +
+					"contact_last_name",
+			},
 			{ data: "contact_cell_phone" },
 			{ data: "contact_email" },
 			{ data: "user" },
 			{ data: "property_status" },
-			{ data: "reason" },
+			{ data: "none_interest_reason" },
 			{ data: "note" },
-			{ data: "access" },
-			{ data: "occupancy" },
+			{ data: "interior_access" },
+			{ data: "occupancy_status" },
 			{ data: "product", readOnly: true },
-			{ data: "prop_type" },
+			{ data: "property_type" },
 			{
 				data: "square_feet",
 				type: "numeric",
-				// numericFormat: {
-				// 	pattern: "0,0",
-				// 	culture: "en-US",
-				// },
+				numericFormat: {
+					pattern: "0,0",
+					culture: "en-US",
+				},
 			},
 			{ data: "bed_rooms" },
 			{ data: "bath_rooms" },
@@ -358,6 +366,7 @@ const Home = () => {
 		autoWrapRow: true,
 		collapsibleColumns: true,
 		minCols: 44,
+		minRows: 1,
 		className: "htMiddle htCenter",
 		// hiddenColumns: true,
 		exportFile: true,
@@ -429,7 +438,7 @@ const Home = () => {
 	const [status, setStatus] = useState("");
 
 	//state to handle row data
-	const [rowData, setRowData] = useState<PropertyRecord>({});
+	// const [rowData, setRowData] = useState<PropertyRecord>({});
 
 	const { handleClickInside } = useVisibleHook(true);
 
@@ -450,7 +459,7 @@ const Home = () => {
 					);
 					var currentRowPropertyStatus = currentRowData["property_status"];
 					setStatus(currentRowPropertyStatus);
-					setRowData(currentRowData);
+					handleRowData!(currentRowData);
 					if (!open) {
 						handleTabOpen();
 					}

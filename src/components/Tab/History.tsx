@@ -45,9 +45,9 @@ const History = (props: { property_id: string | undefined }) => {
 				width: 90,
 			},
 			{ data: "updated_at", readOnly: true, width: 100 },
-			{ data: "updated_by", readOnly: true, width: 120 },
-			{ data: "field_name", readOnly: true, width: 120 },
-			{ data: "new_value", readOnly: true, width: 100 },
+			{ data: "updated_by", readOnly: true, width: 150 },
+			{ data: "field_name", readOnly: true, width: 150 },
+			{ data: "new_value", readOnly: true, width: 120 },
 			//{ data: "notes", readOnly: true, width: 150 },
 		],
 		renderer: function (

@@ -1,4 +1,4 @@
-import React, { ReactNode, FC, useState } from "react";
+import React, { ReactNode, FC, useState, useEffect } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import {
 	BUY_UPDATE_PROPERTY_STATUS,
@@ -15,9 +15,11 @@ import {
 	BUY_UPDATE_REHAB_COST,
 	BUY_UPDATE_HOLD_TIME,
 } from "../../../helpers/graphql/mutations";
+import { useRowData } from "../../../helpers/contexts/rowDataContext";
 import {
 	LIST_ALL_PROPERTY,
 	LIST_CONTACT,
+	SINGLE_PROPERTY_REPORT,
 } from "../../../helpers/graphql/queries";
 import { BuyRecord } from "../../Types";
 import {
@@ -103,9 +105,9 @@ type ChildrenProps = {
 
 type Props = {
 	children(_: ChildrenProps): ReactNode;
-	rowData: any;
+	// rowData: any;
 };
-const BuyProvider: FC<Props> = ({ children, rowData }) => {
+const BuyProvider: FC<Props> = ({ children }) => {
 	const [statusUpdate, setStatusUpdate] = useState("");
 	const [reasonUpdate, setReasonUpdate] = useState("");
 	const [accessUpdate, setAccessUpdate] = useState("");
@@ -120,6 +122,19 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 	const [auctionLpUpdate, setAuctionLpUpdate] = useState("");
 	const [holdTimeUpdate, setHoldTimeUpdate] = useState("");
 	const [errorText, setErrorText] = useState("Error saving changes");
+
+	const { rowData, handleRowData } = useRowData();
+
+	//console.log(rowData);
+
+	const [propID, setPropID] = useState("");
+
+	useEffect(() => {
+		setPropID(rowData._id);
+		handleRowData!(rowData);
+	}, []);
+
+	console.log(rowData);
 
 	//================pricehistory modal handler==============
 	const [open, setOpen] = useState(false);
@@ -148,7 +163,7 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 	//state handler for all the input fields
 	const [data, setData] = useState<BuyRecord>({
 		stRsv: "",
-		sqft: rowData.square_feet ? rowData.square_feet : 0,
+		sqft: rowData.square_feet,
 		br: rowData.bed_rooms,
 		ba: rowData.bath_rooms,
 		lot: rowData.lot_size,
@@ -232,7 +247,7 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 
 		buy_update_access({
 			variables: {
-				property_id: rowData._id,
+				property_id: propID,
 				input_value: value == "Yes" ? true : false,
 			},
 		});
@@ -267,7 +282,7 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 
 		buy_update_property_type({
 			variables: {
-				property_id: rowData._id,
+				property_id: propID,
 				input_value: value,
 			},
 		});
@@ -362,7 +377,30 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 	};
 	//=========end of holdtime=========================
 
-	const { refetch } = useQuery(LIST_ALL_PROPERTY);
+	const cloneRow = rowData;
+
+	const { data: reportData, refetch } = useQuery(SINGLE_PROPERTY_REPORT, {
+		variables: {
+			property_id: rowData._id,
+		},
+		onCompleted() {
+			const newRowData = {
+				...cloneRow,
+				...reportData.get_property_report.property,
+			};
+			handleRowData!(newRowData);
+		},
+	});
+
+	const { refetch: refetchAll } = useQuery(LIST_ALL_PROPERTY);
+
+	// const rowwData = reportData ? reportData : {};
+
+	// const refetched = () => {
+	// 	handleRowData!(rowwData);
+	// };
+
+	// handleRowData!(rowwData);
 
 	//mutation to update property status
 	const [
@@ -414,11 +452,11 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 		{ loading: accessLoading, error: accessError, data: accessData },
 	] = useMutation(BUY_UPDATE_ACCESS, {
 		onCompleted() {
-			refetch();
 			setAccessUpdate("Changes saved");
 			setTimeout(() => {
 				setAccessUpdate("");
 			}, 3000);
+			refetch();
 		},
 		onError(err) {
 			setTimeout(() => {
@@ -458,11 +496,12 @@ const BuyProvider: FC<Props> = ({ children, rowData }) => {
 		{ loading: propertyLoading, error: propertyError, data: propertyData },
 	] = useMutation(BUY_UPDATE_PROPERTY_TYPE, {
 		onCompleted() {
-			refetch();
 			setPropTypeUpdate("Changes saved");
 			setTimeout(() => {
 				setPropTypeUpdate("");
 			}, 3000);
+			refetch();
+			refetchAll();
 		},
 		onError(err) {
 			setTimeout(() => {
