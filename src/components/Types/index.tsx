@@ -102,4 +102,40 @@ type BuyRecord = {
 	property_type?: string;
 };
 
-export type { PropertyRecord, Contact, BuyRecord };
+type EscrowRecord = {
+	status?: string;
+	tpp?: string;
+	potential_rehab?: string;
+	potential_lp?: string;
+	potential_profit?: string;
+	potential_roi?: string;
+	est_coe?: string;
+	occupancy?: string;
+	property_access?: string;
+	property_received?: string;
+	co_needed?: string;
+	co_completed?: string;
+	oil_swept?: string;
+	sewer_checked?: string;
+	list_agent?: string;
+	list_agent_number?: string;
+	list_agent_email?: string;
+	auction_agent?: string;
+	auction_agent_number?: string;
+	auction_agent_email?: string;
+	financing?: string;
+	loan_amount?: string;
+	appraisal_ordered?: string;
+	appraisal_date_ordered?: string;
+	title_received?: string;
+	deed_received?: string;
+	final_work_through?: string;
+	ready_to_close?: string;
+	bought_date?: string;
+	note?: string;
+	down_payment?: string;
+	loan_interest?: string;
+	contractor_received?: string;
+};
+
+export type { PropertyRecord, Contact, BuyRecord, EscrowRecord };
