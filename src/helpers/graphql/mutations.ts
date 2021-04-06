@@ -337,7 +337,7 @@ const OWNED_UPDATE_SOLD_DATE = gql`
 `;
 
 const ESCROW_UPDATE_BOUGHT_DATE = gql`
-	mutation escrowBoughtDate($property_id: String, $input_value: DateTime) {
+	mutation escrowBoughtDate($property_id: String, $input_value: Date) {
 		escrow_update_bought_date(
 			property_id: $property_id
 			input_value: $input_value

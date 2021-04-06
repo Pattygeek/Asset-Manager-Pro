@@ -33,7 +33,11 @@ type ChildrenProps = {
 	optionList: any[];
 	handleAuctionChange: (evt: React.ChangeEvent<any>) => void;
 	openDiv: boolean;
-    handleListAgentChange: (event: React.ChangeEvent<any>) => void;
+	handleListAgentChange: (event: React.ChangeEvent<any>) => void;
+    boughtDateUpdate: string;
+    boughtDateError: any;
+    boughtDateData: any;
+    errorText: string;
 };
 
 type Props = {
@@ -43,8 +47,8 @@ type Props = {
 const EscrowProvider: FC<Props> = ({ children }) => {
 	const { rowData, handleRowData } = useRowData();
 
-    const [errorText, setErrorText] = useState("Error saving changes");
-    const [boughtDateUpdate, setBoughtDateUpdate] = useState("")
+	const [errorText, setErrorText] = useState("Error saving changes");
+	const [boughtDateUpdate, setBoughtDateUpdate] = useState("");
 	//state handler for all the input fields
 	const [data, setData] = useState({
 		status: rowData.property_status,
@@ -108,9 +112,42 @@ const EscrowProvider: FC<Props> = ({ children }) => {
 
 	const handleBoughtDateChange = (date: Date | null) => {
 		setBoughtDate(date);
+
+		escrow_update_bought_date({
+			variables: {
+				property_id: rowData._id,
+				input_value: date,
+			},
+		});
 	};
 
 	//===============end of date handler===================
+
+	//mutation to update property status
+	const [
+		escrow_update_bought_date,
+		{
+			loading: boughtDateLoading,
+			error: boughtDateError,
+			data: boughtDateData,
+		},
+	] = useMutation(ESCROW_UPDATE_BOUGHT_DATE, {
+		onCompleted() {
+			//refetch();
+			setBoughtDateUpdate("Changes saved");
+			setTimeout(() => {
+				setBoughtDateUpdate("");
+			}, 3000);
+		},
+		onError(err) {
+			setTimeout(() => {
+				setErrorText("");
+			}, 8000);
+			console.log(err);
+			return null;
+		},
+	});
+	//==========end of update status mutation======================
 
 	//================contact filtering=======================
 	const [options, setOptions] = useState<any[]>([]);
@@ -223,7 +260,11 @@ const EscrowProvider: FC<Props> = ({ children }) => {
 				optionList,
 				handleAuctionChange,
 				openDiv,
-                handleListAgentChange
+				handleListAgentChange,
+                boughtDateData,
+                boughtDateError,
+                boughtDateUpdate,
+                errorText
 			})}
 		</>
 	);

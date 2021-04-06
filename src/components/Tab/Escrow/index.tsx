@@ -75,6 +75,9 @@ const useStyles = makeStyles(() => ({
 		display: "flex",
 		justifyContent: "space-between",
 	},
+	update: {
+		color: "red",
+	},
 	buttonStack: {
 		display: "flex",
 		marginTop: "32px",
@@ -344,6 +347,10 @@ const Index = ({ options, rowData }: BuyProps) => {
 					handleAuctionChange,
 					openDiv,
 					handleListAgentChange,
+					boughtDateData,
+					boughtDateError,
+					boughtDateUpdate,
+					errorText
 				}) => (
 					<MuiPickersUtilsProvider utils={DateFnsUtils}>
 						<div className={classes.div}>
@@ -1070,7 +1077,12 @@ const Index = ({ options, rowData }: BuyProps) => {
 											},
 										}}
 									/>
-									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+									<FormHelperText
+										id="filled-weight-helper-text"
+										className={boughtDateError ? classes.update : ""}
+									>
+										{boughtDateError ? `${errorText}` : `${boughtDateUpdate}`}
+									</FormHelperText>
 								</FormControl>
 							</Box>
 						</div>
