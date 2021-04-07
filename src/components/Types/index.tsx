@@ -138,4 +138,44 @@ type EscrowRecord = {
 	contractor_received?: string;
 };
 
-export type { PropertyRecord, Contact, BuyRecord, EscrowRecord };
+type OwnedRecord = {
+	status?: string;
+	tpp?: string;
+	list_price?: string;
+	profit?: string;
+	roi?: string;
+	hold_time?: string;
+	note?: string;
+	occupancy?: string;
+	eviction?: string;
+	cfk?: string;
+	cfk_amount?: string;
+	occupant?: string;
+	occupant_number?: string;
+	occupant_email?: string;
+	eviction_date?: string;
+	attorney_name?: string;
+	attorney_number?: string;
+	attorney_email?: string;
+	eviction_cost?: string;
+	water_co?: string;
+	water_co_number?: string;
+	electric_co?: string;
+	electric_co_number?: string;
+	gas_co?: string;
+	gas_co_number?: string;
+	taxes?: string;
+	taxes_number?: string;
+	contractor_bid_received?: string;
+	rehab?: string;
+	gc?: string;
+	gc_number?: string;
+	gc_email?: string;
+	list_agent?: string;
+	list_agent_email?: string;
+	list_agent_number?: string;
+	sold_date?: string;
+	sold_price?: string;
+};
+
+export type { PropertyRecord, Contact, BuyRecord, EscrowRecord, OwnedRecord };

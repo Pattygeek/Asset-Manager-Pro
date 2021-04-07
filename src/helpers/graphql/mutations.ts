@@ -312,8 +312,8 @@ const BUY_UPDATE_MKT = gql`
 	}
 `;
 
-const OWNED_UPDATE_CFK = gql`
-	mutation ownedCfk($property_id: String, $input_value: Boolean!) {
+const OWNED_UPDATE_CFK_AMOUNT = gql`
+	mutation ownedCfk($property_id: String, $input_value: Float!) {
 		owned_update_cfk_amount(
 			property_id: $property_id
 			input_value: $input_value
@@ -325,7 +325,7 @@ const OWNED_UPDATE_CFK = gql`
 `;
 
 const OWNED_UPDATE_SOLD_DATE = gql`
-	mutation ownedSoldDate($property_id: String, $input_value: DateTime) {
+	mutation ownedSoldDate($property_id: String, $input_value: Date) {
 		owned_update_sold_date(
 			property_id: $property_id
 			input_value: $input_value
@@ -350,7 +350,7 @@ const ESCROW_UPDATE_BOUGHT_DATE = gql`
 
 export {
 	ESCROW_UPDATE_BOUGHT_DATE,
-	OWNED_UPDATE_CFK,
+	OWNED_UPDATE_CFK_AMOUNT,
 	OWNED_UPDATE_SOLD_DATE,
 	BUY_UPDATE_HUD,
 	BUY_UPDATE_MKT,

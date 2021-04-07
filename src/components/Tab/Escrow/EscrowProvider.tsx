@@ -123,7 +123,7 @@ const EscrowProvider: FC<Props> = ({ children }) => {
 
 	//===============end of date handler===================
 
-	//mutation to update property status
+	//mutation to update bought date
 	const [
 		escrow_update_bought_date,
 		{
@@ -147,7 +147,7 @@ const EscrowProvider: FC<Props> = ({ children }) => {
 			return null;
 		},
 	});
-	//==========end of update status mutation======================
+	//==========end of update bought date======================
 
 	//================contact filtering=======================
 	const [options, setOptions] = useState<any[]>([]);

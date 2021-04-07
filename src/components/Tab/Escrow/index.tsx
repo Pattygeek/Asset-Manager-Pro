@@ -8,7 +8,6 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import Button from "@material-ui/core/Button";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import DoneOutlinedIcon from "@material-ui/icons/DoneOutlined";
 
 //assets & components
 import { ReactComponent as FileIcon } from "../../../assets/icons/file.svg";
@@ -29,19 +28,13 @@ import {
 	PhoneNumberFormat,
 } from "../../../utils/formats";
 import { PropertyRecord } from "../../../components/Types";
-import {
-	DisplayOptions,
-	NoOptions,
-} from "../../ContactsAutocomplete/AutocompleteComponent";
 import AutoComplete from "../../ContactsAutocomplete";
 import { red } from "@material-ui/core/colors";
 import DateFnsUtils from "@date-io/date-fns";
 import {
 	MuiPickersUtilsProvider,
-	KeyboardTimePicker,
 	KeyboardDatePicker,
 } from "@material-ui/pickers";
-import { useState } from "react";
 
 const useStyles = makeStyles(() => ({
 	label: {
@@ -168,165 +161,14 @@ const useStyles = makeStyles(() => ({
 }));
 
 interface BuyProps {
-	options: any[];
+	// options: any[];
 	rowData: PropertyRecord;
 }
 
-const Index = ({ options, rowData }: BuyProps) => {
+const Index = ({ rowData }: BuyProps) => {
 	const classes = useStyles();
 
 	const images = [pix1, pix2, pix3, pix4, pix5, pix6];
-
-	// const [data, setData] = useState({
-	// 	status: rowData.property_status,
-	// 	tpp: "",
-	// 	potential_rehab: "",
-	// 	potential_lp: "",
-	// 	potential_profit: "",
-	// 	potential_roi: "",
-	// 	est_coe: "",
-	// 	occupancy: "",
-	// 	property_access: "",
-	// 	property_received: "",
-	// 	co_needed: "",
-	// 	co_completed: "",
-	// 	oil_swept: "",
-	// 	sewer_checked: "",
-	// 	list_agent: "",
-	// 	list_agent_number: "",
-	// 	list_agent_email: "",
-	// 	auction_agent: "",
-	// 	auction_agent_number: "",
-	// 	auction_agent_email: "",
-	// 	financing: "",
-	// 	loan_amount: "",
-	// 	appraisal_ordered: "",
-	// 	appraisal_date_ordered: "",
-	// 	title_received: "",
-	// 	deed_received: "",
-	// 	final_work_through: "",
-	// 	ready_to_close: "",
-	// 	bought_date: "",
-	// 	note: "",
-	// 	down_payment: "",
-	// 	loan_interest: "",
-	// 	contractor_received: "",
-	// });
-
-	// //onchange handler for input fields
-	// const handleChange = (event: React.ChangeEvent<any>) => {
-	// 	const { name, value } = event.target;
-	// 	setData({
-	// 		...data,
-	// 		[name]: value,
-	// 	});
-	// };
-
-	// //state and change handler for date
-	// const [estDate, setEstDate] = useState<any>(new Date());
-
-	// const handleEstDateChange = (date: Date | null) => {
-	// 	setEstDate(date);
-	// };
-
-	// const [appraisalDate, setAppraisalDate] = useState<any>(new Date());
-
-	// const handleAppraisalDateChange = (date: Date | null) => {
-	// 	setAppraisalDate(date);
-	// };
-
-	// const [boughtDate, setBoughtDate] = useState<any>(new Date());
-
-	// const handleBoughtDateChange = (date: Date | null) => {
-	// 	setBoughtDate(date);
-	// };
-
-	// //===============end of date handler===================
-
-	// const [optionList, setOptionList] = useState<any[]>([]);
-	// const [listAgentOptions, setListAgentOptions] = useState<any[]>([]);
-	// let optionData;
-	// let filteredOption;
-
-	// //state handler for auction agent autocomplete
-	// const [openDiv, setOpenDiv] = useState(false);
-
-	// //state handler for list agent autocomplete
-	// const [openListDiv, setOpenListDiv] = useState(false);
-
-	// //onchange handler for list agent
-	// const handleListAgentChange = (event: React.ChangeEvent<any>) => {
-	// 	const { value } = event.target;
-	// 	setOpenListDiv(true);
-	// 	setData({
-	// 		...data,
-	// 		list_agent: value,
-	// 	});
-
-	// 	filteredOption = options.filter((optionName: any) =>
-	// 		optionName.contact_first_name.toLowerCase().includes(event.target.value)
-	// 	);
-	// 	setListAgentOptions(filteredOption);
-	// };
-
-	// //autocomplete function for list agent
-	// if (listAgentOptions?.length > 0 && data.list_agent != "") {
-	// 	optionData = listAgentOptions?.map((option: any) => (
-	// 		<DisplayOptions
-	// 			key={option._id}
-	// 			name={option.contact_first_name}
-	// 			handleClick={() => {
-	// 				setData({
-	// 					...data,
-	// 					list_agent: option.contact_first_name,
-	// 					list_agent_email: option.contact_email,
-	// 					list_agent_number: option.contact_cell_phone,
-	// 				});
-	// 				setOpenListDiv(false);
-	// 			}}
-	// 		/>
-	// 	));
-	// } else if (listAgentOptions?.length == 0 && data.list_agent != "") {
-	// 	optionData = <NoOptions />;
-	// }
-	// //===========end of list agent onchange=========================
-
-	// //onchange handler for auction agent
-	// const handleAuctionChange = (evt: React.ChangeEvent<any>) => {
-	// 	const { value } = evt.target;
-	// 	setOpenDiv(true);
-	// 	setData({
-	// 		...data,
-	// 		auction_agent: value,
-	// 	});
-
-	// 	filteredOption = options.filter((optionName: any) =>
-	// 		optionName.contact_first_name.toLowerCase().includes(evt.target.value)
-	// 	);
-	// 	setOptionList(filteredOption);
-	// };
-
-	// //autocomplete function for auction agent
-	// if (optionList?.length > 0 && data.auction_agent != "") {
-	// 	optionData = optionList?.map((option: any) => (
-	// 		<DisplayOptions
-	// 			key={option._id}
-	// 			name={option.contact_first_name}
-	// 			handleClick={() => {
-	// 				setData({
-	// 					...data,
-	// 					auction_agent: option.contact_first_name,
-	// 					auction_agent_email: option.contact_email,
-	// 					auction_agent_number: option.contact_cell_phone,
-	// 				});
-	// 				setOpenDiv(false);
-	// 			}}
-	// 		/>
-	// 	));
-	// } else if (optionList?.length == 0 && data.auction_agent != "") {
-	// 	optionData = <NoOptions />;
-	// }
-	// //===========end of auction agent onchange========================
 
 	return (
 		<>
@@ -350,7 +192,7 @@ const Index = ({ options, rowData }: BuyProps) => {
 					boughtDateData,
 					boughtDateError,
 					boughtDateUpdate,
-					errorText
+					errorText,
 				}) => (
 					<MuiPickersUtilsProvider utils={DateFnsUtils}>
 						<div className={classes.div}>
