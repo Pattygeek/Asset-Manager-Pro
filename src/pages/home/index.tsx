@@ -7,8 +7,9 @@ import React, {
 	useMemo,
 	useCallback,
 } from "react";
-import { useQuery } from "@apollo/client";
+import { useQuery, useApolloClient } from "@apollo/client";
 import { LIST_ALL_PROPERTY } from "../../helpers/graphql/queries";
+import { LIST_ALL_PROPERTY_CACHE } from "../../helpers/graphql/ApolloCache/cacheQuery";
 import { useToggle } from "../../helpers/contexts/toggleContext";
 import useVisibleHook from "../../utils/useVisibleHook";
 import Handsontable from "handsontable";
@@ -20,6 +21,8 @@ import { PropertyRecord } from "../../components/Types";
 
 const Home = () => {
 	const { toggle } = useToggle();
+
+	const client = useApolloClient();
 
 	const { rowData, handleRowData } = useRowData();
 
@@ -63,14 +66,23 @@ const Home = () => {
 		variables: {
 			limit,
 		},
+
 		onCompleted() {
 			const { has_next_page } = data.list_all_property_reports.page_info;
 			setHasMore(has_next_page);
 			const { edges } = data.list_all_property_reports;
 			// setProperty((prevState) => [...prevState, ...edges]);
 			setProperty(edges);
+			client.writeQuery({
+				query: LIST_ALL_PROPERTY_CACHE,
+				data: data.list_all_property_reports,
+			});
 		},
 	});
+
+	console.log(data);
+
+	const Prop = client.readQuery({ query: LIST_ALL_PROPERTY_CACHE });
 
 	const [hasMore, setHasMore] = useState(false);
 
@@ -307,10 +319,7 @@ const Home = () => {
 				},
 			},
 			{
-				data:
-					"contact_first_name" +
-					" " +
-					"contact_last_name",
+				data: "contact_first_name" + " " + "contact_last_name",
 			},
 			{ data: "contact_cell_phone" },
 			{ data: "contact_email" },

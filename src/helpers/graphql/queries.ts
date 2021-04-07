@@ -90,7 +90,6 @@ const LIST_ALL_PROPERTY = gql`
 				run_number
 				interior_access
 				hud_percent
-				
 			}
 			page_info {
 				has_next_page
@@ -177,10 +176,9 @@ const USER_PROFILE = gql`
 	}
 `;
 
-
 const SINGLE_PROPERTY_REPORT = gql`
 	query SinglePropertyReport($property_id: String) {
-		get_property_report(property_id:$property_id) {
+		get_property_report(property_id: $property_id) {
 			property {
 				_id
 				property_id

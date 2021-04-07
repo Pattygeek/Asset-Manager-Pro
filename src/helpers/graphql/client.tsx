@@ -5,6 +5,8 @@ import {
 	ApolloLink,
 } from "@apollo/client";
 
+import { LIST_ALL_PROPERTY_CACHE } from "./ApolloCache/cacheQuery";
+
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
 
@@ -69,12 +71,31 @@ const authLink = setContext((_, { headers }) => {
 
 const link = ApolloLink.from([authLink, httpLink, errorLink]);
 
-const cache = new InMemoryCache()
+
+
+const cache = new InMemoryCache();
+
+
 
 const client = new ApolloClient({
 	link,
-	typeDefs,
 	cache,
 });
 
 export default client;
+
+const data = {
+	list_all_property_reports: [],
+	// allContacts: [],
+	// singlePropertyRecord: {},
+};
+
+const setInitialCache = () => {
+	cache.writeQuery({ query: LIST_ALL_PROPERTY_CACHE, data: data.list_all_property_reports });
+	// cache.writeQuery({ query: LIST_ALL_PROPERTY, data });
+	// cache.writeQuery({ query: LIST_ALL_PROPERTY, data });
+}
+	
+setInitialCache();
+
+// client.onClearStore(() => setInitialCache());
