@@ -3,14 +3,18 @@ import Button from "@material-ui/core/Button";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import { useState } from "react";
 import ImageSlider from "../ImageSlider";
+import theme from "../../../helpers/theme";
 
 const useStyles = makeStyles((theme) => ({
 	image: {
 		width: "100%",
-		height: "180px",
+		height: "250px",
 		borderRadius: "4px 4px 0px 0px",
 		cursor: "pointer",
 		objectFit: "cover",
+		[theme.breakpoints.up("xl")]: {
+			height: "300px",
+		},
 	},
 	img: {
 		height: "32px",
@@ -25,6 +29,12 @@ const useStyles = makeStyles((theme) => ({
 		// width: "100%",
 		// // gap: "0px",
 	},
+	marginBottom: {
+		[theme.breakpoints.up("xl")]: {
+			marginBottom: "32px",
+		},
+	},
+
 	box: {
 		width: "100%",
 		height: "125px",
@@ -106,7 +116,7 @@ const PhotoBox = ({ images }: PhotoProps) => {
 	//========end of arrow nav handler=============
 	return (
 		<>
-			<Box borderRadius={4} width="100%">
+			<Box borderRadius={4} width="100%" className={classes.marginBottom}>
 				<img
 					src={images[index]}
 					alt=""

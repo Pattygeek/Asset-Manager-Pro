@@ -29,12 +29,6 @@ const theme = createMuiTheme({
 			xl: 1920,
 		},
 	},
-	// typography: {
-	// 	fontWeight: {
-	// 		fontWeightBold: "700",
-	// 	},
-	// 	fontFamily: "Nunito",
-	// },
 });
 
 export default theme;

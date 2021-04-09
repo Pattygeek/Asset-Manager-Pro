@@ -35,6 +35,7 @@ import {
 	MuiPickersUtilsProvider,
 	KeyboardDatePicker,
 } from "@material-ui/pickers";
+import theme from "../../../helpers/theme";
 
 const useStyles = makeStyles(() => ({
 	label: {
@@ -42,13 +43,23 @@ const useStyles = makeStyles(() => ({
 		fontWeight: 500,
 		fontSize: "12px",
 	},
+	marginRight: {
+		marginRight: "8px",
+		[theme.breakpoints.up("xl")]: {
+			marginRight: "20px",
+		},
+	},
 	input: {
 		fontSize: "12px",
 	},
 	div: {
 		display: "flex",
-		// gridTemplateColumns: "repeat(6, 1fr)",
-		// gap: "12px",
+	},
+	contact: {
+		display: "flex",
+		[theme.breakpoints.up("xl")]: {
+			width: "80%",
+		},
 	},
 	grid: {
 		display: "grid",
@@ -95,6 +106,12 @@ const useStyles = makeStyles(() => ({
 	},
 	uploadButton: {
 		boxShadow: "0px 4px 10px rgba(16, 156, 241, 0.24)",
+	},
+	mRight: {
+		marginRight: "8px",
+		[theme.breakpoints.up("xl")]: {
+			marginRight: "32px",
+		},
 	},
 	datePicker: {
 		position: "relative",
@@ -197,10 +214,10 @@ const Index = ({ rowData }: BuyProps) => {
 					<MuiPickersUtilsProvider utils={DateFnsUtils}>
 						<div className={classes.div}>
 							<div
-								style={{ width: "69%", marginTop: "10px", marginRight: "20px" }}
+								style={{ width: "73%", marginTop: "10px", marginRight: "20px" }}
 							>
 								<div className={classes.div}>
-									<Box width="200px">
+									<Box width="180px" className={classes.marginRight}>
 										<p className={classes.label}>Status</p>
 										<FormControl variant="filled">
 											<Select
@@ -243,7 +260,7 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box marginX={1}>
+									<Box className={classes.marginRight}>
 										<p className={classes.label}>TPP</p>
 										<FormControl variant="filled">
 											<FilledInput
@@ -259,7 +276,7 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box marginRight={1}>
+									<Box className={classes.marginRight} width="180px">
 										<p className={classes.label}>Pot. Rehab</p>
 										<FormControl variant="filled">
 											<FilledInput
@@ -284,11 +301,11 @@ const Index = ({ rowData }: BuyProps) => {
 													size="small"
 												/>
 											}
-											style={{ fontSize: "10px" }}
+											style={{ fontSize: "10px", whiteSpace: "nowrap" }}
 											label="Bid Confirm"
 										/>
 									</Box>
-									<Box marginRight={1}>
+									<Box className={classes.marginRight}>
 										<p className={classes.label}>Pot. LP</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
@@ -307,7 +324,7 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box marginRight={1}>
+									<Box className={classes.marginRight}>
 										<p className={classes.label}>Pot. Profit</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
@@ -326,7 +343,7 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box marginRight={1}>
+									<Box className={classes.marginRight}>
 										<p className={classes.label}>Pot. ROI</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
@@ -345,7 +362,7 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box>
+									<Box className={classes.marginRight}>
 										<p className={classes.label}>EST COE</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
@@ -371,29 +388,103 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-								</div>
-								<Box width="85%" mb={3}>
-									<p className={classes.label}>Note</p>
-									<FormControl
-										// className={clsx(classes.margin, classes.textField)}
-										variant="filled"
-									>
-										<TextField
-											id="filled-multiline-static"
-											name="note"
-											value={data.note}
-											onChange={handleChange}
-											multiline
-											rows={3}
-											// defaultValue="Default Value"
+									<Box className={classes.marginRight}>
+										<p
+											className={classes.label}
+											style={{ whiteSpace: "nowrap" }}
+										>
+											Final Work Through
+										</p>
+										<FormControl
+											// className={clsx(classes.margin, classes.textField)}
 											variant="filled"
-										/>
-										<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-									</FormControl>
-								</Box>
-								<div className={classes.div} style={{ width: "100%" }}>
-									<Box width="90px" marginRight={1}>
-										<p className={classes.label}>CO Needed</p>
+										>
+											<Select
+												native
+												value={data.final_work_through}
+												onChange={handleChange}
+												name="final_work_through"
+												className={classes.input}
+												placeholder=""
+											>
+												<option aria-label="None" value="" />
+												<option value={10}>Yes</option>
+												<option value={20}>No</option>
+											</Select>
+											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+										</FormControl>
+									</Box>
+									<Box className={classes.marginRight}>
+										<p
+											className={classes.label}
+											style={{ whiteSpace: "nowrap" }}
+										>
+											Ready To Close
+										</p>
+										<FormControl
+											// className={clsx(classes.margin, classes.textField)}
+											variant="filled"
+										>
+											<Select
+												native
+												value={data.ready_to_close}
+												onChange={handleChange}
+												name="ready_to_close"
+												className={classes.input}
+												placeholder=""
+											>
+												<option aria-label="None" value="" />
+												<option value={10}>Yes</option>
+												<option value={20}>No</option>
+											</Select>
+											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+										</FormControl>
+									</Box>
+									<Box>
+										<p className={classes.label}>Bought Date</p>
+										<FormControl
+											// className={clsx(classes.margin, classes.textField)}
+											variant="filled"
+										>
+											<KeyboardDatePicker
+												disableToolbar
+												variant="inline"
+												format="MM/dd/yyyy"
+												margin="normal"
+												id="date-picker-inline"
+												// label="Date picker inline"
+												name="bought"
+												value={boughtDate}
+												onChange={handleBoughtDateChange}
+												KeyboardButtonProps={{
+													"aria-label": "change date",
+												}}
+												InputProps={{
+													classes: {
+														root: classes.datePicker,
+													},
+												}}
+											/>
+											<FormHelperText
+												id="filled-weight-helper-text"
+												className={boughtDateError ? classes.update : ""}
+											>
+												{boughtDateError
+													? `${errorText}`
+													: `${boughtDateUpdate}`}
+											</FormHelperText>
+										</FormControl>
+									</Box>
+								</div>
+
+								<div className={classes.div}>
+									<Box width="90px" className={classes.marginRight}>
+										<p
+											className={classes.label}
+											style={{ whiteSpace: "nowrap" }}
+										>
+											CO Needed
+										</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
 											variant="filled"
@@ -414,7 +505,7 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box marginRight={1} width="50px">
+									<Box className={classes.marginRight} width="50px">
 										<p className={classes.label}>Oil ✓</p>
 
 										<FormControl
@@ -436,8 +527,13 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box marginRight={1} width="90px">
-										<p className={classes.label}>Sewer ✓</p>
+									<Box className={classes.marginRight} width="90px">
+										<p
+											className={classes.label}
+											style={{ whiteSpace: "nowrap" }}
+										>
+											Sewer ✓
+										</p>
 										<FormControl variant="filled">
 											<Select
 												native
@@ -455,7 +551,7 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box marginRight={1}>
+									<Box className={classes.marginRight}>
 										<p className={classes.label}>Financing</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
@@ -476,7 +572,7 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box marginRight={1} width="100px">
+									<Box className={classes.marginRight} width="100px">
 										<p className={classes.label}>Loan $</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
@@ -493,7 +589,7 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box marginRight={1} width="100px">
+									<Box className={classes.marginRight} width="100px">
 										<p className={classes.label}>Down $</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
@@ -510,8 +606,13 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box marginRight={1} width="80px">
-										<p className={classes.label}>Interest %</p>
+									<Box className={classes.marginRight} width="80px">
+										<p
+											className={classes.label}
+											style={{ whiteSpace: "nowrap" }}
+										>
+											Interest %
+										</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
 											variant="filled"
@@ -530,7 +631,7 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box marginRight={1} width="70px">
+									<Box className={classes.marginRight} width="70px">
 										<p className={classes.label}>Appraisal</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
@@ -551,8 +652,13 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box width="150px" marginRight={2}>
-										<p className={classes.label}>Appraisal Date Ordered</p>
+									<Box width="150px" className={classes.marginRight}>
+										<p
+											className={classes.label}
+											style={{ whiteSpace: "nowrap" }}
+										>
+											Appraisal Date Ordered
+										</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
 											variant="filled"
@@ -579,7 +685,7 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box marginRight={1} width="80px">
+									<Box className={classes.marginRight} width="80px">
 										<p className={classes.label}>Occupancy</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
@@ -600,9 +706,250 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
+									<Box className={classes.marginRight}>
+										<p className={classes.label}>Accessed</p>
+										<FormControl variant="filled">
+											<Select
+												native
+												value={data.property_access}
+												onChange={handleChange}
+												name="property_access"
+												placeholder=""
+												className={classes.input}
+											>
+												<option aria-label="None" value="" />
+												<option value={10}>Yes</option>
+												<option value={20}>No</option>
+											</Select>
+											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+										</FormControl>
+									</Box>
+									<Box className={classes.marginRight}>
+										<p
+											className={classes.label}
+											style={{ whiteSpace: "nowrap" }}
+										>
+											Title Received?
+										</p>
+										<FormControl
+											// className={clsx(classes.margin, classes.textField)}
+											variant="filled"
+										>
+											<Select
+												native
+												value={data.title_received}
+												onChange={handleChange}
+												name="title_received"
+												className={classes.input}
+												placeholder=""
+											>
+												<option aria-label="None" value="" />
+												<option value={10}>Yes</option>
+												<option value={20}>No</option>
+											</Select>
+											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+										</FormControl>
+									</Box>
+									<Box>
+										<p
+											className={classes.label}
+											style={{ whiteSpace: "nowrap" }}
+										>
+											Deed Received?
+										</p>
+										<FormControl
+											// className={clsx(classes.margin, classes.textField)}
+											variant="filled"
+										>
+											<Select
+												native
+												value={data.deed_received}
+												onChange={handleChange}
+												name="deed_received"
+												className={classes.input}
+												placeholder=""
+											>
+												<option aria-label="None" value="" />
+												<option value={10}>Yes</option>
+												<option value={20}>No</option>
+											</Select>
+											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+										</FormControl>
+									</Box>
+								</div>
+
+								<div className={classes.contact}>
+									<Box className={classes.mRight}>
+										<p className={classes.label}>List Agent</p>
+										<FormControl
+											// className={clsx(classes.margin, classes.textField)}
+											variant="filled"
+										>
+											<FilledInput
+												value={data.list_agent}
+												onChange={handleListAgentChange}
+												name="list_agent"
+												placeholder=""
+												aria-describedby="filled-weight-helper-text"
+											/>
+											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+										</FormControl>
+										{openListDiv ? (
+											<AutoComplete
+												options={options}
+												input={data.list_agent}
+												optionData={optionData}
+												optionList={optionList}
+											/>
+										) : (
+											""
+										)}
+									</Box>
+
+									<Box className={classes.mRight}>
+										<p className={classes.label}>List Agent Number</p>
+										<FormControl
+											// className={clsx(classes.margin, classes.textField)}
+											variant="filled"
+										>
+											<FilledInput
+												value={data.list_agent_number}
+												onChange={handleChange}
+												name="list_agent_number"
+												placeholder=""
+												aria-describedby="filled-weight-helper-text"
+												inputProps={{
+													"aria-label": "weight",
+												}}
+												inputComponent={PhoneNumberFormat as any}
+											/>
+											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+										</FormControl>
+									</Box>
+									<Box className={classes.mRight}>
+										<p className={classes.label}>List Agent Email</p>
+										<FormControl
+											// className={clsx(classes.margin, classes.textField)}
+											variant="filled"
+										>
+											<FilledInput
+												value={data.list_agent_email}
+												onChange={handleChange}
+												name="list_agent_email"
+												placeholder=""
+												aria-describedby="filled-weight-helper-text"
+												inputProps={{
+													"aria-label": "weight",
+												}}
+											/>
+											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+										</FormControl>
+									</Box>
+									<Box className={classes.mRight}>
+										<p className={classes.label}>Auction Agent</p>
+										<FormControl
+											// className={clsx(classes.margin, classes.textField)}
+											variant="filled"
+										>
+											<FilledInput
+												value={data.auction_agent}
+												onChange={handleAuctionChange}
+												name="auction_agent"
+												placeholder=""
+												aria-describedby="filled-weight-helper-text"
+												inputProps={{
+													"aria-label": "weight",
+												}}
+											/>
+											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+										</FormControl>
+										{openDiv ? (
+											<AutoComplete
+												options={options}
+												input={data.auction_agent}
+												optionData={optionData}
+												optionList={optionList}
+											/>
+										) : (
+											""
+										)}
+									</Box>
+									<Box className={classes.mRight}>
+										<p className={classes.label}>Auction Agent Number</p>
+										<FormControl
+											// className={clsx(classes.margin, classes.textField)}
+											variant="filled"
+										>
+											<FilledInput
+												value={data.auction_agent_number}
+												onChange={handleChange}
+												name="auction_agent_number"
+												placeholder=""
+												aria-describedby="filled-weight-helper-text"
+												inputProps={{
+													"aria-label": "weight",
+												}}
+												inputComponent={PhoneNumberFormat as any}
+											/>
+											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+										</FormControl>
+									</Box>
+									<Box>
+										<p className={classes.label}>Auction Agent Email</p>
+										<FormControl
+											// className={clsx(classes.margin, classes.textField)}
+											variant="filled"
+										>
+											<FilledInput
+												value={data.auction_agent_email}
+												onChange={handleChange}
+												name="auction_agent_email"
+												type="email"
+												placeholder=""
+												aria-describedby="filled-weight-helper-text"
+												inputProps={{
+													"aria-label": "weight",
+												}}
+											/>
+											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+										</FormControl>
+									</Box>
+								</div>
+								<Box width="50%" mb={3}>
+									<p className={classes.label}>Note</p>
+									<FormControl
+										// className={clsx(classes.margin, classes.textField)}
+										variant="filled"
+									>
+										<TextField
+											id="filled-multiline-static"
+											name="note"
+											value={data.note}
+											onChange={handleChange}
+											multiline
+											rows={3}
+											// defaultValue="Default Value"
+											variant="filled"
+										/>
+										<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+									</FormControl>
+								</Box>
+								<div className={classes.buttonStack}>
+									<div className={classes.buttonBox}>
+										<FileIcon className={classes.icon} color="red" />
+										Property Inspection Report
+									</div>
+
+									<Button
+										variant="outlined"
+										color="primary"
+										className={classes.uploadButton}
+									>
+										upload Document
+									</Button>
 								</div>
 							</div>
-							<Box width="29%" mt={3} mb={2}>
+							<Box width="27%" mt={3} mb={2}>
 								<EscrowPhoto images={images} />
 							</Box>
 						</div>
@@ -654,302 +1001,18 @@ const Index = ({ rowData }: BuyProps) => {
 					</div>
 				</div> */}
 
-						<div className={classes.grid}>
-							<Box marginRight={2}>
-								<p className={classes.label}>List Agent</p>
-								<FormControl
-									// className={clsx(classes.margin, classes.textField)}
-									variant="filled"
-								>
-									<FilledInput
-										value={data.list_agent}
-										onChange={handleListAgentChange}
-										name="list_agent"
-										placeholder=""
-										aria-describedby="filled-weight-helper-text"
-									/>
-									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-								</FormControl>
-								{openListDiv ? (
-									<AutoComplete
-										options={options}
-										input={data.list_agent}
-										optionData={optionData}
-										optionList={optionList}
-									/>
-								) : (
-									""
-								)}
-							</Box>
-
-							<Box marginRight={2}>
-								<p className={classes.label}>List Agent Number</p>
-								<FormControl
-									// className={clsx(classes.margin, classes.textField)}
-									variant="filled"
-								>
-									<FilledInput
-										value={data.list_agent_number}
-										onChange={handleChange}
-										name="list_agent_number"
-										placeholder=""
-										aria-describedby="filled-weight-helper-text"
-										inputProps={{
-											"aria-label": "weight",
-										}}
-										inputComponent={PhoneNumberFormat as any}
-									/>
-									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-								</FormControl>
-							</Box>
-							<Box marginRight={2}>
-								<p className={classes.label}>List Agent Email</p>
-								<FormControl
-									// className={clsx(classes.margin, classes.textField)}
-									variant="filled"
-								>
-									<FilledInput
-										value={data.list_agent_email}
-										onChange={handleChange}
-										name="list_agent_email"
-										placeholder=""
-										aria-describedby="filled-weight-helper-text"
-										inputProps={{
-											"aria-label": "weight",
-										}}
-									/>
-									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-								</FormControl>
-							</Box>
-							<Box marginRight={2}>
-								<p className={classes.label}>Auction Agent</p>
-								<FormControl
-									// className={clsx(classes.margin, classes.textField)}
-									variant="filled"
-								>
-									<FilledInput
-										value={data.auction_agent}
-										onChange={handleAuctionChange}
-										name="auction_agent"
-										placeholder=""
-										aria-describedby="filled-weight-helper-text"
-										inputProps={{
-											"aria-label": "weight",
-										}}
-									/>
-									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-								</FormControl>
-								{openDiv ? (
-									<AutoComplete
-										options={options}
-										input={data.auction_agent}
-										optionData={optionData}
-										optionList={optionList}
-									/>
-								) : (
-									""
-								)}
-							</Box>
-							<Box marginRight={2}>
-								<p className={classes.label}>Auction Agent Number</p>
-								<FormControl
-									// className={clsx(classes.margin, classes.textField)}
-									variant="filled"
-								>
-									<FilledInput
-										value={data.auction_agent_number}
-										onChange={handleChange}
-										name="auction_agent_number"
-										placeholder=""
-										aria-describedby="filled-weight-helper-text"
-										inputProps={{
-											"aria-label": "weight",
-										}}
-										inputComponent={PhoneNumberFormat as any}
-									/>
-									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-								</FormControl>
-							</Box>
-							<Box>
-								<p className={classes.label}>Auction Agent Email</p>
-								<FormControl
-									// className={clsx(classes.margin, classes.textField)}
-									variant="filled"
-								>
-									<FilledInput
-										value={data.auction_agent_email}
-										onChange={handleChange}
-										name="auction_agent_email"
-										type="email"
-										placeholder=""
-										aria-describedby="filled-weight-helper-text"
-										inputProps={{
-											"aria-label": "weight",
-										}}
-									/>
-									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-								</FormControl>
-							</Box>
-						</div>
-						<div className={classes.div} style={{ marginTop: "20px" }}>
-							<Box marginRight={2}>
-								<p className={classes.label}>Accessed</p>
-								<FormControl variant="filled">
-									<Select
-										native
-										value={data.property_access}
-										onChange={handleChange}
-										name="property_access"
-										placeholder=""
-										className={classes.input}
-									>
-										<option aria-label="None" value="" />
-										<option value={10}>Yes</option>
-										<option value={20}>No</option>
-									</Select>
-									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-								</FormControl>
-							</Box>
-							<Box marginRight={2}>
-								<p className={classes.label}>Title Received?</p>
-								<FormControl
-									// className={clsx(classes.margin, classes.textField)}
-									variant="filled"
-								>
-									<Select
-										native
-										value={data.title_received}
-										onChange={handleChange}
-										name="title_received"
-										className={classes.input}
-										placeholder=""
-									>
-										<option aria-label="None" value="" />
-										<option value={10}>Yes</option>
-										<option value={20}>No</option>
-									</Select>
-									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-								</FormControl>
-							</Box>
-							<Box marginRight={2}>
-								<p className={classes.label}>Deed Received?</p>
-								<FormControl
-									// className={clsx(classes.margin, classes.textField)}
-									variant="filled"
-								>
-									<Select
-										native
-										value={data.deed_received}
-										onChange={handleChange}
-										name="deed_received"
-										className={classes.input}
-										placeholder=""
-									>
-										<option aria-label="None" value="" />
-										<option value={10}>Yes</option>
-										<option value={20}>No</option>
-									</Select>
-									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-								</FormControl>
-							</Box>
-							<Box marginRight={2}>
-								<p className={classes.label}>Final Work Through</p>
-								<FormControl
-									// className={clsx(classes.margin, classes.textField)}
-									variant="filled"
-								>
-									<Select
-										native
-										value={data.final_work_through}
-										onChange={handleChange}
-										name="final_work_through"
-										className={classes.input}
-										placeholder=""
-									>
-										<option aria-label="None" value="" />
-										<option value={10}>Yes</option>
-										<option value={20}>No</option>
-									</Select>
-									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-								</FormControl>
-							</Box>
-							<Box marginRight={2}>
-								<p className={classes.label}>Ready To Close</p>
-								<FormControl
-									// className={clsx(classes.margin, classes.textField)}
-									variant="filled"
-								>
-									<Select
-										native
-										value={data.ready_to_close}
-										onChange={handleChange}
-										name="ready_to_close"
-										className={classes.input}
-										placeholder=""
-									>
-										<option aria-label="None" value="" />
-										<option value={10}>Yes</option>
-										<option value={20}>No</option>
-									</Select>
-									<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-								</FormControl>
-							</Box>
-							<Box>
-								<p className={classes.label}>Bought Date</p>
-								<FormControl
-									// className={clsx(classes.margin, classes.textField)}
-									variant="filled"
-								>
-									<KeyboardDatePicker
-										disableToolbar
-										variant="inline"
-										format="MM/dd/yyyy"
-										margin="normal"
-										id="date-picker-inline"
-										// label="Date picker inline"
-										name="bought"
-										value={boughtDate}
-										onChange={handleBoughtDateChange}
-										KeyboardButtonProps={{
-											"aria-label": "change date",
-										}}
-										InputProps={{
-											classes: {
-												root: classes.datePicker,
-											},
-										}}
-									/>
-									<FormHelperText
-										id="filled-weight-helper-text"
-										className={boughtDateError ? classes.update : ""}
-									>
-										{boughtDateError ? `${errorText}` : `${boughtDateUpdate}`}
-									</FormHelperText>
-								</FormControl>
-							</Box>
-						</div>
-						<div className={classes.buttonStack}>
-							<div className={classes.buttonBox}>
-								<FileIcon className={classes.icon} color="red" />
-								Property Inspection Report
-							</div>
-
-							<Button
-								variant="outlined"
-								color="primary"
-								className={classes.uploadButton}
-							>
-								upload Document
-							</Button>
-						</div>
 						<Box
 							width="100%"
 							display="flex"
 							justifyContent="space-between"
-							marginTop={10}
+							marginTop={1}
 						>
-							<History property_id={rowData?._id} />
-							<Document />
+							<Box width="73%">
+								<History property_id={rowData?._id} />
+							</Box>
+							<Box width="26%" style={{ marginLeft: "20px" }}>
+								<Document />
+							</Box>
 						</Box>
 					</MuiPickersUtilsProvider>
 				)}

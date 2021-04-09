@@ -23,7 +23,7 @@ const Document = () => {
 	return (
 		<>
 			<Box
-				width="33%"
+				width="100%"
 				border={1}
 				borderColor="#ececec"
 				borderRadius={4}

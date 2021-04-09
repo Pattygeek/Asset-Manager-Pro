@@ -90,6 +90,7 @@ export const LIST_ALL_PROPERTY_CACHE = gql`
 				run_number
 				interior_access
 				hud_percent
+				hud_cost
 			}
 			page_info {
 				has_next_page

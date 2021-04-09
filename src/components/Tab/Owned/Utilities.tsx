@@ -30,7 +30,7 @@ const Utilities = () => {
 		licenseKey: "non-commercial-and-evaluation",
 		rowHeights: 28,
 		columnHeaderHeight: 35,
-		width: 800,
+		// width: 800,
 		height: "auto",
 		className: "htCenter htMiddle",
 		data: [
@@ -128,11 +128,13 @@ const Utilities = () => {
 		minRows: 3,
 		filters: true,
 		columnSorting: true,
+		stretchH: "all",
+		width: "100%",
 	});
 	return (
 		<>
 			<Box
-				width="65%"
+				width="100%"
 				borderRadius={4}
 				boxShadow="2px 2px 4px rgba(0, 0, 0, 0.25)"
 				borderColor="#ececec"

@@ -35,19 +35,19 @@ const History = (props: { property_id: string | undefined }) => {
 		rowHeights: 28,
 		columnHeaderHeight: 35,
 		className: "htMiddle htLeft",
-		stretchH: "last",
+		stretchH: "all",
 		width: "100%",
 		height: "auto",
 		columns: [
 			{
 				data: "updated_at",
 				readOnly: true,
-				width: 90,
+				
 			},
-			{ data: "updated_at", readOnly: true, width: 100 },
-			{ data: "updated_by", readOnly: true, width: 150 },
-			{ data: "field_name", readOnly: true, width: 150 },
-			{ data: "new_value", readOnly: true, width: 120 },
+			{ data: "updated_at", readOnly: true,},
+			{ data: "updated_by", readOnly: true, },
+			{ data: "field_name", readOnly: true, },
+			{ data: "new_value", readOnly: true,},
 			//{ data: "notes", readOnly: true, width: 150 },
 		],
 		renderer: function (
@@ -92,12 +92,13 @@ const History = (props: { property_id: string | undefined }) => {
 	return (
 		<>
 			<Box
-				width="65%"
+				width="100%"
 				borderRadius={4}
 				boxShadow="2px 2px 4px rgba(0, 0, 0, 0.25)"
 				borderColor="#ececec"
 				height="fit-content"
 				marginBottom={6}
+				
 			>
 				<Box className={classes.box}>History</Box>
 				{historyData?.length < 1 && !loading ? (

@@ -35,8 +35,9 @@ import {
 	KeyboardDatePicker,
 } from "@material-ui/pickers";
 import OwnedProvider from "./OwnedProvider";
+import theme from "../../../helpers/theme";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
 	label: {
 		marginBottom: "2px",
 		fontWeight: 500,
@@ -47,8 +48,12 @@ const useStyles = makeStyles(() => ({
 	},
 	div: {
 		display: "flex",
-		// gridTemplateColumns: "repeat(6, 1fr)",
-		// gap: "12px",
+	},
+	contact: {
+		display: "flex",
+		[theme.breakpoints.up("xl")]: {
+			width: "80%",
+		},
 	},
 	input: {
 		fontSize: "12px",
@@ -87,6 +92,12 @@ const useStyles = makeStyles(() => ({
 		fontWeight: 500,
 		marginRight: "12px",
 		cursor: "pointer",
+	},
+	marginRight: {
+		marginRight: "8px",
+		[theme.breakpoints.up("xl")]: {
+			marginRight: "20px",
+		},
 	},
 	icon: {
 		height: "18px",
@@ -204,7 +215,7 @@ const Index = ({ rowData }: BuyProps) => {
 								style={{ width: "69%", marginTop: "10px", marginRight: "20px" }}
 							>
 								<div className={classes.div}>
-									<Box marginRight={1} width="200px">
+									<Box className={classes.marginRight} width="200px">
 										<p className={classes.label}>Status</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
@@ -250,7 +261,37 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box marginRight={1}>
+									<Box width="180px" className={classes.marginRight}>
+										<p className={classes.label}>Rehab</p>
+										<FormControl
+											// className={clsx(classes.margin, classes.textField)}
+											variant="filled"
+										>
+											<FilledInput
+												value={data.rehab}
+												onChange={handleChange}
+												name="rehab"
+												className={classes.input}
+												inputComponent={NumberCurrencyFormatCustom as any}
+												placeholder=""
+											/>
+											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+										</FormControl>
+										<FormControlLabel
+											control={
+												<Checkbox
+													// checked={state.checkedB}
+													// onChange={handleChange}
+													name="checkedB"
+													color="primary"
+													size="small"
+												/>
+											}
+											style={{ fontSize: "7px", whiteSpace: "nowrap" }}
+											label="Bid Confirm"
+										/>
+									</Box>
+									<Box className={classes.marginRight}>
 										<p className={classes.label}>TPP</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
@@ -269,8 +310,13 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box marginRight={1}>
-										<p className={classes.label}>List Price ($)</p>
+									<Box className={classes.marginRight}>
+										<p
+											className={classes.label}
+											style={{ whiteSpace: "nowrap" }}
+										>
+											List Price
+										</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
 											variant="filled"
@@ -288,8 +334,8 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box marginRight={1}>
-										<p className={classes.label}>Profit ($)</p>
+									<Box className={classes.marginRight}>
+										<p className={classes.label}>Profit</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
 											variant="filled"
@@ -307,8 +353,8 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box marginRight={1}>
-										<p className={classes.label}>ROI (%)</p>
+									<Box className={classes.marginRight}>
+										<p className={classes.label}>ROI</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
 											variant="filled"
@@ -326,8 +372,13 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box marginRight={1}>
-										<p className={classes.label}>Hold Time</p>
+									<Box className={classes.marginRight}>
+										<p
+											className={classes.label}
+											style={{ whiteSpace: "nowrap" }}
+										>
+											Hold Time
+										</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
 											variant="filled"
@@ -345,8 +396,126 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box marginRight={1}>
-										<p className={classes.label}>Sold Price ($)</p>
+									<Box className={classes.marginRight} width="160px">
+										<p className={classes.label}>Eviction</p>
+										<FormControl
+											// className={clsx(classes.margin, classes.textField)}
+											variant="filled"
+										>
+											<Select
+												native
+												value={data.eviction}
+												onChange={handleChange}
+												inputProps={{
+													name: "age",
+													id: "filled-age-native-simple",
+												}}
+												placeholder=""
+												className={classes.input}
+											>
+												<option aria-label="None" value="" />
+												<option value="vacant">Vacant</option>
+												<option value="occupied">Occupied</option>
+												<option value="in_eviction">In Eviction</option>
+												<option value="CFK">CFK</option>
+											</Select>
+											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+										</FormControl>
+									</Box>
+									<Box className={classes.marginRight}>
+										<p
+											className={classes.label}
+											style={{ whiteSpace: "nowrap" }}
+										>
+											Eviction Cost
+										</p>
+										<FormControl
+											// className={clsx(classes.margin, classes.textField)}
+											variant="filled"
+										>
+											<FilledInput
+												value={data.eviction_cost}
+												onChange={handleChange}
+												inputComponent={NumberCurrencyFormatCustom as any}
+												placeholder=""
+												aria-describedby="filled-weight-helper-text"
+												inputProps={{
+													"aria-label": "weight",
+												}}
+												className={classes.input}
+											/>
+											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+										</FormControl>
+									</Box>
+									<Box className={classes.marginRight}>
+										<p
+											className={classes.label}
+											style={{ whiteSpace: "nowrap" }}
+										>
+											CFK Amount
+										</p>
+										<FormControl
+											// className={clsx(classes.margin, classes.textField)}
+											variant="filled"
+										>
+											<FilledInput
+												name="cfk_amount"
+												value={data.cfk_amount}
+												onChange={handleChange}
+												onBlur={onCfkAmountBlur}
+												className={classes.input}
+												inputProps={{
+													maxLength: 5,
+												}}
+												inputComponent={NumberCurrencyFormatCustom as any}
+											/>
+											<FormHelperText
+												id="filled-weight-helper-text"
+												className={cfkAmountError ? classes.update : ""}
+											>
+												{cfkAmountError ? `${errorText}` : `${cfkAmountUpdate}`}
+											</FormHelperText>
+										</FormControl>
+									</Box>
+									<Box className={classes.marginRight}>
+										<p
+											className={classes.label}
+											style={{ whiteSpace: "nowrap" }}
+										>
+											Eviction Date
+										</p>
+										<FormControl
+											// className={clsx(classes.margin, classes.textField)}
+											variant="filled"
+										>
+											<KeyboardDatePicker
+												disableToolbar
+												variant="inline"
+												format="MM/dd/yyyy"
+												margin="normal"
+												id="date-picker-inline"
+												// label="Date picker inline"
+												value={evictionDate}
+												onChange={handleEvictionDateChange}
+												KeyboardButtonProps={{
+													"aria-label": "change date",
+												}}
+												InputProps={{
+													classes: {
+														root: classes.datePicker,
+													},
+												}}
+											/>
+											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+										</FormControl>
+									</Box>
+									<Box className={classes.marginRight}>
+										<p
+											className={classes.label}
+											style={{ whiteSpace: "nowrap" }}
+										>
+											Sold Price
+										</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
 											variant="filled"
@@ -400,29 +569,8 @@ const Index = ({ rowData }: BuyProps) => {
 									</Box>
 								</div>
 
-								<div>
-									<Box width="60%" mb={5}>
-										<p className={classes.label}>Note</p>
-										<FormControl
-											// className={clsx(classes.margin, classes.textField)}
-											variant="filled"
-										>
-											<TextField
-												id="filled-multiline-static"
-												multiline
-												rows={3}
-												name="note"
-												value={data.note}
-												onChange={handleChange}
-												// defaultValue="Default Value"
-												variant="filled"
-											/>
-											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-										</FormControl>
-									</Box>
-								</div>
-								<div className={classes.div}>
-									<Box marginRight={1}>
+								<div className={classes.contact}>
+									<Box className={classes.marginRight}>
 										<p className={classes.label}>G.C.</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
@@ -448,7 +596,7 @@ const Index = ({ rowData }: BuyProps) => {
 											""
 										)}
 									</Box>
-									<Box marginRight={1}>
+									<Box className={classes.marginRight}>
 										<p className={classes.label}>G.C. Number</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
@@ -465,7 +613,7 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box marginRight={1} width="250px">
+									<Box className={classes.marginRight}>
 										<p className={classes.label}>G.C. Email</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
@@ -482,207 +630,7 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box width="200px">
-										<p className={classes.label}>Rehab ($)</p>
-										<FormControl
-											// className={clsx(classes.margin, classes.textField)}
-											variant="filled"
-										>
-											<FilledInput
-												value={data.rehab}
-												onChange={handleChange}
-												name="rehab"
-												className={classes.input}
-												inputComponent={NumberCurrencyFormatCustom as any}
-												placeholder=""
-											/>
-											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-										</FormControl>
-										<FormControlLabel
-											control={
-												<Checkbox
-													// checked={state.checkedB}
-													// onChange={handleChange}
-													name="checkedB"
-													color="primary"
-													size="small"
-												/>
-											}
-											style={{ fontSize: "10px" }}
-											label="Bid Confirm"
-										/>
-									</Box>
-								</div>
-							</div>
-							<Box width="29%" mt={3} mb={2}>
-								<EscrowPhoto images={images} />
-							</Box>
-						</div>
-
-						<div className={classes.section}>
-							<div style={{ width: "100%", marginTop: "10px" }}>
-								<div className={classes.sectionDiv}>
-									<Box>
-										<p className={classes.label}>Occupancy</p>
-										<FormControl
-											// className={clsx(classes.margin, classes.textField)}
-											variant="filled"
-										>
-											<Select
-												native
-												value={data.occupancy}
-												onChange={handleChange}
-												inputProps={{
-													name: "age",
-													id: "filled-age-native-simple",
-												}}
-												placeholder=""
-											>
-												<option aria-label="None" value="" />
-												<option value={10}>Occupied</option>
-												<option value={20}>Vacant</option>
-											</Select>
-											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-										</FormControl>
-									</Box>
-									<Box>
-										<p className={classes.label}>Eviction</p>
-										<FormControl
-											// className={clsx(classes.margin, classes.textField)}
-											variant="filled"
-										>
-											<Select
-												native
-												value={data.eviction}
-												onChange={handleChange}
-												inputProps={{
-													name: "age",
-													id: "filled-age-native-simple",
-												}}
-												placeholder=""
-											>
-												<option aria-label="None" value="" />
-												<option value="vacant">Vacant</option>
-												<option value="occupied">Occupied</option>
-												<option value="in_eviction">In Eviction</option>
-												<option value="CFK">CFK</option>
-											</Select>
-											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-										</FormControl>
-									</Box>
-									<Box>
-										<p className={classes.label}>Occupant</p>
-										<FormControl
-											// className={clsx(classes.margin, classes.textField)}
-											variant="filled"
-										>
-											<FilledInput
-												value={data.occupant}
-												onChange={handleChange}
-												name="occupant"
-												placeholder=""
-												aria-describedby="filled-weight-helper-text"
-												inputProps={{
-													"aria-label": "weight",
-												}}
-											/>
-											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-										</FormControl>
-									</Box>
-									<Box>
-										<p className={classes.label}>Occupant Number</p>
-										<FormControl
-											// className={clsx(classes.margin, classes.textField)}
-											variant="filled"
-										>
-											<FilledInput
-												value={data.occupant_number}
-												onChange={handleChange}
-												name="occupant_number"
-												inputComponent={PhoneNumberFormat as any}
-												placeholder=""
-												aria-describedby="filled-weight-helper-text"
-												inputProps={{
-													"aria-label": "weight",
-												}}
-											/>
-											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-										</FormControl>
-									</Box>
-									<Box>
-										<p className={classes.label}>Occupant Email</p>
-										<FormControl
-											// className={clsx(classes.margin, classes.textField)}
-											variant="filled"
-										>
-											<FilledInput
-												value={data.occupant_email}
-												onChange={handleChange}
-												name="occupant_email"
-												type="email"
-												placeholder=""
-												aria-describedby="filled-weight-helper-text"
-												inputProps={{
-													"aria-label": "weight",
-												}}
-											/>
-											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-										</FormControl>
-									</Box>
-									<Box>
-										<p className={classes.label}>Eviction Date</p>
-										<FormControl
-											// className={clsx(classes.margin, classes.textField)}
-											variant="filled"
-										>
-											<KeyboardDatePicker
-												disableToolbar
-												variant="inline"
-												format="MM/dd/yyyy"
-												margin="normal"
-												id="date-picker-inline"
-												// label="Date picker inline"
-												value={evictionDate}
-												onChange={handleEvictionDateChange}
-												KeyboardButtonProps={{
-													"aria-label": "change date",
-												}}
-												InputProps={{
-													classes: {
-														root: classes.datePicker,
-													},
-												}}
-											/>
-											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
-										</FormControl>
-									</Box>
-									<Box>
-										<p className={classes.label}>CFK Amount ($)</p>
-										<FormControl
-											// className={clsx(classes.margin, classes.textField)}
-											variant="filled"
-										>
-											<FilledInput
-												name="cfk_amount"
-												value={data.cfk_amount}
-												onChange={handleChange}
-												onBlur={onCfkAmountBlur}
-												inputProps={{
-													maxLength: 5,
-												}}
-												inputComponent={NumberCurrencyFormatCustom as any}
-											/>
-											<FormHelperText
-												id="filled-weight-helper-text"
-												className={cfkAmountError ? classes.update : ""}
-											>
-												{cfkAmountError ? `${errorText}` : `${cfkAmountUpdate}`}
-											</FormHelperText>
-										</FormControl>
-									</Box>
-								</div>
-								<div className={classes.grid}>
-									<Box>
+									<Box className={classes.marginRight}>
 										<p className={classes.label}>List Agent</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
@@ -711,7 +659,7 @@ const Index = ({ rowData }: BuyProps) => {
 											""
 										)}
 									</Box>
-									<Box>
+									<Box className={classes.marginRight}>
 										<p className={classes.label}>List Agent Number</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
@@ -751,7 +699,9 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box>
+								</div>
+								<div className={classes.contact}>
+									<Box className={classes.marginRight}>
 										<p className={classes.label}>Attorney Name</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
@@ -780,7 +730,7 @@ const Index = ({ rowData }: BuyProps) => {
 											""
 										)}
 									</Box>
-									<Box>
+									<Box className={classes.marginRight}>
 										<p className={classes.label}>Attorney Number</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
@@ -800,7 +750,7 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box>
+									<Box className={classes.marginRight}>
 										<p className={classes.label}>Attorney Email</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
@@ -820,16 +770,36 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box>
-										<p className={classes.label}>Eviction $</p>
+									<Box className={classes.marginRight}>
+										<p className={classes.label}>Occupant</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
 											variant="filled"
 										>
 											<FilledInput
-												value={data.eviction_cost}
+												value={data.occupant}
 												onChange={handleChange}
-												inputComponent={NumberCurrencyFormatCustom as any}
+												name="occupant"
+												placeholder=""
+												aria-describedby="filled-weight-helper-text"
+												inputProps={{
+													"aria-label": "weight",
+												}}
+											/>
+											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+										</FormControl>
+									</Box>
+									<Box className={classes.marginRight}>
+										<p className={classes.label}>Occupant Number</p>
+										<FormControl
+											// className={clsx(classes.margin, classes.textField)}
+											variant="filled"
+										>
+											<FilledInput
+												value={data.occupant_number}
+												onChange={handleChange}
+												name="occupant_number"
+												inputComponent={PhoneNumberFormat as any}
 												placeholder=""
 												aria-describedby="filled-weight-helper-text"
 												inputProps={{
@@ -840,30 +810,29 @@ const Index = ({ rowData }: BuyProps) => {
 										</FormControl>
 									</Box>
 									<Box>
-										<p className={classes.label}>Contractor Bid Received</p>
+										<p className={classes.label}>Occupant Email</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
 											variant="filled"
 										>
-											<Select
-												native
-												value={data.contractor_bid_received}
+											<FilledInput
+												value={data.occupant_email}
 												onChange={handleChange}
-												name="contractor_bid_received"
-												inputProps={{
-													name: "age",
-													id: "filled-age-native-simple",
-												}}
+												name="occupant_email"
+												type="email"
 												placeholder=""
-											>
-												<option aria-label="None" value="" />
-												<option value={10}>Yes</option>
-												<option value={20}>No</option>
-											</Select>
+												aria-describedby="filled-weight-helper-text"
+												inputProps={{
+													"aria-label": "weight",
+												}}
+											/>
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box>
+								</div>
+
+								<div className={classes.div}>
+									<Box className={classes.marginRight}>
 										<p className={classes.label}>Water Co</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
@@ -882,7 +851,7 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box>
+									<Box className={classes.marginRight}>
 										<p className={classes.label}>Water Co Number</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
@@ -902,7 +871,7 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box>
+									<Box className={classes.marginRight}>
 										<p className={classes.label}>Electric Co</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
@@ -921,8 +890,13 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box>
-										<p className={classes.label}>Electric Co Number</p>
+									<Box className={classes.marginRight}>
+										<p
+											className={classes.label}
+											style={{ whiteSpace: "nowrap" }}
+										>
+											Electric Co Number
+										</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
 											variant="filled"
@@ -941,7 +915,7 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box>
+									<Box className={classes.marginRight}>
 										<p className={classes.label}>Gas Co</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
@@ -960,7 +934,7 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box>
+									<Box className={classes.marginRight}>
 										<p className={classes.label}>Gas Co Number</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
@@ -980,7 +954,7 @@ const Index = ({ rowData }: BuyProps) => {
 											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
 										</FormControl>
 									</Box>
-									<Box>
+									<Box className={classes.marginRight}>
 										<p className={classes.label}>Taxes</p>
 										<FormControl
 											// className={clsx(classes.margin, classes.textField)}
@@ -1020,26 +994,107 @@ const Index = ({ rowData }: BuyProps) => {
 										</FormControl>
 									</Box>
 								</div>
+								<div>
+									<Box width="50%" mb={5}>
+										<p className={classes.label}>Note</p>
+										<FormControl
+											// className={clsx(classes.margin, classes.textField)}
+											variant="filled"
+										>
+											<TextField
+												id="filled-multiline-static"
+												multiline
+												rows={3}
+												name="note"
+												value={data.note}
+												onChange={handleChange}
+												// defaultValue="Default Value"
+												variant="filled"
+											/>
+											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+										</FormControl>
+									</Box>
+								</div>
+								<div className={classes.buttonStack}>
+									<Button
+										variant="outlined"
+										color="primary"
+										className={classes.uploadButton}
+									>
+										upload Document
+									</Button>
+								</div>
 							</div>
+							<Box width="29%" mt={3} mb={2}>
+								<EscrowPhoto images={images} />
+							</Box>
 						</div>
-						<div className={classes.div}></div>
-						<div className={classes.div}></div>
-						<div className={classes.buttonStack}>
-							<Button
-								variant="outlined"
-								color="primary"
-								className={classes.uploadButton}
-							>
-								upload Document
-							</Button>
-						</div>
+
+						{/* <div className={classes.section}>
+							<div style={{ width: "100%", marginTop: "10px" }}>
+								<div className={classes.sectionDiv}>
+									<Box>
+										<p className={classes.label}>Occupancy</p>
+										<FormControl
+											// className={clsx(classes.margin, classes.textField)}
+											variant="filled"
+										>
+											<Select
+												native
+												value={data.occupancy}
+												onChange={handleChange}
+												inputProps={{
+													name: "age",
+													id: "filled-age-native-simple",
+												}}
+												placeholder=""
+											>
+												<option aria-label="None" value="" />
+												<option value={10}>Occupied</option>
+												<option value={20}>Vacant</option>
+											</Select>
+											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+										</FormControl>
+									</Box>
+								</div>
+								<div className={classes.grid}>
+									<Box>
+										<p className={classes.label}>Contractor Bid Received</p>
+										<FormControl
+											// className={clsx(classes.margin, classes.textField)}
+											variant="filled"
+										>
+											<Select
+												native
+												value={data.contractor_bid_received}
+												onChange={handleChange}
+												name="contractor_bid_received"
+												inputProps={{
+													name: "age",
+													id: "filled-age-native-simple",
+												}}
+												placeholder=""
+											>
+												<option aria-label="None" value="" />
+												<option value={10}>Yes</option>
+												<option value={20}>No</option>
+											</Select>
+											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+										</FormControl>
+									</Box>
+								</div>
+							</div>
+						</div> */}
+
 						<Box
 							width="100%"
 							display="flex"
 							justifyContent="space-between"
-							marginTop={10}
+							marginTop={2}
 						>
-							<Utilities />
+							<Box width="69%">
+								<Utilities />
+							</Box>
 						</Box>
 						<Box
 							width="100%"
@@ -1047,8 +1102,12 @@ const Index = ({ rowData }: BuyProps) => {
 							justifyContent="space-between"
 							marginTop={6}
 						>
-							<History property_id={rowData._id} />
-							<Document />
+							<Box width="69%">
+								<History property_id={rowData?._id} />
+							</Box>
+							<Box width="30%" style={{ marginLeft: "20px" }}>
+								<Document />
+							</Box>
 						</Box>
 					</MuiPickersUtilsProvider>
 				)}

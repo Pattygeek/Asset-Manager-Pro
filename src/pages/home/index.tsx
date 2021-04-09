@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import { useQuery, useApolloClient } from "@apollo/client";
 import { LIST_ALL_PROPERTY } from "../../helpers/graphql/queries";
-import { LIST_ALL_PROPERTY_CACHE } from "../../helpers/graphql/ApolloCache/cacheQuery";
+import { LIST_ALL_PROPERTY_CACHE } from "../../helpers/graphql/ApolloClient/cacheQuery";
 import { useToggle } from "../../helpers/contexts/toggleContext";
 import useVisibleHook from "../../utils/useVisibleHook";
 import Handsontable from "handsontable";
