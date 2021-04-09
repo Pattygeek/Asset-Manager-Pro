@@ -6,6 +6,10 @@ import { LIST_CONTACT } from "../../../helpers/graphql/queries";
 import {
 	OWNED_UPDATE_CFK_AMOUNT,
 	OWNED_UPDATE_SOLD_DATE,
+	UPDATE_PROPERTY_NOTE,
+	BUY_UPDATE_PROPERTY_STATUS,
+	BUY_UPDATE_REHAB_COST,
+	BUY_UPDATE_HOLD_TIME,
 } from "../../../helpers/graphql/mutations";
 import {
 	DisplayOptions,
@@ -36,6 +40,22 @@ type ChildrenProps = {
 	cfkAmountError: any;
 	cfkAmountData: any;
 	onCfkAmountBlur: () => void;
+	noteUpdate: string;
+	noteError: any;
+	noteData: any;
+	onNoteBlur: () => void;
+	statusError: any;
+	statusData: any;
+	statusUpdate: string;
+	onStatusChange: (event: React.ChangeEvent<any>) => void;
+	rehabUpdate: string;
+	rehabError: any;
+	rehabData: any;
+	onRehabBlur: () => void;
+	holdTimeUpdate: string;
+	holdTimeError: any;
+	holdTimeData: any;
+	onHoldTimeBlur: () => void;
 };
 
 type Props = {
@@ -48,44 +68,48 @@ const OwnedProvider: FC<Props> = ({ children }) => {
 	const [errorText, setErrorText] = useState("Error saving changes");
 	const [soldDateUpdate, setSoldDateUpdate] = useState("");
 	const [cfkAmountUpdate, setCfkAmountUpdate] = useState("");
+	const [noteUpdate, setNoteUpdate] = useState("");
+	const [statusUpdate, setStatusUpdate] = useState("");
+	const [rehabUpdate, setRehabUpdate] = useState("");
+	const [holdTimeUpdate, setHoldTimeUpdate] = useState("");
 
 	const [data, setData] = useState({
 		status: rowData.property_status,
-		tpp: "",
+		tpp: rowData.total_buy_price,
 		list_price: "",
 		profit: rowData.profit,
 		roi: rowData.return_on_investment,
 		hold_time: "",
 		note: "",
-		occupancy: "",
+		occupancy: rowData.occupancy_status,
 		eviction: "",
-		cfk: "",
-		cfk_amount: "",
+		cfk: rowData.cash_for_keys,
+		cfk_amount: rowData.cash_for_key_amount,
 		occupant: "",
 		occupant_number: "",
 		occupant_email: "",
-		eviction_date: "",
+		eviction_date: rowData.eviction_date,
 		attorney_name: "",
 		attorney_number: "",
 		attorney_email: "",
 		eviction_cost: "",
 		water_co: "",
-		water_co_nuumber: "",
-		electric_co: "",
-		electric_co_number: "",
-		gas_co: "",
-		gas_co_number: "",
+		water_co_number: "",
+		electric_co: rowData.electric_co,
+		electric_co_number: rowData.electric_co_number,
+		gas_co: rowData.gas_co,
+		gas_co_number: rowData.gas_co_number,
 		taxes: "",
 		taxes_number: "",
 		contractor_bid_received: "",
-		rehab: "",
+		rehab: rowData.rehabilitation_cost,
 		gc: "",
 		gc_number: "",
 		gc_email: "",
 		list_agent: "",
 		list_agent_email: "",
 		list_agent_number: "",
-		sold_date: "",
+		sold_date: rowData.date_sold,
 		sold_price: "",
 	});
 
@@ -130,6 +154,101 @@ const OwnedProvider: FC<Props> = ({ children }) => {
 	};
 	//=========end of square feet=========================
 
+	//note function for onBlur
+	const onNoteBlur = () => {
+		buy_update_property_note({
+			variables: {
+				property_id: rowData._id,
+				input_value: data.note,
+			},
+		});
+	};
+	//=========end of note=============================
+
+	//onchange function for status
+	const onStatusChange = (event: React.ChangeEvent<any>) => {
+		const { value } = event.target;
+		setData({
+			...data,
+			status: value,
+		});
+
+		buy_update_property_status({
+			variables: {
+				property_id: rowData._id,
+				status_value: value,
+			},
+		});
+	};
+	//=========end of status onchange=========================
+
+	//rehab function for onBlur
+	const onRehabBlur = () => {
+		buy_update_rehab_cost({
+			variables: {
+				property_id: rowData._id,
+				input_value: Number(data.rehab),
+			},
+		});
+	};
+	//=========end of rehab==================================
+
+	//holdtime function for onBlur
+	const onHoldTimeBlur = () => {
+		buy_update_hold_time({
+			variables: {
+				property_id: rowData._id,
+				input_value: Number(data.hold_time),
+			},
+		});
+	};
+	//=========end of holdtime=========================
+
+	//mutation to update note
+	const [
+		buy_update_property_note,
+		{ loading: noteLoading, error: noteError, data: noteData },
+	] = useMutation(UPDATE_PROPERTY_NOTE, {
+		onCompleted() {
+			// refetch();
+			setNoteUpdate("Changes saved");
+			setData({ ...data, note: "" });
+			setTimeout(() => {
+				setNoteUpdate("");
+			}, 3000);
+		},
+		onError(err) {
+			setTimeout(() => {
+				setErrorText("");
+			}, 8000);
+			console.log(err);
+			return null;
+		},
+	});
+	//==========end of update note mutation======================
+
+	//mutation to update property status
+	const [
+		buy_update_property_status,
+		{ loading: statusLoading, error: statusError, data: statusData },
+	] = useMutation(BUY_UPDATE_PROPERTY_STATUS, {
+		onCompleted() {
+			//refetch();
+			setStatusUpdate("Changes saved");
+			setTimeout(() => {
+				setStatusUpdate("");
+			}, 3000);
+		},
+		onError(err) {
+			setTimeout(() => {
+				setErrorText("");
+			}, 8000);
+			console.log(err);
+			return null;
+		},
+	});
+	//==========end of update status mutation======================
+
 	//mutation to update sold date
 	const [
 		owned_update_sold_date,
@@ -173,6 +292,50 @@ const OwnedProvider: FC<Props> = ({ children }) => {
 		},
 	});
 	//==========end of update cfk amount======================
+
+	//mutation to update rehab cost====================================
+	const [
+		buy_update_rehab_cost,
+		{ loading: rehabLoading, error: rehabError, data: rehabData },
+	] = useMutation(BUY_UPDATE_REHAB_COST, {
+		onCompleted() {
+			//refetch();
+			setRehabUpdate("Changes saved");
+			setTimeout(() => {
+				setRehabUpdate("");
+			}, 3000);
+		},
+		onError(err) {
+			setTimeout(() => {
+				setErrorText("");
+			}, 8000);
+			console.log(err);
+			return null;
+		},
+	});
+	//============end of mutation to update rehab==================
+
+	//mutation to update hold time====================================
+	const [
+		buy_update_hold_time,
+		{ loading: holdTimeLoading, error: holdTimeError, data: holdTimeData },
+	] = useMutation(BUY_UPDATE_HOLD_TIME, {
+		onCompleted() {
+			//refetch();
+			setHoldTimeUpdate("Changes saved");
+			setTimeout(() => {
+				setHoldTimeUpdate("");
+			}, 3000);
+		},
+		onError(err) {
+			setTimeout(() => {
+				setErrorText("");
+			}, 8000);
+			console.log(err);
+			return null;
+		},
+	});
+	//============end of mutation to update hold time==================
 
 	//filtering code snippet
 	const [optionList, setOptionList] = useState<any[]>([]);
@@ -335,6 +498,22 @@ const OwnedProvider: FC<Props> = ({ children }) => {
 				cfkAmountError,
 				cfkAmountData,
 				onCfkAmountBlur,
+				noteData,
+				noteError,
+				noteUpdate,
+				onNoteBlur,
+				statusUpdate,
+				statusError,
+				statusData,
+				onStatusChange,
+				rehabError,
+				rehabData,
+				rehabUpdate,
+				onRehabBlur,
+				holdTimeUpdate,
+				holdTimeError,
+				holdTimeData,
+				onHoldTimeBlur,
 			})}
 		</>
 	);

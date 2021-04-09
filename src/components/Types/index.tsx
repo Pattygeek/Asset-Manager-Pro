@@ -84,6 +84,7 @@ type BuyRecord = {
 	hud_exp?: string | number;
 	profit?: string | number;
 	roi?: number | string;
+	note?: string;
 	hold_time?: string | number;
 	mkt?: string | number;
 	auction_list_price?: string | number;

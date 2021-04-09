@@ -227,6 +227,10 @@ const Buy = () => {
 				holdTimeError,
 				holdTimeUpdate,
 				onHoldTimeBlur,
+				noteData,
+				noteError,
+				noteUpdate,
+				onNoteBlur,
 			}) => (
 				<>
 					<ContactModal
@@ -265,15 +269,19 @@ const Buy = () => {
 											<option value="PROXY_NO_DD">PROXY NO DD</option>
 											<option value="PROXY">PROXY</option>
 											<option value="BID">BID</option>
-											<option value="WON">WON</option>
 											<option value="REJECTED">REJECTED</option>
 											<option value="SALE_CANCELLED">SALE CANCELLED</option>
 											<option value="LOST">LOST</option>
-											<option value="AUCTION_SOLD">AUCTION SOLD</option>
-											<option value="IN_CLOSEING_BUY">IN CLOSING (B)</option>
+											<option value="WON">WON</option>
+											<option
+												value="IN_CLOSEING_BUY
+"
+											>
+												IN CLOSING (B)
+											</option>
 											<option value="CLOSED">CLOSED</option>
-											<option value="OCCUPIED_PENDING">OCCUPIED</option>
-											<option value="VACANCY">PENDING VACANCY</option>
+											<option value="OCCUPIED">OCCUPIED</option>
+											<option value="PENDING_VACANCY">PENDING VACANCY</option>
 											<option value="IN_EVICTION">IN EVICTION</option>
 											<option value="PENDING_BID">PENDING BID</option>
 											<option value="BEING_REHABILITATED">
@@ -983,10 +991,17 @@ const Buy = () => {
 											multiline
 											rows={3}
 											className={classes.input}
+											onChange={handleChange}
+											onBlur={onNoteBlur}
 											// defaultValue="Default Value"
 											variant="filled"
 										/>
-										<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+										<FormHelperText
+											id="filled-weight-helper-text"
+											className={noteError ? classes.update : ""}
+										>
+											{noteError ? `${errorText}` : `${noteUpdate}`}
+										</FormHelperText>
 									</FormControl>
 								</Box>
 							</div>

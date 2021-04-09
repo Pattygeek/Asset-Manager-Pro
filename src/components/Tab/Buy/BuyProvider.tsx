@@ -14,6 +14,7 @@ import {
 	BUY_UPDATE_MKT,
 	BUY_UPDATE_REHAB_COST,
 	BUY_UPDATE_HOLD_TIME,
+	UPDATE_PROPERTY_NOTE,
 } from "../../../helpers/graphql/mutations";
 import { useRowData } from "../../../helpers/contexts/rowDataContext";
 import {
@@ -101,6 +102,10 @@ type ChildrenProps = {
 	holdTimeError: any;
 	holdTimeData: any;
 	onHoldTimeBlur: () => void;
+	noteUpdate: string;
+	noteError: any;
+	noteData: any;
+	onNoteBlur: () => void;
 };
 
 type Props = {
@@ -121,6 +126,7 @@ const BuyProvider: FC<Props> = ({ children }) => {
 	const [rehabUpdate, setRehabUpdate] = useState("");
 	const [auctionLpUpdate, setAuctionLpUpdate] = useState("");
 	const [holdTimeUpdate, setHoldTimeUpdate] = useState("");
+	const [noteUpdate, setNoteUpdate] = useState("");
 	const [errorText, setErrorText] = useState("Error saving changes");
 
 	const { rowData, handleRowData } = useRowData();
@@ -168,6 +174,7 @@ const BuyProvider: FC<Props> = ({ children }) => {
 		ba: rowData.bath_rooms,
 		lot: rowData.lot_size,
 		year: "",
+		note: "",
 		resale: rowData.resale_price,
 		rehab: rowData.rehabilitation_cost,
 		buy_price: rowData.buy_price,
@@ -377,6 +384,17 @@ const BuyProvider: FC<Props> = ({ children }) => {
 	};
 	//=========end of holdtime=========================
 
+	//note function for onBlur
+	const onNoteBlur = () => {
+		buy_update_property_note({
+			variables: {
+				property_id: rowData._id,
+				input_value: data.note,
+			},
+		});
+	};
+	//=========end of note=============================
+
 	const cloneRow = rowData;
 
 	const { data: reportData, refetch } = useQuery(SINGLE_PROPERTY_REPORT, {
@@ -401,6 +419,29 @@ const BuyProvider: FC<Props> = ({ children }) => {
 	// };
 
 	// handleRowData!(rowwData);
+
+	//mutation to update note
+	const [
+		buy_update_property_note,
+		{ loading: noteLoading, error: noteError, data: noteData },
+	] = useMutation(UPDATE_PROPERTY_NOTE, {
+		onCompleted() {
+			refetch();
+			setNoteUpdate("Changes saved");
+			setData({...data, note: ""})
+			setTimeout(() => {
+				setNoteUpdate("");
+			}, 3000);
+		},
+		onError(err) {
+			setTimeout(() => {
+				setErrorText("");
+			}, 8000);
+			console.log(err);
+			return null;
+		},
+	});
+	//==========end of update note mutation======================
 
 	//mutation to update property status
 	const [
@@ -880,6 +921,10 @@ const BuyProvider: FC<Props> = ({ children }) => {
 				holdTimeError,
 				holdTimeUpdate,
 				onHoldTimeBlur,
+				noteData,
+				noteError,
+				noteUpdate,
+				onNoteBlur,
 			})}
 		</>
 	);

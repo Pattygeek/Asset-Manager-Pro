@@ -210,6 +210,14 @@ const Index = ({ rowData }: BuyProps) => {
 					boughtDateError,
 					boughtDateUpdate,
 					errorText,
+					noteUpdate,
+					noteError,
+					noteData,
+					onNoteBlur,
+					statusData,
+					statusError,
+					statusUpdate,
+					onStatusChange,
 				}) => (
 					<MuiPickersUtilsProvider utils={DateFnsUtils}>
 						<div className={classes.div}>
@@ -223,7 +231,7 @@ const Index = ({ rowData }: BuyProps) => {
 											<Select
 												native
 												value={data.status}
-												onChange={handleChange}
+												onChange={onStatusChange}
 												name="status"
 												className={classes.input}
 												placeholder=""
@@ -238,26 +246,36 @@ const Index = ({ rowData }: BuyProps) => {
 												<option value="PENDING_INTEL">PENDING INTEL</option>
 												<option value="FOLLOW_UP">FOLLOW UP</option>
 												<option value="BID_PENDING">BID PENDING</option>
+												<option value="PROXY_NO_DD">PROXY NO DD</option>
 												<option value="PROXY">PROXY</option>
 												<option value="BID">BID</option>
-												<option value="WON">WON</option>
 												<option value="REJECTED">REJECTED</option>
 												<option value="SALE_CANCELLED">SALE CANCELLED</option>
 												<option value="LOST">LOST</option>
-												<option value="AUCTION_SOLD">AUCTION SOLD</option>
-												<option value="IN_CLOSING_B">IN CLOSING (B)</option>
+												<option value="WON">WON</option>
+												<option
+													value="IN_CLOSEING_BUY
+"
+												>
+													IN CLOSING (B)
+												</option>
 												<option value="CLOSED">CLOSED</option>
 												<option value="OCCUPIED">OCCUPIED</option>
 												<option value="PENDING_VACANCY">PENDING VACANCY</option>
 												<option value="IN_EVICTION">IN EVICTION</option>
 												<option value="PENDING_BID">PENDING BID</option>
-												<option value="BEING_REHABBED">BEING REHABBED</option>
+												<option value="BEING_REHABILITATED">BEING REHABBED</option>
 												<option value="LISTED">LISTED</option>
-												<option value="IN_CLOSING_S">IN CLOSING (S)</option>
+												<option value="IN_CLOSING_SALE">IN CLOSING (S)</option>
 												<option value="SOLD">SOLD</option>
 												<option value="NONE">NONE</option>
 											</Select>
-											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+											<FormHelperText
+												id="filled-weight-helper-text"
+												className={statusError ? classes.update : ""}
+											>
+												{statusError ? `${errorText}` : `${statusUpdate}`}
+											</FormHelperText>
 										</FormControl>
 									</Box>
 									<Box className={classes.marginRight}>
@@ -928,10 +946,16 @@ const Index = ({ rowData }: BuyProps) => {
 											onChange={handleChange}
 											multiline
 											rows={3}
+											onBlur={onNoteBlur}
 											// defaultValue="Default Value"
 											variant="filled"
 										/>
-										<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+										<FormHelperText
+											id="filled-weight-helper-text"
+											className={noteError ? classes.update : ""}
+										>
+											{noteError ? `${errorText}` : `${noteUpdate}`}
+										</FormHelperText>
 									</FormControl>
 								</Box>
 								<div className={classes.buttonStack}>

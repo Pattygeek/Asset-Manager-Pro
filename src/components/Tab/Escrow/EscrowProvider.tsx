@@ -1,7 +1,11 @@
 import React, { ReactNode, FC, useState, useEffect } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 
-import { ESCROW_UPDATE_BOUGHT_DATE } from "../../../helpers/graphql/mutations";
+import {
+	ESCROW_UPDATE_BOUGHT_DATE,
+	UPDATE_PROPERTY_NOTE,
+	BUY_UPDATE_PROPERTY_STATUS,
+} from "../../../helpers/graphql/mutations";
 
 import { useRowData } from "../../../helpers/contexts/rowDataContext";
 
@@ -34,10 +38,18 @@ type ChildrenProps = {
 	handleAuctionChange: (evt: React.ChangeEvent<any>) => void;
 	openDiv: boolean;
 	handleListAgentChange: (event: React.ChangeEvent<any>) => void;
-    boughtDateUpdate: string;
-    boughtDateError: any;
-    boughtDateData: any;
-    errorText: string;
+	boughtDateUpdate: string;
+	boughtDateError: any;
+	boughtDateData: any;
+	errorText: string;
+	noteUpdate: string;
+	noteError: any;
+	noteData: any;
+	onNoteBlur: () => void;
+	statusError: any;
+	statusData: any;
+	statusUpdate: string;
+	onStatusChange: (event: React.ChangeEvent<any>) => void;
 };
 
 type Props = {
@@ -49,6 +61,9 @@ const EscrowProvider: FC<Props> = ({ children }) => {
 
 	const [errorText, setErrorText] = useState("Error saving changes");
 	const [boughtDateUpdate, setBoughtDateUpdate] = useState("");
+	const [noteUpdate, setNoteUpdate] = useState("");
+	const [statusUpdate, setStatusUpdate] = useState("");
+
 	//state handler for all the input fields
 	const [data, setData] = useState({
 		status: rowData.property_status,
@@ -108,6 +123,34 @@ const EscrowProvider: FC<Props> = ({ children }) => {
 		setAppraisalDate(date);
 	};
 
+	//note function for onBlur
+	const onNoteBlur = () => {
+		buy_update_property_note({
+			variables: {
+				property_id: rowData._id,
+				input_value: data.note,
+			},
+		});
+	};
+	//=========end of note onblur=============================
+
+	//onchange function for status
+	const onStatusChange = (event: React.ChangeEvent<any>) => {
+		const { value } = event.target;
+		setData({
+			...data,
+			status: value,
+		});
+
+		buy_update_property_status({
+			variables: {
+				property_id: rowData._id,
+				status_value: value,
+			},
+		});
+	};
+	//=========end of status onchange=========================
+
 	const [boughtDate, setBoughtDate] = useState<any>(new Date());
 
 	const handleBoughtDateChange = (date: Date | null) => {
@@ -122,6 +165,51 @@ const EscrowProvider: FC<Props> = ({ children }) => {
 	};
 
 	//===============end of date handler===================
+
+	//mutation to update note
+	const [
+		buy_update_property_note,
+		{ loading: noteLoading, error: noteError, data: noteData },
+	] = useMutation(UPDATE_PROPERTY_NOTE, {
+		onCompleted() {
+			// refetch();
+			setNoteUpdate("Changes saved");
+			setData({ ...data, note: "" });
+			setTimeout(() => {
+				setNoteUpdate("");
+			}, 3000);
+		},
+		onError(err) {
+			setTimeout(() => {
+				setErrorText("");
+			}, 8000);
+			console.log(err);
+			return null;
+		},
+	});
+	//==========end of update note mutation======================
+
+	//mutation to update property status
+	const [
+		buy_update_property_status,
+		{ loading: statusLoading, error: statusError, data: statusData },
+	] = useMutation(BUY_UPDATE_PROPERTY_STATUS, {
+		onCompleted() {
+			//refetch();
+			setStatusUpdate("Changes saved");
+			setTimeout(() => {
+				setStatusUpdate("");
+			}, 3000);
+		},
+		onError(err) {
+			setTimeout(() => {
+				setErrorText("");
+			}, 8000);
+			console.log(err);
+			return null;
+		},
+	});
+	//==========end of update status mutation======================
 
 	//mutation to update bought date
 	const [
@@ -261,10 +349,18 @@ const EscrowProvider: FC<Props> = ({ children }) => {
 				handleAuctionChange,
 				openDiv,
 				handleListAgentChange,
-                boughtDateData,
-                boughtDateError,
-                boughtDateUpdate,
-                errorText
+				boughtDateData,
+				boughtDateError,
+				boughtDateUpdate,
+				errorText,
+				noteUpdate,
+				noteError,
+				noteData,
+				onNoteBlur,
+				statusData,
+				statusError,
+				statusUpdate,
+				onStatusChange
 			})}
 		</>
 	);

@@ -208,6 +208,22 @@ const Index = ({ rowData }: BuyProps) => {
 					cfkAmountError,
 					cfkAmountData,
 					onCfkAmountBlur,
+					noteData,
+					noteError,
+					noteUpdate,
+					onNoteBlur,
+					statusUpdate,
+					statusError,
+					statusData,
+					onStatusChange,
+					rehabError,
+					rehabData,
+					rehabUpdate,
+					onRehabBlur,
+					holdTimeUpdate,
+					holdTimeError,
+					holdTimeData,
+					onHoldTimeBlur,
 				}) => (
 					<MuiPickersUtilsProvider utils={DateFnsUtils}>
 						<div className={classes.div}>
@@ -224,7 +240,7 @@ const Index = ({ rowData }: BuyProps) => {
 											<Select
 												native
 												value={data.status}
-												onChange={handleChange}
+												onChange={onStatusChange}
 												name="status"
 												placeholder=""
 												className={classes.input}
@@ -239,26 +255,38 @@ const Index = ({ rowData }: BuyProps) => {
 												<option value="PENDING_INTEL">PENDING INTEL</option>
 												<option value="FOLLOW_UP">FOLLOW UP</option>
 												<option value="BID_PENDING">BID PENDING</option>
+												<option value="PROXY_NO_DD">PROXY NO DD</option>
 												<option value="PROXY">PROXY</option>
 												<option value="BID">BID</option>
-												<option value="WON">WON</option>
 												<option value="REJECTED">REJECTED</option>
 												<option value="SALE_CANCELLED">SALE CANCELLED</option>
 												<option value="LOST">LOST</option>
-												<option value="AUCTION_SOLD">AUCTION SOLD</option>
-												<option value="IN_CLOSING_B">IN CLOSING (B)</option>
+												<option value="WON">WON</option>
+												<option
+													value="IN_CLOSEING_BUY
+"
+												>
+													IN CLOSING (B)
+												</option>
 												<option value="CLOSED">CLOSED</option>
 												<option value="OCCUPIED">OCCUPIED</option>
 												<option value="PENDING_VACANCY">PENDING VACANCY</option>
 												<option value="IN_EVICTION">IN EVICTION</option>
 												<option value="PENDING_BID">PENDING BID</option>
-												<option value="BEING_REHABBED">BEING REHABBED</option>
+												<option value="BEING_REHABILITATED">
+													BEING REHABBED
+												</option>
 												<option value="LISTED">LISTED</option>
-												<option value="IN_CLOSING_S">IN CLOSING (S)</option>
+												<option value="IN_CLOSING_SALE">IN CLOSING (S)</option>
 												<option value="SOLD">SOLD</option>
 												<option value="NONE">NONE</option>
 											</Select>
-											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+											<FormHelperText
+												id="filled-weight-helper-text"
+												className={statusError ? classes.update : ""}
+											>
+												{statusError ? `${errorText}` : `${statusUpdate}`}
+											</FormHelperText>
 										</FormControl>
 									</Box>
 									<Box width="180px" className={classes.marginRight}>
@@ -272,10 +300,16 @@ const Index = ({ rowData }: BuyProps) => {
 												onChange={handleChange}
 												name="rehab"
 												className={classes.input}
+												onBlur={onRehabBlur}
 												inputComponent={NumberCurrencyFormatCustom as any}
 												placeholder=""
 											/>
-											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+											<FormHelperText
+												id="filled-weight-helper-text"
+												className={rehabError ? classes.update : ""}
+											>
+												{rehabError ? `${errorText}` : `${rehabUpdate}`}
+											</FormHelperText>
 										</FormControl>
 										<FormControlLabel
 											control={
@@ -392,8 +426,14 @@ const Index = ({ rowData }: BuyProps) => {
 													maxLength: 5,
 												}}
 												inputComponent={RegularNumberWithDecimalFormat as any}
+												onBlur={onHoldTimeBlur}
 											/>
-											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+											<FormHelperText
+												id="filled-weight-helper-text"
+												className={holdTimeError ? classes.update : ""}
+											>
+												{holdTimeError ? `${errorText}` : `${holdTimeUpdate}`}
+											</FormHelperText>
 										</FormControl>
 									</Box>
 									<Box className={classes.marginRight} width="160px">
@@ -1007,11 +1047,17 @@ const Index = ({ rowData }: BuyProps) => {
 												rows={3}
 												name="note"
 												value={data.note}
+												onBlur={onNoteBlur}
 												onChange={handleChange}
 												// defaultValue="Default Value"
 												variant="filled"
 											/>
-											<FormHelperText id="filled-weight-helper-text"></FormHelperText>
+											<FormHelperText
+												id="filled-weight-helper-text"
+												className={noteError ? classes.update : ""}
+											>
+												{noteError ? `${errorText}` : `${noteUpdate}`}
+											</FormHelperText>
 										</FormControl>
 									</Box>
 								</div>

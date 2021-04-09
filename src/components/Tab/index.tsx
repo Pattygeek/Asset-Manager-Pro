@@ -73,7 +73,6 @@ const StatusTab = ({ handleClose, status, rowData }: tabProps) => {
 		case "NEW_ASSET":
 			statusValue = 0;
 			break;
-
 		case "NOT_REVIEWED":
 			statusValue = 0;
 			break;
@@ -101,8 +100,14 @@ const StatusTab = ({ handleClose, status, rowData }: tabProps) => {
 		case "PROXY":
 			statusValue = 0;
 			break;
+		case "PROXY_NO_DD":
+			statusValue = 0;
+			break;
 		case "BID":
 			statusValue = 0;
+			break;
+		case "WON":
+			statusValue = 1;
 			break;
 		case "REJECTED":
 			statusValue = 0;
@@ -113,19 +118,19 @@ const StatusTab = ({ handleClose, status, rowData }: tabProps) => {
 		case "LOST":
 			statusValue = 0;
 			break;
-		case "WON":
-			statusValue = 1;
+		case "AUCTION_SOLD":
+			statusValue = 2;
 			break;
-		case "IN_CLOSING":
+		case "IN_CLOSEING_BUY":
 			statusValue = 1;
 			break;
 		case "CLOSED":
 			statusValue = 2;
 			break;
-		case "OCCUPIED":
+		case "OCCUPIED_PENDING":
 			statusValue = 2;
 			break;
-		case "PENDING_VACANCY":
+		case "VACANCY":
 			statusValue = 2;
 			break;
 		case "IN_EVICTION":
@@ -134,19 +139,16 @@ const StatusTab = ({ handleClose, status, rowData }: tabProps) => {
 		case "PENDING_BID":
 			statusValue = 2;
 			break;
-		case "BEING_REHABBED":
+		case "BEING_REHABILITATED":
 			statusValue = 2;
 			break;
 		case "LISTED":
 			statusValue = 2;
 			break;
-		case "IN_CLOSING":
+		case "IN_CLOSING_SALE":
 			statusValue = 2;
 			break;
 		case "SOLD":
-			statusValue = 2;
-			break;
-		case "AUCTION_SOLD":
 			statusValue = 2;
 			break;
 		default:

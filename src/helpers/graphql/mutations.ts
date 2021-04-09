@@ -348,7 +348,20 @@ const ESCROW_UPDATE_BOUGHT_DATE = gql`
 	}
 `;
 
+const UPDATE_PROPERTY_NOTE = gql`
+	mutation propertyNote($property_id: String, $input_value: String) {
+		buy_update_property_note(
+			property_id: $property_id
+			input_value: $input_value
+		){
+			message
+			status_code
+		}
+	}
+`;
+
 export {
+	UPDATE_PROPERTY_NOTE,
 	ESCROW_UPDATE_BOUGHT_DATE,
 	OWNED_UPDATE_CFK_AMOUNT,
 	OWNED_UPDATE_SOLD_DATE,
