@@ -3,11 +3,16 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import Box from "@material-ui/core/Box";
 import CloseIcon from "@material-ui/icons/Close";
 import { HotTable, HotColumn } from "@handsontable/react";
-import { useState } from "react";
+import { useState, ReactText } from "react";
+import Handsontable from "handsontable";
+import { BID_HISTORY } from "../../../helpers/graphql/queries";
+import { useQuery } from "@apollo/client";
+import { DateRenderer } from "../../../utils/customRenderers";
 
 interface ModalProps {
 	open: boolean;
 	handleClose: () => any;
+	property_id?: string | undefined;
 }
 
 const useStyles = makeStyles(() => ({
@@ -25,7 +30,7 @@ const useStyles = makeStyles(() => ({
 		margin: "auto 0px",
 	},
 	dialog: {
-		width:"870px"
+		width: "870px",
 	},
 	icon: {
 		cursor: "pointer",
@@ -35,8 +40,10 @@ const useStyles = makeStyles(() => ({
 	},
 }));
 
-const BidHistory = ({ open, handleClose }: ModalProps) => {
+const BidHistory = ({ open, handleClose, property_id }: ModalProps) => {
 	const classes = useStyles();
+
+	const [bidHistoryData, setBidHistoryData] = useState([]);
 
 	const [header] = useState<any>({
 		colHeaders: ["Total Live Bids", "Live Bidders", "Highest Bid"],
@@ -49,6 +56,7 @@ const BidHistory = ({ open, handleClose }: ModalProps) => {
 		],
 		className: "htCenter htMiddle",
 		width: 760,
+		height: "auto",
 		rowHeights: 35,
 		columnHeaderHeight: 35,
 		columns: [
@@ -73,66 +81,57 @@ const BidHistory = ({ open, handleClose }: ModalProps) => {
 		rowHeights: 30,
 		columnHeaderHeight: 35,
 		width: 760,
-		className: "htMiddle htCenter",
+		height: "auto",
+		className: "htCenter htMiddle",
 		filters: true,
 		columnSorting: true,
-		cells: function (row: number) {
-			let cp: any = {};
-			if (row % 2 === 0) {
-				cp.className = "greyRow";
-			}
-			return cp;
-		},
 		allowInsertColumn: false,
 		allowRemoveColumn: false,
-		data: [
-			{
-				address_street: "860 Ashland Place",
-				address_city: "Alamo, Maryland, 2062",
-				address_county: "SAINT CHARLES",
-				address_state: "IL",
-				address_zip: 749,
-				status: "IL",
-				date: 750,
-			},
-			{
-				address_street: "860 Ashland Place",
-				address_city: "Alamo, Maryland, 2062",
-				address_county: "SAINT CHARLES",
-				address_state: "IL",
-				address_zip: 749,
-				status: "IL",
-				date: 749,
-			},
-			{
-				address_street: "860 Ashland Place",
-				address_city: "Alamo, Maryland, 2062",
-				address_county: "SAINT CHARLES",
-				address_state: "IL",
-				address_zip: 749,
-				status: "IL",
-				date: 789,
-			},
-			{
-				address_street: "860 Ashland Place",
-				address_city: "Alamo, Maryland, 2062",
-				address_county: "SAINT CHARLES",
-				address_state: "IL",
-				address_zip: 749,
-				status: "IL",
-				date: 749,
-			},
-		],
+		minRows: 1,
+		stretchH:"all",
+		renderer: function (
+			instance: Handsontable,
+			td: HTMLTableCellElement,
+			row: number,
+			col: number,
+			prop: ReactText,
+			value: Handsontable.CellValue,
+			cellProperties: Handsontable.CellProperties
+		) {
+			Handsontable.renderers.TextRenderer.apply(
+				this,
+				(arguments as unknown) as [
+					Handsontable,
+					HTMLTableCellElement,
+					number,
+					number,
+					string | number,
+					Handsontable.CellValue,
+					Handsontable.CellProperties
+				]
+			);
+			td.innerHTML = `<div class="truncated">${value}</div>`;
+		},
 		columns: [
-			{ data: "address_zip", readOnly: true, width: 75 },
-			{ data: "address_state", readOnly: true, width: 70 },
-			{ data: "address_county", readOnly: true, width: 120 },
-			{ data: "address_city", readOnly: true, width: 170 },
-			{ data: "address_street", readOnly: true, width: 130 },
-			{ data: "status", readOnly: true, width: 100 },
-			{ data: "date", readOnly: true, width: 95 },
+			{ data: "date_time", readOnly: true, width: 75 },
+			{ data: "auction_event_id", readOnly: true, width: 70 },
+			{ data: "bidder_type", readOnly: true, width: 120 },
+			{ data: "bid_amount", readOnly: true, width: 170 },
+			{ data: "bid_increment", readOnly: true, width: 130 },
+			{ data: "reserve_status", readOnly: true, width: 100 },
+			{ data: "sales_status", readOnly: true, width: 95 },
 		],
 	});
+
+	const { loading, error, data } = useQuery(BID_HISTORY, {
+		variables: {
+			property_id: "606f3512bf50a9a83fddaf7f", //this is more like dummy property id, just to show the data, it will be updated to pick the actual property id
+		},
+		onCompleted() {
+			setBidHistoryData(data?.get_bid_history?.bid_history);
+		},
+	});
+
 	return (
 		<>
 			<Dialog
@@ -148,6 +147,7 @@ const BidHistory = ({ open, handleClose }: ModalProps) => {
 				<HotTable settings={header}></HotTable>
 				<HotTable
 					settings={state}
+					data={bidHistoryData}
 					dropdownMenu={[
 						"alignment",
 						"---------",
@@ -158,11 +158,15 @@ const BidHistory = ({ open, handleClose }: ModalProps) => {
 						"filter_action_bar",
 					]}
 				>
-					{/* <HotColumn width={160} />
-					<HotColumn width={150} />
-					<HotColumn width={150} />
-					<HotColumn width={150} />
-					<HotColumn width={150} /> */}
+					<HotColumn data={state.columns[0].data}>
+						<DateRenderer hot-renderer />
+					</HotColumn>
+					<HotColumn data={state.columns[1].data} />
+					<HotColumn data={state.columns[2].data} />
+					<HotColumn data={state.columns[3].data} />
+					<HotColumn data={state.columns[4].data} />
+					<HotColumn data={state.columns[5].data} />
+					<HotColumn data={state.columns[6].data} />
 				</HotTable>
 			</Dialog>
 		</>

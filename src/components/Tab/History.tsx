@@ -12,6 +12,7 @@ import { useState, ReactText } from "react";
 import { useQuery } from "@apollo/client";
 import { TAB_HISTORY } from "../../helpers/graphql/queries";
 
+
 const useStyles = makeStyles((theme) => ({
 	box: {
 		color: "white",

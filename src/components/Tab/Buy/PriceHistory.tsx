@@ -3,11 +3,16 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import Box from "@material-ui/core/Box";
 import { HotTable, HotColumn } from "@handsontable/react";
 import CloseIcon from "@material-ui/icons/Close";
-import { useState } from "react";
+import { useState, ReactText } from "react";
+import Handsontable from "handsontable";
+import { PRICE_HISTORY } from "../../../helpers/graphql/queries";
+import { useQuery } from "@apollo/client";
+import { DateRenderer } from "../../../utils/customRenderers";
 
 interface ModalProps {
 	open: boolean;
 	handleClose: () => any;
+	property_id?: string | undefined;
 }
 
 const useStyles = makeStyles(() => ({
@@ -32,8 +37,10 @@ const useStyles = makeStyles(() => ({
 	},
 }));
 
-const PriceHistory = ({ open, handleClose }: ModalProps) => {
+const PriceHistory = ({ open, handleClose, property_id }: ModalProps) => {
 	const classes = useStyles();
+
+	const [priceHistoryData, setPriceHistoryData] = useState([]);
 
 	const [state, setState] = useState<any>({
 		colHeaders: ["Date", "Status", "Sale Type", "Amount", "Source"],
@@ -41,76 +48,53 @@ const PriceHistory = ({ open, handleClose }: ModalProps) => {
 		rowHeights: 26,
 		columnHeaderHeight: 35,
 		width: 760,
+		height: "auto",
 		filters: true,
+		stretchH: "all",
 		columnSorting: true,
 		allowInsertColumn: false,
 		allowRemoveColumn: false,
-		data: [
-			{
-				address_street: "860 Ashland Place",
-				address_city: "Alamo, Maryland, 2062",
-				address_county: "SAINT CHARLES",
-				address_state: "IL",
-				address_zip: 749,
-			},
-			{
-				address_street: "860 Ashland Place",
-				address_city: "Alamo, Maryland, 2062",
-				address_county: "SAINT CHARLES",
-				address_state: "IL",
-				address_zip: 749,
-			},
-			{
-				address_street: "860 Ashland Place",
-				address_city: "Alamo, Maryland, 2062",
-				address_county: "SAINT CHARLES",
-				address_state: "IL",
-				address_zip: 749,
-			},
-			{
-				address_street: "860 Ashland Place",
-				address_city: "Alamo, Maryland, 2062",
-				address_county: "SAINT CHARLES",
-				address_state: "IL",
-				address_zip: 749,
-			},
-			{
-				address_street: "860 Ashland Place",
-				address_city: "Alamo, Maryland, 2062",
-				address_county: "SAINT CHARLES",
-				address_state: "IL",
-				address_zip: 749,
-			},
-			{
-				address_street: "860 Ashland Place",
-				address_city: "Alamo, Maryland, 2062",
-				address_county: "SAINT CHARLES",
-				address_state: "IL",
-				address_zip: 749,
-			},
-			{
-				address_street: "860 Ashland Place",
-				address_city: "Alamo, Maryland, 2062",
-				address_county: "SAINT CHARLES",
-				address_state: "IL",
-				address_zip: 749,
-			},
-			{
-				address_street: "860 Ashland Place",
-				address_city: "Alamo, Maryland, 2062",
-				address_county: "SAINT CHARLES",
-				address_state: "IL",
-				address_zip: 749,
-			},
-		],
 		className: "htCenter htMiddle",
+		minRows: 1,
+		renderer: function (
+			instance: Handsontable,
+			td: HTMLTableCellElement,
+			row: number,
+			col: number,
+			prop: ReactText,
+			value: Handsontable.CellValue,
+			cellProperties: Handsontable.CellProperties
+		) {
+			Handsontable.renderers.TextRenderer.apply(
+				this,
+				(arguments as unknown) as [
+					Handsontable,
+					HTMLTableCellElement,
+					number,
+					number,
+					string | number,
+					Handsontable.CellValue,
+					Handsontable.CellProperties
+				]
+			);
+			td.innerHTML = `<div class="truncated">${value}</div>`;
+		},
 		columns: [
-			{ data: "address_zip", readOnly: true, width: 100 },
-			{ data: "address_state", readOnly: true, width: 150 },
-			{ data: "address_county", readOnly: true, width: 150 },
-			{ data: "address_city", readOnly: true, width: 200 },
-			{ data: "address_street", readOnly: true, width: 160 },
+			{ data: "transaction_date", readOnly: true, width: 100 },
+			{ data: "status", readOnly: true, width: 150 },
+			{ data: "sales_type", readOnly: true, width: 150 },
+			{ data: "transaction_amount", readOnly: true, width: 200 },
+			{ data: "source", readOnly: true, width: 160 },
 		],
+	});
+
+	const { loading, error, data } = useQuery(PRICE_HISTORY, {
+		variables: {
+			property_id: "606f3512bf50a9a83fddaf7f", //this is more like dummy property id, just to show the data, it will be updated to pick the actual property id
+		},
+		onCompleted() {
+			setPriceHistoryData(data?.get_price_history?.price_history);
+		},
 	});
 	return (
 		<>
@@ -126,6 +110,7 @@ const PriceHistory = ({ open, handleClose }: ModalProps) => {
 				</Box>
 				<HotTable
 					settings={state}
+					data={priceHistoryData}
 					dropdownMenu={[
 						"alignment",
 						"---------",
@@ -136,11 +121,13 @@ const PriceHistory = ({ open, handleClose }: ModalProps) => {
 						"filter_action_bar",
 					]}
 				>
-					{/* <HotColumn width={160} />
-					<HotColumn width={150} />
-					<HotColumn width={150} />
-					<HotColumn width={150} />
-					<HotColumn width={150} /> */}
+					<HotColumn data={state.columns[0].data}>
+						<DateRenderer hot-renderer />
+					</HotColumn>
+					<HotColumn data={state.columns[1].data} />
+					<HotColumn data={state.columns[2].data} />
+					<HotColumn data={state.columns[3].data} />
+					<HotColumn data={state.columns[4].data} />
 				</HotTable>
 			</Dialog>
 		</>

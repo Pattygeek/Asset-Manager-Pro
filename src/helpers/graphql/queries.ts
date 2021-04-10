@@ -272,7 +272,40 @@ const SINGLE_PROPERTY_REPORT = gql`
 	}
 `;
 
+const PRICE_HISTORY = gql`
+	query pricehistory($property_id: String) {
+		get_price_history(property_id: $property_id) {
+			price_history {
+				_id
+				transaction_date
+				transaction_amount
+				source
+				sales_type
+				source
+			}
+		}
+	}
+`;
+
+const BID_HISTORY = gql`
+	query bidhistory($property_id: String) {
+		get_bid_history(property_id: $property_id) {
+			bid_history {
+				date_time
+				auction_event_id
+				bidder_type
+				bid_amount
+				bid_increment
+				reserve_status
+				sales_status
+			}
+		}
+	}
+`;
+
 export {
+	BID_HISTORY,
+	PRICE_HISTORY,
 	SINGLE_PROPERTY_REPORT,
 	LIST_ALL_PROPERTY,
 	LOGIN,
