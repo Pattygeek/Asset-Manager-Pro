@@ -243,13 +243,15 @@ const EscrowProvider: FC<Props> = ({ children }) => {
 	//==========end of update bought date======================
 
 	//================contact filtering=======================
-	const [options, setOptions] = useState<any[]>([]);
+	// const [options, setOptions] = useState<any[]>([]);
+	
 	//query to get contact data
 	const { loading, error, data: contactData } = useQuery(LIST_CONTACT, {
-		onCompleted() {
-			setOptions(contactData.list_paginated_contacts.edges);
-		},
+		// onCompleted() {
+		// 	setOptions(contactData.list_paginated_contacts.edges);
+		// },
 	});
+	const options = contactData?.list_paginated_contacts?.edges;
 	const [optionList, setOptionList] = useState<any[]>([]);
 	const [listAgentOptions, setListAgentOptions] = useState<any[]>([]);
 	let optionData;

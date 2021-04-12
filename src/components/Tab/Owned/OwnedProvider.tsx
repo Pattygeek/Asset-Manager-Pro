@@ -2,7 +2,11 @@ import React, { ReactNode, FC, useState, useEffect } from "react";
 import { useRowData } from "../../../helpers/contexts/rowDataContext";
 import { OwnedRecord } from "../../Types";
 import { useQuery, useMutation } from "@apollo/client";
-import { LIST_CONTACT, LIST_ALL_PROPERTY, TAB_HISTORY } from "../../../helpers/graphql/queries";
+import {
+	LIST_CONTACT,
+	LIST_ALL_PROPERTY,
+	TAB_HISTORY,
+} from "../../../helpers/graphql/queries";
 import {
 	OWNED_UPDATE_CFK_AMOUNT,
 	OWNED_UPDATE_SOLD_DATE,
@@ -357,15 +361,15 @@ const OwnedProvider: FC<Props> = ({ children }) => {
 	let optionData;
 	let filteredOption;
 
-	const [options, setOptions] = useState<any[]>([]);
+	//const [options, setOptions] = useState<any[]>([]);
 
 	//query to get contact data
 	const { loading, error, data: contactData } = useQuery(LIST_CONTACT, {
-		onCompleted() {
-			setOptions(contactData.list_paginated_contacts.edges);
-		},
+		// onCompleted() {
+		// 	setOptions(contactData.list_paginated_contacts.edges);
+		// },
 	});
-
+	const options = contactData?.list_paginated_contacts?.edges;
 	//state handler for attorney autocomplete
 	const [openDiv, setOpenDiv] = useState(false);
 
