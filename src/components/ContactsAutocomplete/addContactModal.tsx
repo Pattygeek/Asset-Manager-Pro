@@ -74,17 +74,16 @@ const ContactModal = ({ open, handleClose, propertyID }: ModalProps) => {
 	const [openAlert, setOpenAlert] = useState(false);
 	const [errorOpen, setErrorOpen] = useState(false);
 
-	//query to updated contact
-	const { refetch } = useQuery(LIST_CONTACT);
+
 
 	//add_contact mutation
 	const [add_contact, { loading, error }] = useMutation(ADD_CONTACT, {
 		onCompleted({ add_contact }) {
 			setSuccess(add_contact.message);
 			setOpenAlert(true);
-            refetch();
 			formik.resetForm();
 		},
+		refetchQueries: [{ query: LIST_CONTACT }],
 		onError(err) {
 			setErrorOpen(true);
 			console.log(err);

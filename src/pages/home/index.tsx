@@ -1,4 +1,5 @@
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import Box from "@material-ui/core/Box";
 import { HotTable } from "@handsontable/react";
 import React, {
 	useState,
@@ -18,11 +19,10 @@ import { useRowData } from "../../helpers/contexts/rowDataContext";
 //components
 import { Tab } from "../../components";
 import { PropertyRecord } from "../../components/Types";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 const Home = () => {
 	const { toggle } = useToggle();
-
-	const client = useApolloClient();
 
 	const { rowData, handleRowData } = useRowData();
 
@@ -67,22 +67,14 @@ const Home = () => {
 			limit,
 		},
 
-		onCompleted() {
-			const { has_next_page } = data.list_all_property_reports.page_info;
-			setHasMore(has_next_page);
-			const { edges } = data.list_all_property_reports;
-			// setProperty((prevState) => [...prevState, ...edges]);
-			setProperty(edges);
-			client.writeQuery({
-				query: LIST_ALL_PROPERTY_CACHE,
-				data: data.list_all_property_reports,
-			});
-		},
+		// onCompleted() {
+		// 	const { has_next_page } = data.list_all_property_reports.page_info;
+		// 	setHasMore(has_next_page);
+		// 	const { edges } = data.list_all_property_reports;
+		// 	// setProperty((prevState) => [...prevState, ...edges]);
+		// 	setProperty(edges);
+		// },
 	});
-
-	console.log(data);
-
-	const Prop = client.readQuery({ query: LIST_ALL_PROPERTY_CACHE });
 
 	const [hasMore, setHasMore] = useState(false);
 
@@ -486,6 +478,42 @@ const Home = () => {
 				// onDoubleClick={handleDoubleClick}
 				ref={scrollRef}
 			>
+				{loading && (
+					<>
+						<Box width="100%" p={2}>
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+							<Skeleton height={40} />
+						</Box>
+					</>
+				)}
 				{data?.list_all_property_reports?.edges && (
 					<HotTable
 						ref={hotTableComponentRef}
@@ -493,7 +521,7 @@ const Home = () => {
 						id="hot"
 						afterSelection={handleClick}
 						//afterScrollVertically={handleScroll}
-						data={property}
+						data={data.list_all_property_reports.edges}
 						dropdownMenu={[
 							"alignment",
 							"---------",

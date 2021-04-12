@@ -2,7 +2,7 @@ import React, { ReactNode, FC, useState, useEffect } from "react";
 import { useRowData } from "../../../helpers/contexts/rowDataContext";
 import { OwnedRecord } from "../../Types";
 import { useQuery, useMutation } from "@apollo/client";
-import { LIST_CONTACT } from "../../../helpers/graphql/queries";
+import { LIST_CONTACT, LIST_ALL_PROPERTY, TAB_HISTORY } from "../../../helpers/graphql/queries";
 import {
 	OWNED_UPDATE_CFK_AMOUNT,
 	OWNED_UPDATE_SOLD_DATE,
@@ -210,7 +210,6 @@ const OwnedProvider: FC<Props> = ({ children }) => {
 		{ loading: noteLoading, error: noteError, data: noteData },
 	] = useMutation(UPDATE_PROPERTY_NOTE, {
 		onCompleted() {
-			// refetch();
 			setNoteUpdate("Changes saved");
 			setData({ ...data, note: "" });
 			setTimeout(() => {
@@ -239,6 +238,10 @@ const OwnedProvider: FC<Props> = ({ children }) => {
 				setStatusUpdate("");
 			}, 3000);
 		},
+		refetchQueries: [
+			{ query: LIST_ALL_PROPERTY },
+			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
+		],
 		onError(err) {
 			setTimeout(() => {
 				setErrorText("");
@@ -255,12 +258,15 @@ const OwnedProvider: FC<Props> = ({ children }) => {
 		{ loading: soldDateLoading, error: soldDateError, data: soldDateData },
 	] = useMutation(OWNED_UPDATE_SOLD_DATE, {
 		onCompleted() {
-			//refetch();
 			setSoldDateUpdate("Changes saved");
 			setTimeout(() => {
 				setSoldDateUpdate("");
 			}, 3000);
 		},
+		refetchQueries: [
+			{ query: LIST_ALL_PROPERTY },
+			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
+		],
 		onError(err) {
 			setTimeout(() => {
 				setErrorText("");
@@ -277,12 +283,15 @@ const OwnedProvider: FC<Props> = ({ children }) => {
 		{ loading: cfkAmountLoading, error: cfkAmountError, data: cfkAmountData },
 	] = useMutation(OWNED_UPDATE_CFK_AMOUNT, {
 		onCompleted() {
-			//refetch();
 			setCfkAmountUpdate("Changes saved");
 			setTimeout(() => {
 				setCfkAmountUpdate("");
 			}, 3000);
 		},
+		refetchQueries: [
+			{ query: LIST_ALL_PROPERTY },
+			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
+		],
 		onError(err) {
 			setTimeout(() => {
 				setErrorText("");
@@ -299,12 +308,15 @@ const OwnedProvider: FC<Props> = ({ children }) => {
 		{ loading: rehabLoading, error: rehabError, data: rehabData },
 	] = useMutation(BUY_UPDATE_REHAB_COST, {
 		onCompleted() {
-			//refetch();
 			setRehabUpdate("Changes saved");
 			setTimeout(() => {
 				setRehabUpdate("");
 			}, 3000);
 		},
+		refetchQueries: [
+			{ query: LIST_ALL_PROPERTY },
+			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
+		],
 		onError(err) {
 			setTimeout(() => {
 				setErrorText("");
@@ -321,12 +333,15 @@ const OwnedProvider: FC<Props> = ({ children }) => {
 		{ loading: holdTimeLoading, error: holdTimeError, data: holdTimeData },
 	] = useMutation(BUY_UPDATE_HOLD_TIME, {
 		onCompleted() {
-			//refetch();
 			setHoldTimeUpdate("Changes saved");
 			setTimeout(() => {
 				setHoldTimeUpdate("");
 			}, 3000);
 		},
+		refetchQueries: [
+			{ query: LIST_ALL_PROPERTY },
+			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
+		],
 		onError(err) {
 			setTimeout(() => {
 				setErrorText("");

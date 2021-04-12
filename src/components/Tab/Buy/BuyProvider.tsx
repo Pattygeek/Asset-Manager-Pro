@@ -20,7 +20,7 @@ import { useRowData } from "../../../helpers/contexts/rowDataContext";
 import {
 	LIST_ALL_PROPERTY,
 	LIST_CONTACT,
-	SINGLE_PROPERTY_REPORT,
+	TAB_HISTORY,
 } from "../../../helpers/graphql/queries";
 import { BuyRecord } from "../../Types";
 import {
@@ -140,8 +140,6 @@ const BuyProvider: FC<Props> = ({ children }) => {
 		handleRowData!(rowData);
 	}, []);
 
-	console.log(rowData);
-
 	//================pricehistory modal handler==============
 	const [open, setOpen] = useState(false);
 
@@ -255,7 +253,7 @@ const BuyProvider: FC<Props> = ({ children }) => {
 		buy_update_access({
 			variables: {
 				property_id: propID,
-				input_value: value == "Yes" ? true : false,
+				input_value: value,
 			},
 		});
 	};
@@ -395,40 +393,14 @@ const BuyProvider: FC<Props> = ({ children }) => {
 	};
 	//=========end of note=============================
 
-	const cloneRow = rowData;
-
-	const { data: reportData, refetch } = useQuery(SINGLE_PROPERTY_REPORT, {
-		variables: {
-			property_id: rowData._id,
-		},
-		onCompleted() {
-			const newRowData = {
-				...cloneRow,
-				...reportData.get_property_report.property,
-			};
-			handleRowData!(newRowData);
-		},
-	});
-
-	const { refetch: refetchAll } = useQuery(LIST_ALL_PROPERTY);
-
-	// const rowwData = reportData ? reportData : {};
-
-	// const refetched = () => {
-	// 	handleRowData!(rowwData);
-	// };
-
-	// handleRowData!(rowwData);
-
 	//mutation to update note
 	const [
 		buy_update_property_note,
 		{ loading: noteLoading, error: noteError, data: noteData },
 	] = useMutation(UPDATE_PROPERTY_NOTE, {
 		onCompleted() {
-			refetch();
 			setNoteUpdate("Changes saved");
-			setData({...data, note: ""})
+			setData({ ...data, note: "" });
 			setTimeout(() => {
 				setNoteUpdate("");
 			}, 3000);
@@ -449,12 +421,15 @@ const BuyProvider: FC<Props> = ({ children }) => {
 		{ loading: statusLoading, error: statusError, data: statusData },
 	] = useMutation(BUY_UPDATE_PROPERTY_STATUS, {
 		onCompleted() {
-			refetch();
 			setStatusUpdate("Changes saved");
 			setTimeout(() => {
 				setStatusUpdate("");
 			}, 3000);
 		},
+		refetchQueries: [
+			{ query: LIST_ALL_PROPERTY },
+			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
+		],
 		onError(err) {
 			setTimeout(() => {
 				setErrorText("");
@@ -471,12 +446,15 @@ const BuyProvider: FC<Props> = ({ children }) => {
 		{ loading: reasonLoading, error: reasonError, data: reasonData },
 	] = useMutation(BUY_UPDATE_REASON, {
 		onCompleted() {
-			refetch();
 			setReasonUpdate("Changes saved");
 			setTimeout(() => {
 				setReasonUpdate("");
 			}, 3000);
 		},
+		refetchQueries: [
+			{ query: LIST_ALL_PROPERTY },
+			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
+		],
 		onError(err) {
 			setTimeout(() => {
 				setErrorText("");
@@ -497,8 +475,11 @@ const BuyProvider: FC<Props> = ({ children }) => {
 			setTimeout(() => {
 				setAccessUpdate("");
 			}, 3000);
-			refetch();
 		},
+		refetchQueries: [
+			{ query: LIST_ALL_PROPERTY },
+			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
+		],
 		onError(err) {
 			setTimeout(() => {
 				setErrorText("");
@@ -515,12 +496,15 @@ const BuyProvider: FC<Props> = ({ children }) => {
 		{ loading: occupancyLoading, error: occupancyError, data: occupancyData },
 	] = useMutation(BUY_UPDATE_OCCUPANCY, {
 		onCompleted() {
-			refetch();
 			setOccupancyUpdate("Changes saved");
 			setTimeout(() => {
 				setOccupancyUpdate("");
 			}, 3000);
 		},
+		refetchQueries: [
+			{ query: LIST_ALL_PROPERTY },
+			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
+		],
 		onError(err) {
 			setTimeout(() => {
 				setErrorText("");
@@ -541,9 +525,11 @@ const BuyProvider: FC<Props> = ({ children }) => {
 			setTimeout(() => {
 				setPropTypeUpdate("");
 			}, 3000);
-			refetch();
-			refetchAll();
 		},
+		refetchQueries: [
+			{ query: LIST_ALL_PROPERTY },
+			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
+		],
 		onError(err) {
 			setTimeout(() => {
 				setErrorText("");
@@ -560,12 +546,15 @@ const BuyProvider: FC<Props> = ({ children }) => {
 		{ loading: sqftLoading, error: sqftError, data: sqftData },
 	] = useMutation(BUY_UPDATE_SQFT, {
 		onCompleted() {
-			refetch();
 			setSqftUpdate("Changes saved");
 			setTimeout(() => {
 				setSqftUpdate("");
 			}, 3000);
 		},
+		refetchQueries: [
+			{ query: LIST_ALL_PROPERTY },
+			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
+		],
 		onError(err) {
 			setTimeout(() => {
 				setErrorText("");
@@ -582,12 +571,15 @@ const BuyProvider: FC<Props> = ({ children }) => {
 		{ loading: brLoading, error: brError, data: brData },
 	] = useMutation(BUY_UPDATE_BR, {
 		onCompleted() {
-			refetch();
 			setBrUpdate("Changes saved");
 			setTimeout(() => {
 				setBrUpdate("");
 			}, 3000);
 		},
+		refetchQueries: [
+			{ query: LIST_ALL_PROPERTY },
+			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
+		],
 		onError(err) {
 			setTimeout(() => {
 				setErrorText("");
@@ -604,12 +596,15 @@ const BuyProvider: FC<Props> = ({ children }) => {
 		{ loading: baLoading, error: baError, data: baData },
 	] = useMutation(BUY_UPDATE_BA, {
 		onCompleted() {
-			refetch();
 			setBaUpdate("Changes saved");
 			setTimeout(() => {
 				setBaUpdate("");
 			}, 3000);
 		},
+		refetchQueries: [
+			{ query: LIST_ALL_PROPERTY },
+			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
+		],
 		onError(err) {
 			setTimeout(() => {
 				setErrorText("");
@@ -626,12 +621,15 @@ const BuyProvider: FC<Props> = ({ children }) => {
 		{ loading: lotLoading, error: lotError, data: lotData },
 	] = useMutation(BUY_UPDATE_LOT, {
 		onCompleted() {
-			refetch();
 			setLotUpdate("Changes saved");
 			setTimeout(() => {
 				setLotUpdate("");
 			}, 3000);
 		},
+		refetchQueries: [
+			{ query: LIST_ALL_PROPERTY },
+			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
+		],
 		onError(err) {
 			setTimeout(() => {
 				setErrorText("");
@@ -648,12 +646,15 @@ const BuyProvider: FC<Props> = ({ children }) => {
 		{ loading: auctionLpLoading, error: auctionLpError, data: auctionLpData },
 	] = useMutation(BUY_UPDATE_AUCTION_LP, {
 		onCompleted() {
-			refetch();
 			setAuctionLpUpdate("Changes saved");
 			setTimeout(() => {
 				setAuctionLpUpdate("");
 			}, 3000);
 		},
+		refetchQueries: [
+			{ query: LIST_ALL_PROPERTY },
+			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
+		],
 		onError(err) {
 			setTimeout(() => {
 				setErrorText("");
@@ -670,12 +671,15 @@ const BuyProvider: FC<Props> = ({ children }) => {
 		{ loading: mktLoading, error: mktError, data: mktData },
 	] = useMutation(BUY_UPDATE_MKT, {
 		onCompleted() {
-			refetch();
 			setMktUpdate("Changes saved");
 			setTimeout(() => {
 				setMktUpdate("");
 			}, 3000);
 		},
+		refetchQueries: [
+			{ query: LIST_ALL_PROPERTY },
+			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
+		],
 		onError(err) {
 			setTimeout(() => {
 				setErrorText("");
@@ -692,12 +696,15 @@ const BuyProvider: FC<Props> = ({ children }) => {
 		{ loading: rehabLoading, error: rehabError, data: rehabData },
 	] = useMutation(BUY_UPDATE_REHAB_COST, {
 		onCompleted() {
-			refetch();
 			setRehabUpdate("Changes saved");
 			setTimeout(() => {
 				setRehabUpdate("");
 			}, 3000);
 		},
+		refetchQueries: [
+			{ query: LIST_ALL_PROPERTY },
+			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
+		],
 		onError(err) {
 			setTimeout(() => {
 				setErrorText("");
@@ -714,12 +721,15 @@ const BuyProvider: FC<Props> = ({ children }) => {
 		{ loading: holdTimeLoading, error: holdTimeError, data: holdTimeData },
 	] = useMutation(BUY_UPDATE_HOLD_TIME, {
 		onCompleted() {
-			refetch();
 			setHoldTimeUpdate("Changes saved");
 			setTimeout(() => {
 				setHoldTimeUpdate("");
 			}, 3000);
 		},
+		refetchQueries: [
+			{ query: LIST_ALL_PROPERTY },
+			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
+		],
 		onError(err) {
 			setTimeout(() => {
 				setErrorText("");
@@ -732,10 +742,12 @@ const BuyProvider: FC<Props> = ({ children }) => {
 
 	//query to get contact data
 	const { loading, error, data: contactData } = useQuery(LIST_CONTACT, {
-		onCompleted() {
-			setOptions(contactData.list_paginated_contacts.edges);
-		},
+		// onCompleted() {
+		// 	setOptions(contactData.list_paginated_contacts.edges);
+		// },
 	});
+
+	const options = contactData?.list_paginated_contacts?.edges;
 
 	//!!!!!!!!!!!!!!!this block of code below has to do with contact filters!!!!!!!!!!!!
 
@@ -756,7 +768,7 @@ const BuyProvider: FC<Props> = ({ children }) => {
 	//state handler for list agent autocomplete
 	const [openListDiv, setOpenListDiv] = useState(false);
 
-	const [options, setOptions] = useState<any[]>([]);
+	// const [options, setOptions] = useState<any[]>([]);
 
 	const [optionList, setOptionList] = useState<any[]>([]);
 	let optionData: any;

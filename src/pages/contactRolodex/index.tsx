@@ -16,8 +16,10 @@ import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
 import { useQuery, useLazyQuery } from "@apollo/client";
 import { LIST_CONTACT, CONTACTS_BY_ZIP } from "../../helpers/graphql/queries";
 import { Contact } from "../../components/Types";
+import Skeleton from "@material-ui/lab/Skeleton";
+import theme from "../../helpers/theme";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
 	div: {
 		display: "grid",
 		gridTemplateColumns: "repeat(5, 1fr)",
@@ -41,17 +43,21 @@ const useStyles = makeStyles(() => ({
 	scrollBox: {
 		overflowY: "auto",
 		overflowX: "hidden",
-		"&::-webkit-scrollbar": {
-			width: "4px",
+		height: "70vh",
+		[theme.breakpoints.up("xl")]: {
+			height: "80vh",
 		},
-		"&::-webkit-scrollbar-track": {
-			background: "#ebeff2",
-			borderRadius: "16px",
-		},
-		"&::-webkit-scrollbar-thumb": {
-			background: "rgba(109, 109, 109, 0.36)",
-			borderRadius: "16px",
-		},
+		// "&::-webkit-scrollbar": {
+		// 	width: "4px",
+		// },
+		// "&::-webkit-scrollbar-track": {
+		// 	background: "#ebeff2",
+		// 	borderRadius: "16px",
+		// },
+		// "&::-webkit-scrollbar-thumb": {
+		// 	background: "rgba(109, 109, 109, 0.36)",
+		// 	borderRadius: "16px",
+		// },
 	},
 }));
 
@@ -62,7 +68,6 @@ const ContactRolodex = () => {
 
 	const [state, setState] = useState({
 		width: "100%",
-		height: "auto",
 		contextMenu: true,
 		filters: true,
 		columnSorting: true,
@@ -90,9 +95,6 @@ const ContactRolodex = () => {
 		// variables: {
 		// 	limit: 50,
 		// },
-		onCompleted() {
-			setContactData(data.list_paginated_contacts.edges);
-		},
 	});
 
 	//state for zip
@@ -180,28 +182,56 @@ const ContactRolodex = () => {
 				<Box
 					width="inherit"
 					marginX="auto"
-					height="70vh"
 					marginTop={4}
 					bgcolor="#fff"
 					borderRadius="4px"
 					className={classes.scrollBox}
 				>
-					<HotTable
-						settings={state}
-						id="hot"
-						stretchH="all"
-						// data={data?.list_paginated_contacts?.edges}
-						data={contactData}
-						dropdownMenu={[
-							"alignment",
-							"---------",
-							"filter_by_condition",
-							"---------",
-							"filter_by_value",
-							"---------",
-							"filter_action_bar",
-						]}
-					></HotTable>
+					{loading && (
+						<>
+							<Box p={2} overflow="hidden">
+								<Skeleton height={40} />
+								<Skeleton height={40} />
+								<Skeleton height={40} />
+								<Skeleton height={40} />
+								<Skeleton height={40} />
+								<Skeleton height={40} />
+								<Skeleton height={40} />
+								<Skeleton height={40} />
+								<Skeleton height={40} />
+								<Skeleton height={40} />
+								<Skeleton height={40} />
+								<Skeleton height={40} />
+								<Skeleton height={40} />
+								<Skeleton height={40} />
+								<Skeleton height={40} />
+								<Skeleton height={40} />
+								<Skeleton height={40} />
+								<Skeleton height={40} />
+								<Skeleton height={40} />
+								<Skeleton height={40} />
+								<Skeleton height={40} />
+							</Box>
+						</>
+					)}
+					{data?.list_paginated_contacts?.edges && (
+						<HotTable
+							settings={state}
+							id="hot"
+							stretchH="all"
+							// data={data?.list_paginated_contacts?.edges}
+							data={data.list_paginated_contacts.edges}
+							dropdownMenu={[
+								"alignment",
+								"---------",
+								"filter_by_condition",
+								"---------",
+								"filter_by_value",
+								"---------",
+								"filter_action_bar",
+							]}
+						></HotTable>
+					)}
 				</Box>
 			</Box>
 		</>

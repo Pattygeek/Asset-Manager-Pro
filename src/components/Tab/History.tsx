@@ -11,7 +11,7 @@ import {
 import { useState, ReactText } from "react";
 import { useQuery } from "@apollo/client";
 import { TAB_HISTORY } from "../../helpers/graphql/queries";
-
+import Skeleton from "@material-ui/lab/Skeleton";
 
 const useStyles = makeStyles((theme) => ({
 	box: {
@@ -43,12 +43,11 @@ const History = (props: { property_id: string | undefined }) => {
 			{
 				data: "updated_at",
 				readOnly: true,
-				
 			},
-			{ data: "updated_at", readOnly: true,},
-			{ data: "updated_by", readOnly: true, },
-			{ data: "field_name", readOnly: true, },
-			{ data: "new_value", readOnly: true,},
+			{ data: "updated_at", readOnly: true },
+			{ data: "updated_by", readOnly: true },
+			{ data: "field_name", readOnly: true },
+			{ data: "new_value", readOnly: true },
 			//{ data: "notes", readOnly: true, width: 150 },
 		],
 		renderer: function (
@@ -85,9 +84,9 @@ const History = (props: { property_id: string | undefined }) => {
 		variables: {
 			property_id: property_id, //this is more like dummy property id, just to show the data, it will be updated to pick the actual property id
 		},
-		onCompleted() {
-			setHistoryData(data?.buy_stream_price_history?.history);
-		},
+		// onCompleted() {
+		// 	setHistoryData(data?.buy_stream_price_history?.history);
+		// },
 	});
 
 	return (
@@ -99,43 +98,50 @@ const History = (props: { property_id: string | undefined }) => {
 				borderColor="#ececec"
 				height="fit-content"
 				marginBottom={6}
-				
 			>
 				<Box className={classes.box}>History</Box>
-				{historyData?.length < 1 && !loading ? (
+				{loading && (
+					<Box>
+						<Skeleton height={40} />
+						<Skeleton height={40} />
+					</Box>
+				)}
+				{data?.buy_stream_price_history?.history.length < 1 && (
 					<Box textAlign="center" py={3}>
 						There is no history yet for this property
 					</Box>
-				) : (
-					<HotTable
-						settings={state}
-						data={historyData}
-						dropdownMenu={[
-							"alignment",
-							"---------",
-							"filter_by_condition",
-							"---------",
-							"filter_by_value",
-							"---------",
-							"filter_action_bar",
-						]}
-					>
-						<HotColumn data={state.columns[0].data}>
-							<DateRenderer hot-renderer />
-						</HotColumn>
-						<HotColumn data={state.columns[1].data}>
-							<TimeRenderer hot-renderer />
-						</HotColumn>
-						<HotColumn data={state.columns[2].data}>
-							<UserNameRenderer hot-renderer />
-						</HotColumn>
-
-						<HotColumn data={state.columns[3].data}>
-							<FieldNameRenderer hot-renderer />
-						</HotColumn>
-						<HotColumn data={state.columns[4].data} />
-					</HotTable>
 				)}
+				{data?.buy_stream_price_history?.history &&
+					data?.buy_stream_price_history?.history.length >= 1 && (
+						<HotTable
+							settings={state}
+							data={data?.buy_stream_price_history?.history}
+							dropdownMenu={[
+								"alignment",
+								"---------",
+								"filter_by_condition",
+								"---------",
+								"filter_by_value",
+								"---------",
+								"filter_action_bar",
+							]}
+						>
+							<HotColumn data={state.columns[0].data}>
+								<DateRenderer hot-renderer />
+							</HotColumn>
+							<HotColumn data={state.columns[1].data}>
+								<TimeRenderer hot-renderer />
+							</HotColumn>
+							<HotColumn data={state.columns[2].data}>
+								<UserNameRenderer hot-renderer />
+							</HotColumn>
+
+							<HotColumn data={state.columns[3].data}>
+								<FieldNameRenderer hot-renderer />
+							</HotColumn>
+							<HotColumn data={state.columns[4].data} />
+						</HotTable>
+					)}
 			</Box>
 		</>
 	);

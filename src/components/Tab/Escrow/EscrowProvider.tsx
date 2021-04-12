@@ -12,7 +12,7 @@ import { useRowData } from "../../../helpers/contexts/rowDataContext";
 import {
 	LIST_ALL_PROPERTY,
 	LIST_CONTACT,
-	SINGLE_PROPERTY_REPORT,
+	TAB_HISTORY
 } from "../../../helpers/graphql/queries";
 
 import { EscrowRecord } from "../../Types";
@@ -172,7 +172,6 @@ const EscrowProvider: FC<Props> = ({ children }) => {
 		{ loading: noteLoading, error: noteError, data: noteData },
 	] = useMutation(UPDATE_PROPERTY_NOTE, {
 		onCompleted() {
-			// refetch();
 			setNoteUpdate("Changes saved");
 			setData({ ...data, note: "" });
 			setTimeout(() => {
@@ -195,12 +194,15 @@ const EscrowProvider: FC<Props> = ({ children }) => {
 		{ loading: statusLoading, error: statusError, data: statusData },
 	] = useMutation(BUY_UPDATE_PROPERTY_STATUS, {
 		onCompleted() {
-			//refetch();
 			setStatusUpdate("Changes saved");
 			setTimeout(() => {
 				setStatusUpdate("");
 			}, 3000);
 		},
+		refetchQueries: [
+			{ query: LIST_ALL_PROPERTY },
+			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
+		],
 		onError(err) {
 			setTimeout(() => {
 				setErrorText("");
@@ -221,12 +223,15 @@ const EscrowProvider: FC<Props> = ({ children }) => {
 		},
 	] = useMutation(ESCROW_UPDATE_BOUGHT_DATE, {
 		onCompleted() {
-			//refetch();
 			setBoughtDateUpdate("Changes saved");
 			setTimeout(() => {
 				setBoughtDateUpdate("");
 			}, 3000);
 		},
+		refetchQueries: [
+			{ query: LIST_ALL_PROPERTY },
+			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
+		],
 		onError(err) {
 			setTimeout(() => {
 				setErrorText("");
