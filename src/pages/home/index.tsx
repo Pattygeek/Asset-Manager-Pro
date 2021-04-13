@@ -76,35 +76,56 @@ const Home = () => {
 		// },
 	});
 
+	(() => {
+		fetchMore({
+			variables: {
+				offset: 20,
+				limit: 230,
+			},
+		});
+	})();
+
+	console.log(data);
+
+	// const { data: MoreData } = useQuery(LIST_ALL_PROPERTY, {
+	// 	variables: {
+	// 		cursor: "2021-04-09T10:44:54.417Z",
+	// 	},
+	// });
+
+	// const AllData = data?.concat(MoreData);
+
+	// console.log(AllData);
+
 	const [hasMore, setHasMore] = useState(false);
 
 	const scrollRef = React.createRef<HTMLDivElement>();
 	const hotTableComponentRef = React.createRef<HotTable>();
 
-	const handleScroll = () => {
-		// if (!hasMore) return;
-		// FetchMoreRecords();
-		// return;
-		if (hasMore) {
-			FetchMoreRecords();
-		}
-	};
+	// const handleScroll = () => {
+	// 	// if (!hasMore) return;
+	// 	// FetchMoreRecords();
+	// 	// return;
+	// 	if (hasMore) {
+	// 		FetchMoreRecords();
+	// 	}
+	// };
 
-	const FetchMoreRecords = () => {
-		fetchMore({
-			variables: {
-				limit,
-				cursor: data.list_all_property_reports.page_info.end_cursor,
-			},
-		});
-		const { has_next_page } = data.list_all_property_reports.page_info;
-		setHasMore(has_next_page);
-		const { edges } = data.list_all_property_reports;
-		//setProperty(edges)
-		setProperty((prevState) => [...prevState, ...edges]);
-		//
-		// setProperty(prevState => [...prevState, ...edges]);
-	};
+	// const FetchMoreRecords = () => {
+	// 	fetchMore({
+	// 		variables: {
+	// 			limit,
+	// 			cursor: data.list_all_property_reports.page_info.end_cursor,
+	// 		},
+	// 	});
+	// 	const { has_next_page } = data.list_all_property_reports.page_info;
+	// 	setHasMore(has_next_page);
+	// 	const { edges } = data.list_all_property_reports;
+	// 	//setProperty(edges)
+	// 	setProperty((prevState) => [...prevState, ...edges]);
+	// 	//
+	// 	// setProperty(prevState => [...prevState, ...edges]);
+	// };
 
 	// if (loading) return <p>Loading...</p>;
 	// if (error) return <p>Error :(</p>;
