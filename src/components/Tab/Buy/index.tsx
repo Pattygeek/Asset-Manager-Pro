@@ -652,7 +652,11 @@ const Buy = () => {
 									<p className={classes.price} onClick={handleOpen}>
 										Price History
 									</p>
-									<PriceHistory open={open} handleClose={handleClose} />
+									<PriceHistory
+										open={open}
+										handleClose={handleClose}
+										property_id={rowData._id}
+									/>
 								</Box>
 								<Box className={classes.mRight}>
 									<p className={classes.label}>High Bid</p>
@@ -677,7 +681,11 @@ const Buy = () => {
 									>
 										Bid History
 									</p>
-									<BidHistory open={show} handleClose={handleCloseShow} />
+									<BidHistory
+										open={show}
+										handleClose={handleCloseShow}
+										property_id={rowData._id}
+									/>
 								</Box>
 								<Box className={classes.mRight}>
 									<p className={classes.label} style={{ whiteSpace: "nowrap" }}>

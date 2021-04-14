@@ -127,7 +127,7 @@ const BuyProvider: FC<Props> = ({ children }) => {
 	const [auctionLpUpdate, setAuctionLpUpdate] = useState("");
 	const [holdTimeUpdate, setHoldTimeUpdate] = useState("");
 	const [noteUpdate, setNoteUpdate] = useState("");
-	const [errorText, setErrorText] = useState("Error saving changes");
+	const [errorText, setErrorText] = useState("");
 
 	const { rowData, handleRowData } = useRowData();
 
@@ -406,6 +406,7 @@ const BuyProvider: FC<Props> = ({ children }) => {
 			}, 3000);
 		},
 		onError(err) {
+			setErrorText("Error saving changes");
 			setTimeout(() => {
 				setErrorText("");
 			}, 8000);
@@ -431,6 +432,7 @@ const BuyProvider: FC<Props> = ({ children }) => {
 			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
 		],
 		onError(err) {
+			setErrorText("Error saving changes");
 			setTimeout(() => {
 				setErrorText("");
 			}, 8000);
@@ -456,6 +458,7 @@ const BuyProvider: FC<Props> = ({ children }) => {
 			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
 		],
 		onError(err) {
+			setErrorText("Error saving changes");
 			setTimeout(() => {
 				setErrorText("");
 			}, 8000);
@@ -481,6 +484,7 @@ const BuyProvider: FC<Props> = ({ children }) => {
 			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
 		],
 		onError(err) {
+			setErrorText("Error saving changes");
 			setTimeout(() => {
 				setErrorText("");
 			}, 8000);
@@ -506,6 +510,7 @@ const BuyProvider: FC<Props> = ({ children }) => {
 			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
 		],
 		onError(err) {
+			setErrorText("Error saving changes");
 			setTimeout(() => {
 				setErrorText("");
 			}, 8000);
@@ -531,6 +536,7 @@ const BuyProvider: FC<Props> = ({ children }) => {
 			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
 		],
 		onError(err) {
+			setErrorText("Error saving changes");
 			setTimeout(() => {
 				setErrorText("");
 			}, 8000);
@@ -556,6 +562,7 @@ const BuyProvider: FC<Props> = ({ children }) => {
 			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
 		],
 		onError(err) {
+			setErrorText("Error saving changes");
 			setTimeout(() => {
 				setErrorText("");
 			}, 8000);
@@ -581,6 +588,7 @@ const BuyProvider: FC<Props> = ({ children }) => {
 			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
 		],
 		onError(err) {
+			setErrorText("Error saving changes");
 			setTimeout(() => {
 				setErrorText("");
 			}, 8000);
@@ -606,6 +614,7 @@ const BuyProvider: FC<Props> = ({ children }) => {
 			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
 		],
 		onError(err) {
+			setErrorText("Error saving changes");
 			setTimeout(() => {
 				setErrorText("");
 			}, 8000);
@@ -631,6 +640,7 @@ const BuyProvider: FC<Props> = ({ children }) => {
 			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
 		],
 		onError(err) {
+			setErrorText("Error saving changes");
 			setTimeout(() => {
 				setErrorText("");
 			}, 8000);
@@ -656,6 +666,7 @@ const BuyProvider: FC<Props> = ({ children }) => {
 			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
 		],
 		onError(err) {
+			setErrorText("Error saving changes");
 			setTimeout(() => {
 				setErrorText("");
 			}, 8000);
@@ -681,6 +692,7 @@ const BuyProvider: FC<Props> = ({ children }) => {
 			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
 		],
 		onError(err) {
+			setErrorText("Error saving changes");
 			setTimeout(() => {
 				setErrorText("");
 			}, 8000);
@@ -706,6 +718,7 @@ const BuyProvider: FC<Props> = ({ children }) => {
 			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
 		],
 		onError(err) {
+			setErrorText("Error saving changes");
 			setTimeout(() => {
 				setErrorText("");
 			}, 8000);
@@ -731,6 +744,7 @@ const BuyProvider: FC<Props> = ({ children }) => {
 			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
 		],
 		onError(err) {
+			setErrorText("Error saving changes");
 			setTimeout(() => {
 				setErrorText("");
 			}, 8000);

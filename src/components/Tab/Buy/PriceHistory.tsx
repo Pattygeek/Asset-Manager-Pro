@@ -8,11 +8,12 @@ import Handsontable from "handsontable";
 import { PRICE_HISTORY } from "../../../helpers/graphql/queries";
 import { useQuery } from "@apollo/client";
 import { DateRenderer } from "../../../utils/customRenderers";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 interface ModalProps {
 	open: boolean;
 	handleClose: () => any;
-	property_id?: string | undefined;
+	property_id: string | undefined;
 }
 
 const useStyles = makeStyles(() => ({
@@ -90,11 +91,11 @@ const PriceHistory = ({ open, handleClose, property_id }: ModalProps) => {
 
 	const { loading, error, data } = useQuery(PRICE_HISTORY, {
 		variables: {
-			property_id: "606f3512bf50a9a83fddaf7f", //this is more like dummy property id, just to show the data, it will be updated to pick the actual property id
+			property_id: property_id, //this is more like dummy property id, just to show the data, it will be updated to pick the actual property id
 		},
-		onCompleted() {
-			setPriceHistoryData(data?.get_price_history?.price_history);
-		},
+		// onCompleted() {
+		// 	setPriceHistoryData(data?.get_price_history?.price_history);
+		// },
 	});
 	return (
 		<>
@@ -108,27 +109,41 @@ const PriceHistory = ({ open, handleClose, property_id }: ModalProps) => {
 					<Box className={classes.heading}>Price History</Box>
 					<CloseIcon onClick={handleClose} className={classes.icon} />
 				</Box>
-				<HotTable
-					settings={state}
-					data={priceHistoryData}
-					dropdownMenu={[
-						"alignment",
-						"---------",
-						"filter_by_condition",
-						"---------",
-						"filter_by_value",
-						"---------",
-						"filter_action_bar",
-					]}
-				>
-					<HotColumn data={state.columns[0].data}>
-						<DateRenderer hot-renderer />
-					</HotColumn>
-					<HotColumn data={state.columns[1].data} />
-					<HotColumn data={state.columns[2].data} />
-					<HotColumn data={state.columns[3].data} />
-					<HotColumn data={state.columns[4].data} />
-				</HotTable>
+				{loading && (
+					<Box>
+						<Skeleton height={40} />
+						<Skeleton height={40} />
+						<Skeleton height={40} />
+					</Box>
+				)}
+				{data?.get_price_history?.price_history.length < 1 && (
+					<Box textAlign="center" py={3}>
+						There is no history yet for this property
+					</Box>
+				)}
+				{data?.get_price_history?.price_history && (
+					<HotTable
+						settings={state}
+						data={data?.get_price_history?.price_history}
+						dropdownMenu={[
+							"alignment",
+							"---------",
+							"filter_by_condition",
+							"---------",
+							"filter_by_value",
+							"---------",
+							"filter_action_bar",
+						]}
+					>
+						<HotColumn data={state.columns[0].data}>
+							<DateRenderer hot-renderer />
+						</HotColumn>
+						<HotColumn data={state.columns[1].data} />
+						<HotColumn data={state.columns[2].data} />
+						<HotColumn data={state.columns[3].data} />
+						<HotColumn data={state.columns[4].data} />
+					</HotTable>
+				)}
 			</Dialog>
 		</>
 	);

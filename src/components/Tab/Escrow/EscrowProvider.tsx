@@ -59,7 +59,7 @@ type Props = {
 const EscrowProvider: FC<Props> = ({ children }) => {
 	const { rowData, handleRowData } = useRowData();
 
-	const [errorText, setErrorText] = useState("Error saving changes");
+	const [errorText, setErrorText] = useState("");
 	const [boughtDateUpdate, setBoughtDateUpdate] = useState("");
 	const [noteUpdate, setNoteUpdate] = useState("");
 	const [statusUpdate, setStatusUpdate] = useState("");
@@ -179,6 +179,7 @@ const EscrowProvider: FC<Props> = ({ children }) => {
 			}, 3000);
 		},
 		onError(err) {
+			setErrorText("Error saving changes");
 			setTimeout(() => {
 				setErrorText("");
 			}, 8000);
@@ -204,6 +205,7 @@ const EscrowProvider: FC<Props> = ({ children }) => {
 			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
 		],
 		onError(err) {
+			setErrorText("Error saving changes");
 			setTimeout(() => {
 				setErrorText("");
 			}, 8000);
@@ -233,6 +235,7 @@ const EscrowProvider: FC<Props> = ({ children }) => {
 			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
 		],
 		onError(err) {
+			setErrorText("Error saving changes");
 			setTimeout(() => {
 				setErrorText("");
 			}, 8000);

@@ -17,6 +17,7 @@ import { useState } from "react";
 
 import { typeDefs } from "./resolvers";
 import Cookies from "js-cookie";
+import { argsToArgsConfig } from "graphql/type/definition";
 
 const httpLink = createHttpLink({
 	uri: "https://amp-gql-api.herokuapp.com/graphql",
@@ -71,6 +72,27 @@ const authLink = setContext((_, { headers }) => {
 
 const link = ApolloLink.from([authLink, httpLink, errorLink]);
 
+// const cache = new InMemoryCache({
+// 	typePolicies: {
+// 		Query: {
+// 			fields: {
+// 				list_all_property_reports: {
+// 					// Don't cache separate results based on
+// 					// any of this field's arguments.
+// 					keyArgs: [],
+// 					// Concatenate the incoming list items with
+// 					// the existing list items.
+// 					merge: (existing = [], incoming) => { 
+// 						return existing.concat(incoming);
+// 					},
+// 				},
+// 			},
+// 		},
+// 	},
+// });
+
+
+
 const cache = new InMemoryCache();
 
 const client = new ApolloClient({
@@ -80,21 +102,21 @@ const client = new ApolloClient({
 
 export default client;
 
-const data = {
-	list_all_property_reports: [],
-	// allContacts: [],
-	// singlePropertyRecord: {},
-};
+// const data = {
+// 	list_all_property_reports: [],
+// 	// allContacts: [],
+// 	// singlePropertyRecord: {},
+// };
 
-const setInitialCache = () => {
-	cache.writeQuery({
-		query: LIST_ALL_PROPERTY_CACHE,
-		data: data.list_all_property_reports,
-	});
-	// cache.writeQuery({ query: LIST_ALL_PROPERTY, data });
-	// cache.writeQuery({ query: LIST_ALL_PROPERTY, data });
-};
+// const setInitialCache = () => {
+// 	cache.writeQuery({
+// 		query: LIST_ALL_PROPERTY_CACHE,
+// 		data: data.list_all_property_reports,
+// 	});
+// 	// cache.writeQuery({ query: LIST_ALL_PROPERTY, data });
+// 	// cache.writeQuery({ query: LIST_ALL_PROPERTY, data });
+// };
 
-setInitialCache();
+// setInitialCache();
 
-// client.onClearStore(() => setInitialCache());
+// // client.onClearStore(() => setInitialCache());

@@ -7,6 +7,7 @@ import React, {
 	ReactText,
 	useMemo,
 	useCallback,
+	useEffect,
 } from "react";
 import { useQuery, useApolloClient } from "@apollo/client";
 import { LIST_ALL_PROPERTY } from "../../helpers/graphql/queries";
@@ -76,16 +77,26 @@ const Home = () => {
 		// },
 	});
 
-	(() => {
-		fetchMore({
-			variables: {
-				offset: 20,
-				limit: 230,
-			},
-		});
-	})();
+	// (() => {
+	// 	fetchMore({
+	// 		variables: {
+	// 			limit: 0,
+	// 		},
+	// 	});
+	// })();
 
-	console.log(data);
+	// console.log(data);
+
+	// useEffect(() => {
+	// 	setTimeout(() => {
+	// 		fetchMore({
+	// 			variables: {
+	// 				cursor: data?.list_all_property_reports[0].page_info.end_cursor,
+	// 				limit: 40,
+	// 			},
+	// 		});
+	// 	}, 5000);
+	// }, []);
 
 	// const { data: MoreData } = useQuery(LIST_ALL_PROPERTY, {
 	// 	variables: {
