@@ -198,29 +198,7 @@ const BUY_UPDATE_OCCUPANCY = gql`
 	}
 `;
 
-const BUY_UPDATE_PROPERTY_TYPE = gql`
-	mutation buyProperty($property_id: String, $input_value: PropertyTypeValues) {
-		buy_update_property_type(
-			property_id: $property_id
-			input_value: $input_value
-		) {
-			message
-			status_code
-		}
-	}
-`;
 
-const BUY_UPDATE_SQFT = gql`
-	mutation buySqft($property_id: String, $input_value: Int) {
-		buy_update_square_feet(
-			property_id: $property_id
-			input_value: $input_value
-		) {
-			message
-			status_code
-		}
-	}
-`;
 
 const BUY_UPDATE_BR = gql`
 	mutation buyBr($property_id: String, $input_value: Int) {
@@ -249,133 +227,12 @@ const BUY_UPDATE_LOT = gql`
 	}
 `;
 
-const BUY_UPDATE_AUCTION_LP = gql`
-	mutation buyAuction($property_id: String, $input_value: Int) {
-		buy_update_auction_list_price(
-			property_id: $property_id
-			input_value: $input_value
-		) {
-			message
-			status_code
-		}
-	}
-`;
 
-const BUY_UPDATE_HOLD_TIME = gql`
-	mutation buyHoldTime($property_id: String, $input_value: Int!) {
-		buy_update_hold_time(property_id: $property_id, input_value: $input_value) {
-			message
-			status_code
-		}
-	}
-`;
 
-const BUY_UPDATE_REHAB_COST = gql`
-	mutation buyRehabCost($property_id: String, $input_value: Int!) {
-		buy_update_rehab_cost(
-			property_id: $property_id
-			input_value: $input_value
-		) {
-			message
-			status_code
-		}
-	}
-`;
-
-const BUY_UPDATE_REHAB_TIME = gql`
-	mutation buyRehabTime($property_id: String, $input_value: Float!) {
-		buy_update_rehab_time(
-			property_id: $property_id
-			input_value: $input_value
-		) {
-			message
-			status_code
-		}
-	}
-`;
-
-const BUY_UPDATE_HUD = gql`
-	mutation buyRehabTime($property_id: String, $input_value: Float!) {
-		buy_update_hud(property_id: $property_id, input_value: $input_value) {
-			message
-			status_code
-		}
-	}
-`;
-
-const BUY_UPDATE_MKT = gql`
-	mutation buyMkt($property_id: String, $input_value: Int!) {
-		buy_update_hud(property_id: $property_id, input_value: $input_value) {
-			message
-			status_code
-		}
-	}
-`;
-
-const OWNED_UPDATE_CFK_AMOUNT = gql`
-	mutation ownedCfk($property_id: String, $input_value: Float!) {
-		owned_update_cfk_amount(
-			property_id: $property_id
-			input_value: $input_value
-		) {
-			message
-			status_code
-		}
-	}
-`;
-
-const OWNED_UPDATE_SOLD_DATE = gql`
-	mutation ownedSoldDate($property_id: String, $input_value: Date) {
-		owned_update_sold_date(
-			property_id: $property_id
-			input_value: $input_value
-		) {
-			message
-			status_code
-		}
-	}
-`;
-
-const ESCROW_UPDATE_BOUGHT_DATE = gql`
-	mutation escrowBoughtDate($property_id: String, $input_value: Date) {
-		escrow_update_bought_date(
-			property_id: $property_id
-			input_value: $input_value
-		) {
-			message
-			status_code
-		}
-	}
-`;
-
-const UPDATE_PROPERTY_NOTE = gql`
-	mutation propertyNote($property_id: String, $input_value: String) {
-		buy_update_property_note(
-			property_id: $property_id
-			input_value: $input_value
-		){
-			message
-			status_code
-		}
-	}
-`;
-
-export {
-	UPDATE_PROPERTY_NOTE,
-	ESCROW_UPDATE_BOUGHT_DATE,
-	OWNED_UPDATE_CFK_AMOUNT,
-	OWNED_UPDATE_SOLD_DATE,
-	BUY_UPDATE_HUD,
-	BUY_UPDATE_MKT,
-	BUY_UPDATE_REHAB_TIME,
-	BUY_UPDATE_REHAB_COST,
-	BUY_UPDATE_HOLD_TIME,
-	BUY_UPDATE_AUCTION_LP,
+export {	
 	BUY_UPDATE_LOT,
 	BUY_UPDATE_BA,
 	BUY_UPDATE_BR,
-	BUY_UPDATE_SQFT,
-	BUY_UPDATE_PROPERTY_TYPE,
 	BUY_UPDATE_OCCUPANCY,
 	BUY_UPDATE_ACCESS,
 	PROPERTY_ENTRY,

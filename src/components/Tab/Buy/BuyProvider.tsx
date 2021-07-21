@@ -3,18 +3,11 @@ import { useMutation, useQuery } from "@apollo/client";
 import {
 	BUY_UPDATE_PROPERTY_STATUS,
 	BUY_UPDATE_REASON,
-	BUY_UPDATE_PROPERTY_TYPE,
 	BUY_UPDATE_ACCESS,
-	BUY_UPDATE_SQFT,
 	BUY_UPDATE_OCCUPANCY,
 	BUY_UPDATE_BR,
 	BUY_UPDATE_BA,
 	BUY_UPDATE_LOT,
-	BUY_UPDATE_AUCTION_LP,
-	BUY_UPDATE_MKT,
-	BUY_UPDATE_REHAB_COST,
-	BUY_UPDATE_HOLD_TIME,
-	UPDATE_PROPERTY_NOTE,
 } from "../../../helpers/graphql/mutations";
 import { useRowData } from "../../../helpers/contexts/rowDataContext";
 import {
@@ -349,73 +342,6 @@ const BuyProvider: FC<Props> = ({ children }) => {
 	};
 	//=========end of auction list price=========================
 
-	//mkt function for onBlur
-	const onMktBlur = () => {
-		buy_update_marketing_time({
-			variables: {
-				property_id: rowData._id,
-				input_value: Number(data.mkt),
-			},
-		});
-	};
-	//=========end of mkt=========================
-
-	//rehab function for onBlur
-	const onRehabBlur = () => {
-		buy_update_rehab_cost({
-			variables: {
-				property_id: rowData._id,
-				input_value: Number(data.rehab),
-			},
-		});
-	};
-	//=========end of rehab=========================
-
-	//holdtime function for onBlur
-	const onHoldTimeBlur = () => {
-		buy_update_hold_time({
-			variables: {
-				property_id: rowData._id,
-				input_value: Number(data.hold_time),
-			},
-		});
-	};
-	//=========end of holdtime=========================
-
-	//note function for onBlur
-	const onNoteBlur = () => {
-		buy_update_property_note({
-			variables: {
-				property_id: rowData._id,
-				input_value: data.note,
-			},
-		});
-	};
-	//=========end of note=============================
-
-	//mutation to update note
-	const [
-		buy_update_property_note,
-		{ loading: noteLoading, error: noteError, data: noteData },
-	] = useMutation(UPDATE_PROPERTY_NOTE, {
-		onCompleted() {
-			setNoteUpdate("Changes saved");
-			setData({ ...data, note: "" });
-			setTimeout(() => {
-				setNoteUpdate("");
-			}, 3000);
-		},
-		onError(err) {
-			setErrorText("Error saving changes");
-			setTimeout(() => {
-				setErrorText("");
-			}, 8000);
-			console.log(err);
-			return null;
-		},
-	});
-	//==========end of update note mutation======================
-
 	//mutation to update property status
 	const [
 		buy_update_property_status,
@@ -676,86 +602,16 @@ const BuyProvider: FC<Props> = ({ children }) => {
 	});
 	//============end of mutation to update auction list price==================
 
-	//mutation to update marketing time====================================
-	const [
-		buy_update_marketing_time,
-		{ loading: mktLoading, error: mktError, data: mktData },
-	] = useMutation(BUY_UPDATE_MKT, {
-		onCompleted() {
-			setMktUpdate("Changes saved");
-			setTimeout(() => {
-				setMktUpdate("");
-			}, 3000);
-		},
-		refetchQueries: [
-			{ query: LIST_ALL_PROPERTY },
-			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
-		],
-		onError(err) {
-			setErrorText("Error saving changes");
-			setTimeout(() => {
-				setErrorText("");
-			}, 8000);
-			console.log(err);
-			return null;
-		},
-	});
-	//============end of mutation to update marketing time==================
 
-	//mutation to update rehab cost====================================
-	const [
-		buy_update_rehab_cost,
-		{ loading: rehabLoading, error: rehabError, data: rehabData },
-	] = useMutation(BUY_UPDATE_REHAB_COST, {
-		onCompleted() {
-			setRehabUpdate("Changes saved");
-			setTimeout(() => {
-				setRehabUpdate("");
-			}, 3000);
-		},
-		refetchQueries: [
-			{ query: LIST_ALL_PROPERTY },
-			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
-		],
-		onError(err) {
-			setErrorText("Error saving changes");
-			setTimeout(() => {
-				setErrorText("");
-			}, 8000);
-			console.log(err);
-			return null;
-		},
-	});
-	//============end of mutation to update rehab==================
 
-	//mutation to update hold time====================================
-	const [
-		buy_update_hold_time,
-		{ loading: holdTimeLoading, error: holdTimeError, data: holdTimeData },
-	] = useMutation(BUY_UPDATE_HOLD_TIME, {
-		onCompleted() {
-			setHoldTimeUpdate("Changes saved");
-			setTimeout(() => {
-				setHoldTimeUpdate("");
-			}, 3000);
-		},
-		refetchQueries: [
-			{ query: LIST_ALL_PROPERTY },
-			{ query: TAB_HISTORY, variables: { property_id: rowData._id } },
-		],
-		onError(err) {
-			setErrorText("Error saving changes");
-			setTimeout(() => {
-				setErrorText("");
-			}, 8000);
-			console.log(err);
-			return null;
-		},
-	});
-	//============end of mutation to update hold time==================
+	
 
 	//query to get contact data
-	const { loading, error, data: contactData } = useQuery(LIST_CONTACT, {
+	const {
+		loading,
+		error,
+		data: contactData,
+	} = useQuery(LIST_CONTACT, {
 		// onCompleted() {
 		// 	setOptions(contactData.list_paginated_contacts.edges);
 		// },

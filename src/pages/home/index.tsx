@@ -67,14 +67,6 @@ const Home = () => {
 		variables: {
 			limit,
 		},
-
-		// onCompleted() {
-		// 	const { has_next_page } = data.list_all_property_reports.page_info;
-		// 	setHasMore(has_next_page);
-		// 	const { edges } = data.list_all_property_reports;
-		// 	// setProperty((prevState) => [...prevState, ...edges]);
-		// 	setProperty(edges);
-		// },
 	});
 
 	// (() => {
@@ -113,35 +105,7 @@ const Home = () => {
 	const scrollRef = React.createRef<HTMLDivElement>();
 	const hotTableComponentRef = React.createRef<HotTable>();
 
-	// const handleScroll = () => {
-	// 	// if (!hasMore) return;
-	// 	// FetchMoreRecords();
-	// 	// return;
-	// 	if (hasMore) {
-	// 		FetchMoreRecords();
-	// 	}
-	// };
 
-	// const FetchMoreRecords = () => {
-	// 	fetchMore({
-	// 		variables: {
-	// 			limit,
-	// 			cursor: data.list_all_property_reports.page_info.end_cursor,
-	// 		},
-	// 	});
-	// 	const { has_next_page } = data.list_all_property_reports.page_info;
-	// 	setHasMore(has_next_page);
-	// 	const { edges } = data.list_all_property_reports;
-	// 	//setProperty(edges)
-	// 	setProperty((prevState) => [...prevState, ...edges]);
-	// 	//
-	// 	// setProperty(prevState => [...prevState, ...edges]);
-	// };
-
-	// if (loading) return <p>Loading...</p>;
-	// if (error) return <p>Error :(</p>;
-
-	// const hotTableComponentRef = useRef<HotTable>(null);
 
 	const [state, setState] = useState({
 		rowHeights: 28,
@@ -220,38 +184,7 @@ const Home = () => {
 			td.innerHTML =
 				value === null ? "" : `<div class="truncated">${value}</div>`;
 		},
-		// persistentState: true,
-		// persistentStateLoad: function () {
-		// 	//console.log(arguments[0], arguments[1])
-		// 	console.log("load am");
-		// },
-		// persistentStateReset: function () {
-		// 	//console.log(arguments[0], arguments[1])
-		// 	console.log("reset am");
-		// 	const persistentStatePlugin = hotTableComponentRef.current?.hotInstance.getPlugin(
-		// 		"persistentState"
-		// 	);
-		// 	persistentStatePlugin?.resetValue("manualColumnMove");
-		// },
-		// persistentStateSave: function () {
-		// 	//console.log(arguments[0], arguments[1]);
-		// 	console.log("save am");
-		// },
-		// afterColumnMove: function (
-		// 	movedRows: number[],
-		// 	finalIndex: number,
-		// 	dropIndex: number | undefined,
-		// 	movePossible: boolean,
-		// 	orderChanged: boolean
-		// ) {
-		// 	const persistentStatePlugin = hotTableComponentRef.current?.hotInstance.getPlugin(
-		// 		"persistentState"
-		// 	);
-		// 	if (movePossible === true && orderChanged === true) {
-		// 		// resetValue("manualRowMove");
-		// 		persistentStatePlugin?.resetValue("manualColumnMove");
-		// 	}
-		// },
+		
 
 		columns: [
 			{
@@ -570,34 +503,19 @@ const Home = () => {
 							"hidden_columns_hide",
 							"hidden_columns_show",
 						]}
-						// rowHeaders={[
-
-						// 		type: "checkbox",
-						// 		checkedTemplate: "yes",
-						// 		uncheckedTemplate: "no",
-
-						// ]}
+						
 					>
-						{/* <HotColumn width={100}></HotColumn>
-								<HotColumn width={150}></HotColumn>
-								<HotColumn width={150}></HotColumn> */}
+						
 					</HotTable>
 				)}
-				{/* <Box width="inherit" display="flex" height="fit-content">
-					<ArrowBackIosOutlinedIcon />
-					<ArrowForwardIosOutlinedIcon />
-				</Box> */}
+				
 				{open ? (
 					<Tab handleClose={handleTabClose} status={status} rowData={rowData} />
 				) : (
 					""
 				)}
 			</div>
-			{/* <button onClick={FetchMoreRecords}>
-				load more
-			</button> */}
-
-			{/* </Layout> */}
+			
 		</>
 	);
 };

@@ -15,12 +15,15 @@ import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 
 import { useState } from "react";
 
-import { typeDefs } from "./resolvers";
+
 import Cookies from "js-cookie";
-import { argsToArgsConfig } from "graphql/type/definition";
+
+const BASE_URL = process.env.NODE_ENV === 'development' 
+				 ? process.env.REACT_APP_BASE_URL_DEV
+				 : process.env.REACT_APP_BASE_URL;
 
 const httpLink = createHttpLink({
-	uri: "https://amp-gql-api.herokuapp.com/graphql",
+	uri: BASE_URL,
 });
 
 function Alert(props: AlertProps) {
@@ -65,31 +68,13 @@ const authLink = setContext((_, { headers }) => {
 	return {
 		headers: {
 			...headers,
-			authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjA1OGFlNTdkZmFkZWIzNmVlYmExY2MyIiwiaXNfYWRtaW4iOnRydWUsImlhdCI6MTYxNjQyNDYyOCwiZXhwIjoxNjE5MDE2NjI4fQ.klm_D-5JSCrmVoFzNQRlF2EGG62UYaC1oFoLVL0UdNc`,
+			authorization: `Bearer ${token}`,
 		},
 	};
 });
 
 const link = ApolloLink.from([authLink, httpLink, errorLink]);
 
-// const cache = new InMemoryCache({
-// 	typePolicies: {
-// 		Query: {
-// 			fields: {
-// 				list_all_property_reports: {
-// 					// Don't cache separate results based on
-// 					// any of this field's arguments.
-// 					keyArgs: [],
-// 					// Concatenate the incoming list items with
-// 					// the existing list items.
-// 					merge: (existing = [], incoming) => { 
-// 						return existing.concat(incoming);
-// 					},
-// 				},
-// 			},
-// 		},
-// 	},
-// });
 
 
 
@@ -102,21 +87,3 @@ const client = new ApolloClient({
 
 export default client;
 
-// const data = {
-// 	list_all_property_reports: [],
-// 	// allContacts: [],
-// 	// singlePropertyRecord: {},
-// };
-
-// const setInitialCache = () => {
-// 	cache.writeQuery({
-// 		query: LIST_ALL_PROPERTY_CACHE,
-// 		data: data.list_all_property_reports,
-// 	});
-// 	// cache.writeQuery({ query: LIST_ALL_PROPERTY, data });
-// 	// cache.writeQuery({ query: LIST_ALL_PROPERTY, data });
-// };
-
-// setInitialCache();
-
-// // client.onClearStore(() => setInitialCache());
