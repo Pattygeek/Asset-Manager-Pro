@@ -13,12 +13,12 @@ This codebase is a READONLY version of the Asset Manager Pro platform. It should
 
 **Signup Page**
 
-![AMP Signup](https://github.com/Pattygeek/Asset-Manager-Pro/blob/main/docs/images/AMP-Signup.jpg)
+![AMP Signup](https://github.com/Pattygeek/Asset-Manager-Pro/blob/main/docs/images/AMP-SIgnup.jpg)
 
 
 **Home Page**
 
-![AMP Homepage](https://github.com/Pattygeek/Asset-Manager-Pro/blob/main/docs/images/AMP-HomeWithData.jpg)
+![AMP Homepage](https://github.com/Pattygeek/Asset-Manager-Pro/blob/main/docs/images/AMP-HomeData.jpg)
 
 
 **Owned Tab Page**
